@@ -1,0 +1,171 @@
+@charset "UTF-8";
+
+html, body{
+    height: 100%;
+}
+
+.left-side{
+    height: 100%;
+    width: 70%;
+    background-color: #1c4025;
+    float: left;
+}
+
+.recommend{
+    clear: both;
+    padding-top: 5px;
+    padding-bottom: 20%;
+}
+
+.right-side{
+    height: 100%;
+    width: 30%;
+    float: right;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.intro{
+    clear: both;
+    height: 100%;
+    margin-top: 10px;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 32px;
+    color: #F2EAC2;
+    padding-left: 25%;
+}
+
+#intro{
+    padding-left: 45%;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden; /* 좌우 표시안되는 슬라이드 hidden */
+}
+
+.slider-container {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    box-sizing: border-box;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.slider-container.animated {
+    -webkit-transition: left .5s ease-in;
+    transition: left .5s ease-in;
+}
+
+#prev, #next {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%);
+    z-index: 99999;
+    display: inline-block;
+    border-radius: 50%;
+    color: #F2EAC2;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    -webkit-transition: all .5s ease-in;
+    transition: all .5s ease-in;
+}
+
+#prev {
+    margin-left: -380px;
+}
+
+#next {
+    margin-left: 330px;
+}
+
+.pager{
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    text-align: center;
+}
+
+.pager span{
+    width: 10px; height: 10px; background-color: #F2EAC2;
+    border-radius: 50%; display: inline-block; text-indent: -9999em;
+    margin: 0 10px;
+}
+
+.pager span.active{
+    background-color: #94a68f;
+}
+
+.logo{
+    position: relative;
+    height: 25%;
+    text-align: center;
+    line-height: 200px;
+}
+
+#logoImg{
+    width: 240px;
+    height: 104px;
+    vertical-align: middle;
+    margin-left: 10%;
+}
+
+.loginBtn{
+    width: 80px;
+    height: 80px;
+    margin-left: 42%;
+    margin-top: 10%;
+}
+
+#loginIcon{
+    color: #1c4025;
+    text-align: center;
+    }
+
+#loginBtn{
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    opacity: 0;
+    cursor: pointer;
+    }
+
+#id, #pwd {
+    border: solid 2px #1c4025;
+    margin-top: 10px;
+    margin-left: 15%;
+    border-radius: 10px;
+    width: 70%; height: 32px;
+    outline: none;
+    font-family: 'Noto Serif KR', serif;
+}
+
+#join, #find {
+    margin-left: 60%;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: bold;
+    color: #400101;
+    font-family: 'Noto Serif KR', serif;
+    }
+    
+#find {
+	margin-left: 63%;
+}
