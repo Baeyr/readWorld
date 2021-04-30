@@ -31,7 +31,7 @@ public class BookInsertControl extends HttpServlet {
 		
 		
 		BookDAO bookDao = new BookDAO();
-		bookDao.bookInsert();
+//		bookDao.bookInsert();
 		
 		request.getRequestDispatcher("Main.jsp").forward(request, response);
 	}
