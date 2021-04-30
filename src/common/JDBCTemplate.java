@@ -23,7 +23,7 @@ public class JDBCTemplate {
 			conn = DriverManager.getConnection(prop.getProperty("url"), 
 					prop.getProperty("user"), prop.getProperty("pwd"));
 			
-			if(conn == null) {
+			if(conn != null) {
 				System.out.println("db 연결 성공");
 			} else {				
 				System.out.println("db 연결 실패");
