@@ -53,7 +53,7 @@ public class BoardReadControl extends HttpServlet {
 				request.setAttribute("readboard", vo);
 				
 				// TODO: 게시글 읽기 jsp로 이동 
-				request.getRequestDispatcher("board/BoardRead.jsp").forward(request, response); 
+				request.getRequestDispatcher("/CommentReadControl").forward(request, response); 
 			}
 		}
 	
