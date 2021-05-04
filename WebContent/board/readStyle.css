@@ -1,0 +1,199 @@
+@charset "UTF-8";
+
+div{
+    width: 100%;
+}
+
+.header{
+	position: realtive;
+	margin-top: 5%;
+	padding: 2px;
+}
+
+.s, .s1{
+    color: #730202;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.s{
+    margin-left: 15%;
+}
+
+.s1{
+    float: right;
+    margin-right: 15%;
+}
+
+.body{
+    width:90%;
+    height: 100;
+    margin: auto;
+    padding:5% 0;
+    background-color: white;
+    text-align: center;
+}
+
+.thead, .tfooter{
+    width: 100%;
+}
+
+.tfooter{
+    margin-bottom: 10px;
+}
+
+.line{
+    border: 1px solid #94a68f;
+}
+
+.lineNo1,.lineNo3, .lineNo4, .lineNo5, .p, .reCmt, .row1{
+    color: #400101;
+    font-weight: bold;
+}
+
+.lineNo1, .lineNo2, .lineNo3, .lineNo4, .lineNo5{
+    border-style: 0;
+}
+
+.lineNo1{
+    width: 5%;
+    height: 50px;
+    line-height: 50px;
+    background-color: white;
+    text-align: center;
+}
+
+.lineNo2{
+    width: 60%;
+    color: #F2EAC2;
+    font-weight: bold;
+}
+ 
+.lineNo3, .lineNo5{
+    width: 10%;
+}
+ 
+.lineNo4{
+    width: 15%;
+}
+
+.lineNo2, .lineNo3, .lineNo4, .lineNo5{
+    height: 50px;
+    line-height: 50px;
+    background-color: #94a68f;
+    margin: 0;
+    text-align: center;
+}
+
+#likeIcon{
+    text-align: center;
+    position: absolute;
+}
+
+#like{
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+    cursor: pointer;
+    text-align: center;
+}
+
+.table1{
+    width: 100%;
+    text-align: center;
+}
+
+.table2, .table3, .table4, .table5{
+    width: 95%;
+    text-align: left;
+    margin-left: 5%;
+    margin: 20px auto;
+}
+
+.table3, .table4, .table5{
+    height: 60px;
+}
+
+.text{
+    width: 85%;
+}
+
+.textBtn{
+    float: left;
+    margin-left: 10px;
+}
+
+.re,.row1{
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    width: 10%;
+}
+
+.row1{
+    font-size: 18px;
+}
+
+#icon{
+    text-align: center;
+    vertical-align: middle;
+    color: #1C4025;
+}
+
+.post, .liking{
+    padding: 5% 5%;
+}
+
+.post, .line1{
+    border-top: 2px solid #400101;
+}
+
+.table2{
+    margin-left: 5%;
+}
+
+.btns{
+    text-align: right;
+    padding-right: 5%;
+}
+
+.putCmt, .inputReCmt{
+    width: 100%;
+    height: 80px;
+    border: 2px solid #1C4025;
+    border-radius: 5px;
+    resize: none;
+}
+
+.row2, .row3, .reCmt{
+    width: 90%;
+    height: 100%;
+}
+
+span, .bBtn{
+    font-size: 16px;
+    font-weight: bold;
+    color: #1C4025;
+}
+
+.bBtn, .sBtn{
+    background-color: white;
+    border: none;
+    font-weight: bold;
+}
+
+.bBtn{
+    width: 85px;
+    height: 85px;
+}
+
+.sBtn{
+    font-size: 12px;
+    padding: 5px;
+    color: #F2EAC2;
+}
+
+hr{
+    width: 80%;
+    border: 2px solid #94A68F;
+}
