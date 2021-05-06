@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Board.vo.Board;
+import Board.vo.Comment;
 import Member.vo.Member;
 import common.JDBCTemplate;
 
@@ -127,7 +128,8 @@ public class BoardDAO {
 			if(rs.next()) {
 				// 글에 대한 정보를 담을 객체 생성
 				getvo.setBoardno(boardno);
-				getvo.setId(rs.getString("boardno"));
+//				getvo.setId(rs.getString("id"));
+				getvo.setId("test");
 				getvo.setBoarddate(rs.getDate("boarddate"));
 				getvo.setBoardcontent(rs.getString("boardcontent"));
 				getvo.setBoardtitle(rs.getString("boardtitle"));
@@ -144,45 +146,73 @@ public class BoardDAO {
 	}
 	
 	//게시글 쓰기
-	public int boardWrite(Board vo) {
-		int result=0;
-		int max=1;
+		public int boardWrite(Board vo) {
+			int result=0;
+			int max=1;
 
-		conn = JDBCTemplate.getConnection();
-		
-		String sql="insert into board values(?,?,current_timestamp,?,?,0,0)"; //테이블명 확인
-		String sqlMaxNo="select nvl(max(boardno),0)+1 from board"; //테이블명 확인
-		pstmt=null; rs=null;
-
-		try {
-			pstmt=conn.prepareStatement(sqlMaxNo); //글번호 지정
-			rs=pstmt.executeQuery();
-			
-			if(rs.next()) {
-				max=rs.getInt(1);
-			} else {
-				System.out.println("확인 요");
-				return 0;
-			}
-			
-			
-			{
-				pstmt=conn.prepareStatement(sql);
-				pstmt.setInt(1, max);
-				pstmt.setString(2, vo.getId());
-				pstmt.setString(3, vo.getBoardcontent());
-				pstmt.setString(4, vo.getBoardtitle());
+			conn = JDBCTemplate.getConnection();
 				
-				result=pstmt.executeUpdate();
+			String sql="insert into board values(?,?,current_timestamp,?,?,0,0,?)"; //테이블명 확인
+			String sqlMaxNo="select nvl(max(boardno),0)+1 from board"; //테이블명 확인
+			pstmt=null; rs=null;
+
+			try {
+				pstmt=conn.prepareStatement(sqlMaxNo); //글번호 지정
+				rs=pstmt.executeQuery();
+				
+				if(rs.next()) {
+					max=rs.getInt(1);
+				} else {
+					System.out.println("확인 요");
+					return 0;
+				}
+				
+				{
+					pstmt=conn.prepareStatement(sql);
+					pstmt.setInt(1, max);
+					pstmt.setString(2, vo.getId());
+					pstmt.setString(3, vo.getBoardcontent());
+					pstmt.setString(4, vo.getBoardtitle());
+					pstmt.setString(5, vo.getBoardfile());
+					
+					result=pstmt.executeUpdate();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close();
 			}
-		}catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close();
+			return result;
 		}
-		return result;
-	}
-	
+		
+	// 게시글 수정
+		public int boardReWrite(Board vo) {
+			
+			conn = JDBCTemplate.getConnection();
+			
+			int result = 0;
+			int boardno = vo.getBoardno();
+			String sql = "update board set id=?, boardtitle=?, boardcontent=?, boardfile=? where boardno=?";
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, vo.getId());
+				pstmt.setString(2, vo.getBoardtitle());
+				pstmt.setString(3, vo.getBoardcontent());
+				pstmt.setString(4, vo.getBoardfile());
+				pstmt.setInt(5, boardno);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close();
+			}
+			
+			return result;
+		}
+		
 	// 게시글 삭제
 	public int boardDelete(Board vo) {
 		conn = JDBCTemplate.getConnection();
@@ -284,4 +314,48 @@ public class BoardDAO {
 		
 		// 베스트 게시물 상단 고정 
 	
+		// 코멘트 내용 불러오기
+		public List<Comment> getComment(Comment co) {
+			
+			conn = JDBCTemplate.getConnection();
+			
+			List<Comment> cmt=null;
+			int boardno = co.getBoardno();
+			System.out.println("getComment:" + boardno);
+			// 특정 게시물 번호에 해당하는 모든 코멘트를 가져오기 
+			String sql = "SELECT * FROM cmt WHERE boardno=?";
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1,boardno);
+				rs = pstmt.executeQuery();
+				// 결과가 4개나 되는데.. 1개만 넣네요.
+				if(rs.next()) {
+					// 코멘트에 대한 정보를 담을 객체 생성
+					cmt=new ArrayList<Comment>();
+					do{
+					Comment getco=new Comment();
+					getco.setCommentno(rs.getInt("commentno"));
+					getco.setBoardno(boardno);
+					getco.setId(rs.getString("id"));
+					getco.setCmtcontent(rs.getString("cmtcontent"));
+					System.out.println("co:"+rs.getString("cmtcontent"));
+					getco.setCmtrootno(rs.getInt("cmtrootno"));
+					getco.setCmtstep(rs.getInt("cmtstep"));
+					getco.setCmtlevel(rs.getInt("cmtlevel"));
+					cmt.add(getco);
+					} while(rs.next());
+				} else {
+					System.out.println("안들어간다!!!");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close();
+			}
+			
+			// 위에서 co 변수에 setter를 잔뜩하고.. 
+			// return은 cmt 했네요.
+			System.out.println("getComment: "+ cmt);
+			return cmt;
+		}
 }
