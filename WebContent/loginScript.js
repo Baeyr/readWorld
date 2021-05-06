@@ -1,3 +1,5 @@
+window.onload=function(){
+	
 var sliderWrapper = document.getElementsByClassName('image-container'), //고정 div
     sliderContainer = document.getElementsByClassName('slider-container'), //슬라이드 이동 div
     slides = document.getElementsByClassName('slide'), //슬라이드
@@ -83,4 +85,5 @@ for (var i = 0; i < pagerBtn.length; i++) {
         var pagerNum = e.target.innerText - 1; //페이저의 innerText (i+1)에서 -1한 값=index
         goToSlide(pagerNum) //해당 페이저 index로 슬라이드 이동
     });
+}
 }

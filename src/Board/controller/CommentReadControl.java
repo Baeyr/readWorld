@@ -36,19 +36,14 @@ public class CommentReadControl extends HttpServlet {
 
 	protected void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int boardno=Integer.parseInt(request.getParameter("boardno"));
-		System.out.println(boardno);
 		Comment cmt=new Comment(); 
 		List<Comment> co=new ArrayList<Comment>();
 		Board vo=(Board)request.getAttribute("readboard");
-		System.out.println("vo : "+vo);
 		BoardDAO dao=new BoardDAO();
 		
 			cmt.setBoardno(vo.getBoardno());
-			System.out.println("cmtno:"+cmt.getBoardno());
 			co=dao.getComment(cmt);
-			System.out.println(co);
 			if(co!=null) { //여기서 수정
-				System.out.println("aaaa:"+cmt);
 				request.setAttribute("cmt", co);
 				request.setAttribute("readboard", vo);
 				request.getRequestDispatcher("/board/BoardRead.jsp").forward(request, response); 

@@ -32,21 +32,22 @@
     </div>
     <div class="body">
         <div class="line">
+        <form id="frm">
             <table class="thead">
                 <tr>
-                    <td class="lineNo1">${readboard.boardno}</td><!--값 연결-->
-                    <td class="lineNo2">${readboard.boardtitle}</td><!--값 연결-->
-                    <td class="lineNo3">${readboard.id}</td><!--값 연결-->
-                    <td class="lineNo4">${readboard.boarddate}</td><!--값 연결-->
-                    <td class="lineNo5">${readboard.boardcount}</td><!--값 연결-->
+                    <td class="lineNo1">${readboard.boardno}</td>
+                    <td class="lineNo2">${readboard.boardtitle}</td>
+                    <td class="lineNo3">${readboard.id}</td>
+                    <td class="lineNo4">${readboard.boarddate}</td>
+                    <td class="lineNo5">${readboard.boardcount}</td>
                 </tr>
             </table>
-            <form id="frm">
                 <div>
                     <table class="table1">
                         <tr>
                             <td class="post">
-                                <p class="p">${readboard.boardcontent}</p><!--값 연결-->
+                            <input type="hidden" name="boardno" value="${readboard.boardno}"/>
+                                <p class="p">${readboard.boardcontent}</p>
                             </td>
                         </tr>
                         <tr>
@@ -97,14 +98,14 @@
 								<hr>
 							</tr>
 							<tr class="re">
-								<td><button type="button" class="sBtn reDel">답글</button>
-									<button type="button" class="sBtn reMod">수정</button></td>
+								<td><button type="button" class="srBtn reDel">답글</button>
+									<button type="button" class="smBtn reMod">수정</button></td>
 							</tr>
 						</table>
 					</c:forEach>
                 </div>
                 </div>
-            </form>
+                </form>
         </div>
     </div>
     <script src="<%=request.getContextPath()%>/board/readScript.js"></script>	
