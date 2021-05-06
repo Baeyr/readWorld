@@ -144,7 +144,50 @@ public class BoardDAO {
 		}
 		return getvo;
 	}
-	
+
+	// 코멘트 내용 불러오기
+	public List<Comment> getComment(Comment co) {
+		
+		conn = JDBCTemplate.getConnection();
+		
+		List<Comment> cmt=null;
+		int boardno = co.getBoardno();
+		System.out.println("getComment:" + boardno);
+		// 특정 게시물 번호에 해당하는 모든 코멘트를 가져오기 
+		String sql = "SELECT * FROM cmt WHERE boardno=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,boardno);
+			rs = pstmt.executeQuery();
+
+			if(rs.next()) {
+				// 코멘트에 대한 정보를 담을 객체 생성
+				cmt=new ArrayList<Comment>();
+				do{
+				Comment getco=new Comment();
+				getco.setCommentno(rs.getInt("commentno"));
+				getco.setBoardno(boardno);
+				getco.setId(rs.getString("id"));
+				getco.setCmtcontent(rs.getString("cmtcontent"));
+				System.out.println("co:"+rs.getString("cmtcontent"));
+				getco.setCmtrootno(rs.getInt("cmtrootno"));
+				getco.setCmtstep(rs.getInt("cmtstep"));
+				getco.setCmtlevel(rs.getInt("cmtlevel"));
+				cmt.add(getco);
+				} while(rs.next());
+			} else {
+				System.out.println("안들어간다!!!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		System.out.println("getComment: "+ cmt);
+		return cmt;
+	}
+
 	//게시글 쓰기
 		public int boardWrite(Board vo) {
 			int result=0;

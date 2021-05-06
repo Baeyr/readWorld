@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+#main_content{
+    width:1000px;
+    height: 800px;
+    margin: auto;
+    margin-top:150px;
+    background-color: white;
+}
+
+
+section{
+    width:1000px;
+ 	height:1000px;
+    margin: auto;
+    background-color: white;
+}
+
+#main_article1{
+    width:960px;
+    height: 1300px;
+    margin: auto;
+    border-radius: 20px;
+    background-color: #94A68F;
+    clear: both;
+    position: relative;
+    top:30px;
+}
+
+table{
+    width: 200px;
+    height: 1180px;
+    text-align: center;
+    float: left;
+    position: relative;
+    background-color: white;
+    border-radius: 10px;
+    margin: auto 40px;
+    position: relative;
+    left:60px;
+    top:-40px;
+    border: 2px solid #1C4025;
+}
+
+
+table h2{
+    width: 180px;
+    background-color: #94A68F;
+    border-radius: 5px;
+    margin-bottom: -20px;
+    height: 40px;
+    line-height: 40px;
+    color: #1C4025;
+    border: 1px solid white;
+}
+
+table img, #List img{
+    border: 1px solid #1C4025;
+    border-radius: 5px;
+    padding: 2px;
+    margin-top: 30px;
+}
+
+.title > a{
+	color:#1C4025;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.author > a{
+	text-decoration: none;
+	color : #94A68F;
+	font-size: 10px;
+}
+
+#main_article2{
+    width:960px;
+    height: 1300px;
+    margin: auto;
+    border-radius: 20px;
+    background-color: white;
+    position: relative;
+    clear: both;
+    top:80px;
+}
+
+#main_article2 h2{
+    color: #400101;
+    margin-left: 20px;
+    margin-bottom: -20px;
+}
+
+.listB{
+	width: 960px;
+	height:340px;
+}
+
+.List{
+	margin-top: 50px;
+}
+
+.List > ul{
+    float: left;
+    list-style: none;
+    text-align: center;
+}
+
+.List li{
+	width:130px;
+	
+	
+    
+    overflow:hidden; 
+    text-overflow:ellipsis; 
+    white-space:nowrap;
+}
+
+hr{
+	background-color: #1C4025;
+	height: 1px;
+}
+
+#pick,#devlop{
+    width: 900px;
+    height: 300px;
+    clear: both;
+    position: relative;
+    left: 30px;
+    top:20px
+}
