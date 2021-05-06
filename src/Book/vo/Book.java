@@ -3,25 +3,24 @@ package Book.vo;
 import java.sql.Date;
 
 public class Book {
-	private int bookno;
+	private String isbn;
 	private String title;
 	private String author;
 	private String publisher;
 	private Date pubDate;
 	private String description;
-	private int isbn;
 	private int pricesales;
 	private String cover;
 	private int ranks;
-	private char adult;
+	private String adult;
 	private String CategoryName;
+	private int siteRanks;
 	
-	
-	public int getBookno() {
-		return bookno;
+	public String getIsbn() {
+		return isbn;
 	}
-	public void setBookno(int bookno) {
-		this.bookno = bookno;
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 	public String getTitle() {
 		return title;
@@ -53,12 +52,6 @@ public class Book {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getIsbn() {
-		return isbn;
-	}
-	public void setIsbn(int isbn) {
-		this.isbn = isbn;
-	}
 	public int getPricesales() {
 		return pricesales;
 	}
@@ -77,10 +70,10 @@ public class Book {
 	public void setRanks(int ranks) {
 		this.ranks = ranks;
 	}
-	public char getAdult() {
+	public String getAdult() {
 		return adult;
 	}
-	public void setAdult(char adult) {
+	public void setAdult(String adult) {
 		this.adult = adult;
 	}
 	public String getCategoryName() {
@@ -90,11 +83,16 @@ public class Book {
 		CategoryName = categoryName;
 	}
 	
+	public int getSiteRanks() {
+		return siteRanks;
+	}
+	public void setSiteRanks(int siteRanks) {
+		this.siteRanks = siteRanks;
+	}
 	@Override
 	public String toString() {
-		return "Book [bookno=" + bookno + ", title=" + title + ", author=" + author + ", publisher=" + publisher
-				+ ", pubDate=" + pubDate + ", description=" + description + ", isbn=" + isbn + ", pricesales="
-				+ pricesales + ", cover=" + cover + ", ranks=" + ranks + ", adult=" + adult + ", CategoryName="
-				+ CategoryName + "]";
+		return "Book [isbn=" + isbn + ", title=" + title + ", author=" + author + ", publisher=" + publisher
+				+ ", pubDate=" + pubDate + ", description=" + description + ", pricesales=" + pricesales + ", cover="
+				+ cover + ", ranks=" + ranks + ", adult=" + adult + ", CategoryName=" + CategoryName + "]";
 	}
 }

@@ -51,12 +51,9 @@ public class BookCateMoreControl extends HttpServlet {
 		int startNum = Integer.parseInt((String) request.getParameter("startNum"));
 		String result = "";
 		
-		
-		//전체 책 가져오기
+		System.out.println("start : " + startNum);
+	
 		List<Book> cateBook = dao.bookCateList(cate,(startNum+1));
-		
-		System.out.println(startNum);
-		System.out.println(cateBook.size()+"개");
 		
 		if(cateBook != null) {
 			Gson jobj = new GsonBuilder().create();

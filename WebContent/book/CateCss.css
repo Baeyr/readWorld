@@ -1,25 +1,43 @@
 @charset "UTF-8";
 
 #main_article1,#main_article2{
-    height: 100px;
     margin: auto;
     clear: both;
+    position: relative;
 }
 
-.listB{
-	clear: both;
-}
 
 #page{
     clear: both;
     width: 80%;
-    margin-left: 10%;
+    height:1000px;
     margin-top: 30px;
+}
+
+.listB{
+	clear: both;
+	
+    margin-left: 5%;
+}
+
+
+#foot{
+	width: 80%;
+	text-align:center;
+	margin-left: 10%;
+	float: left;
 }
 
 #main_article2{
 	text-align: center;
 }
+
+
+.list{
+	clear: both;
+	display: inline;
+}
+
 
 .List ul{
     float: left;
@@ -130,7 +148,6 @@ hr {
 }
 
 #moreBtn{
-	margin-top : 50px;
 	border : 0;
 	outline : 0;
 	background-color: #1C4025;
@@ -140,9 +157,6 @@ hr {
 	width: 200px;
 	height: 50px;
 	font-weight: bold;
-	
-	position: relative;
-	bottom: -500px;
 }
 
 #moreBtn:hover{
