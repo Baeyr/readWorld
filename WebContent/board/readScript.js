@@ -42,7 +42,7 @@ $('.smBtn').click(function(){
 		'</textarea></td> <td class="textBtn"> <button type="submit" class="bBtn" id="modReCmt">입력하기</button> </td> </tr></table>');
 		}
 		else if(cnt%2==0){
-			$(".table4").remove();
+			$(".table6").remove();
 		}
 	})
 	
