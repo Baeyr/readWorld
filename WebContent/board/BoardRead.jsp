@@ -1,3 +1,4 @@
+<%@page import="Board.vo.Comment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../Header.jsp"%>
@@ -8,7 +9,7 @@
 	driver="oracle.jdbc.driver.OracleDriver" user="ReadWorld"
 	password="1234" var="dt" scope="page" />
 <s:query
-	sql="select id, cmtcontent, cmtstep from cmt where boardno = ${readboard.boardno} order by cmtrootno, cmtstep, cmtlevel"
+	sql="select * from cmt where boardno = ${readboard.boardno} order by cmtrootno, cmtstep, cmtlevel"
 	var="d1" dataSource="${dt}" />
 <!DOCTYPE html>
 <html>
@@ -22,7 +23,7 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 <title>읽편한세상</title>
 </head>
-<body> 
+<body>
 <div class="header">
         <hr>
         <div>
@@ -32,7 +33,8 @@
     </div>
     <div class="body">
         <div class="line">
-        <form id="frm">
+            <form id="frm">
+            <div>
             <table class="thead">
                 <tr>
                     <td class="lineNo1">${readboard.boardno}</td>
@@ -42,11 +44,12 @@
                     <td class="lineNo5">${readboard.boardcount}</td>
                 </tr>
             </table>
+            </div>
                 <div>
                     <table class="table1">
                         <tr>
                             <td class="post">
-                            <input type="hidden" name="boardno" value="${readboard.boardno}"/>
+                	<input type="hidden" name="boardno" value="${readboard.boardno}"/>
                                 <p class="p">${readboard.boardcontent}</p>
                             </td>
                         </tr>
@@ -83,29 +86,43 @@
                     </table>
                 </div>
                 <div class="tbody">
-                <div>
                     <c:forEach var="i" items="${d1.rows}" varStatus="s">
-						<table class="table3-${s.count}">
+						<c:if test="${i['cmtstep']==1}">
+							<table class="table3-${i['cmtrootno']}">
 							<tr class="row3">
-								<c:if test="${i['cmtstep']>0}">
-									<td class="re" rowspan="2"><i id="icon"
-										class="fas fa-arrow-right fa-3x"></i></td>
-								</c:if>
+								<td rowspan="2">
+								</td>
 								<td class="row1"><i class="far fa-times-circle"></i>${i['id']}</td>
 								<td class="row2" rowspan="2">
 									<p class="reCmt">${i['cmtcontent']}</p>
 								</td>
-								<hr>
 							</tr>
 							<tr class="re">
 								<td><button type="button" class="srBtn reDel">답글</button>
 									<button type="button" class="smBtn reMod">수정</button></td>
 							</tr>
 						</table>
+							<hr>
+						</c:if>
+						<c:if test="${i['cmtstep']>1}">
+							<table class="table5-${i['cmtrootno']}">
+							<tr class="row3">
+								<td class="re" rowspan="2"><i id="icon"
+								class="fas fa-arrow-right fa-3x"></i></td>
+								<td class="row1"><i class="far fa-times-circle"></i>${i['id']}</td>
+								<td class="row2" rowspan="2">
+									<p class="reCmt">${i['cmtcontent']}</p>
+								</td>
+							</tr>
+							<tr class="re">
+								<td><button type="button" class="smBtn reMod">수정</button></td>
+							</tr>
+						</table>
+								<hr>
+						</c:if>
 					</c:forEach>
                 </div>
-                </div>
-                </form>
+            </form>
         </div>
     </div>
     <script src="<%=request.getContextPath()%>/board/readScript.js"></script>	

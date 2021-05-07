@@ -181,8 +181,6 @@ public class BoardDAO {
 		} finally {
 			close();
 		}
-
-		System.out.println("getComment: "+ cmt);
 		return cmt;
 	}
 

@@ -3,7 +3,7 @@
 div{
     width: 100%;
 }
- 
+
 ul{
     display: block;
     margin-block-start: 1em;
@@ -124,7 +124,7 @@ ul{
 }
 
 .table3, .table4, .table5{
-    height: 80px;
+    height: 120px;
 }
 
 .text{
@@ -141,6 +141,10 @@ ul{
     text-align: center;
     vertical-align: middle;
     width: 10%;
+}
+
+.re {
+	padding-right:3%;
 }
 
 .row1{
@@ -178,13 +182,14 @@ ul{
     resize: none;
 }
 
-.putReCmt{
-    width: 90%;
-}
-
-.row2, .row3, .reCmt{
+.putReCmt, .reCmt, .row3{
     width: 90%;
     height: 100%;
+}
+
+.row2{
+	padding: 3%;
+    width: 90%;
 }
 
 span, .bBtn{
@@ -193,7 +198,7 @@ span, .bBtn{
     color: #1C4025;
 }
 
-.bBtn, .sBtn{
+.bBtn, .reDel, .reMod{
     background-color: white;
     border: none;
     font-weight: bold;
@@ -204,13 +209,13 @@ span, .bBtn{
     height: 85px;
 }
 
-.sBtn{
+.reDel, .reMod{
     font-size: 12px;
     padding: 5px;
     color: #F2EAC2;
 }
 
 hr{
-    width: 75%;
+    width: 90%;
     border: 2px solid #94A68F;
 }
