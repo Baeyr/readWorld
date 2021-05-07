@@ -8,8 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import Member.DAO.MemberDAO;
+import Member.vo.Genre;
 import Member.vo.Member;
 
 /**
@@ -41,22 +44,31 @@ public class LoginControl extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
 		
 		String id = request.getParameter("id");
 		String pwd = request.getParameter("pwd");
+		
+		
+		if(id == null || pwd == null) {
+			out.println("<script>alert('아이디와 비밀번호를 입력해주세요'); history.back()</script>");
+		}
 		
 		Member member = new Member();
 		member.setId(id);
 		member.setPwd(pwd);
 		Member result = new MemberDAO().login(member);
+		Genre genre = new MemberDAO().getGenre(result.getId());			
 		
-		if(result==null || !result.getPwd().equals(pwd)) {
-			out.println("<script>alert('아이디 또는 비밀번호를 확인해주세요');</script>");
+		if(result.getId() == null || !pwd.equals(result.getPwd())) {
+			out.println("<script>alert('아이디 또는 비밀번호를 확인해주세요'); history.back()</script>");
 		} else {
+			System.out.println(genre.getGenre()+"취향");
 			out.println("<script>alert('로그인 성공!!')</script>");
-			out.println("<script>location.href='Main.jsp';</script>");
+			session.setAttribute("user", result);
+			session.setAttribute("genre", genre);
+			request.getRequestDispatcher("/main").forward(request, response);
 		}
-	
 	}
 
 }

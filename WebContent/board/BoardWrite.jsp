@@ -23,12 +23,13 @@
     <hr>
     </div>
     <div class="body">
-    
-    
-    <!-- 게시글을 새로 쓰는 경우 -->
-    <c:if test="${empty modvo.boardno }">
-       <form action="<%=request.getContextPath()%>/boardWrite" method="post" enctype="multipart/form-data" class="form">
+
+	<!-- 새로운 게시글 작성하는 경우 -->
+    <c:if test="${empty modvo }">
+
+    <form action="<%=request.getContextPath()%>/boardWrite.do" method="post" enctype="multipart/form-data" class="form">
     	<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+	    <input type="hidden" name="modiCheck" value="notmodify">	
 	    <table class="board">
 	        <tr>
 	            <td><input type="text" name="BoardTitle" placeholder="제목"></td>
@@ -56,18 +57,19 @@
     </form>
     </c:if>
     
-    <!-- 게시글을 수정하는 경우 -->
-    <c:if test="${not empty modvo.boardno and modvo.boardno ne''}">
-    
-          <form action="<%=request.getContextPath()%>/boardWrite" method="post" enctype="multipart/form-data" class="form">
+    <!-- 존재하는 게시글을 수정하는 경우 -->
+    <c:if test="${not empty modvo }">
+    	<form action="<%=request.getContextPath()%>/boardWrite.do" method="post" enctype="multipart/form-data" class="form">
     	<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+    	<input type="hidden" name="boardno" value="${modvo.boardno }">
+    	<input type="hidden" name="modiCheck" value="modify">
 	    <table class="board">
 	        <tr>
 	            <td><input type="text" name="BoardTitle" value="${modvo.boardtitle }"></td>
 	        </tr>
 	        <tr>
 	            <td>
-	            <textarea name="BoardContent" id="BoardContent" cols="71" rows="30" value="${modvo.boardcontent }"></textarea>
+	            <textarea name="BoardContent" id="BoardContent" cols="71" rows="30">${modvo.boardcontent }</textarea>
 	            <script type="text/javascript">
 					 CKEDITOR.replace('BoardContent'
 	                , {height: 500                                                  
@@ -86,10 +88,7 @@
 	    </table>
     	<input type="submit" value="등록하기" class="btn1">
     </form>
-    
     </c:if>
-    
- 
     </div>
     
     <script>

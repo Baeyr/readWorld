@@ -50,12 +50,11 @@ public class BookCateMoveControl extends HttpServlet {
 		BookDAO dao = new BookDAO();
 		String cate = request.getParameter("cate");
 		int startNum = Integer.parseInt((String) request.getParameter("startNum"));
-		
 		String result = "";
 		
 		
 		//전체 책 가져오기
-		List<Book> cateBook = dao.bookCateList(cate,startNum+1);
+		List<Book> cateBook = dao.bookCateList(cate,0);
 		
 		if(cateBook != null) {
 			Gson jobj = new GsonBuilder().create();

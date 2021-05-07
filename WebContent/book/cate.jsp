@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<link href="${pageContext.request.contextPath}/book/CateCss.css?ver=124" rel="stylesheet" type = "text/css">
+	<link href="${pageContext.request.contextPath}/book/CateCss.css?123q" rel="stylesheet" type = "text/css">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -36,12 +36,14 @@
           	//카테고리 메뉴 클릭시
             cate.click(function(){
             	 var nowLi = $('.now');
+            	 
             	 nowLi.removeClass('now');
             	 $(".List").empty();
+            	 
                  if(!$(this).hasClass("now")){
                      $(this).addClass("now");
                  }
-                
+                 
                  $.ajax({
                 		url : "<%=request.getContextPath()%>/BookCateMove",
                 		type: "post",
@@ -49,10 +51,14 @@
                 		data : {"startNum":0, "cate":$(this).text()},
                 		success:function(data){
         					var htmls = "";
+        					
         					if(data.length<=0){
-        						var htmls = "<div>마지막입니다.</div>";
+        						var htmls = "<ul><li><h3>마지막입니다.</h3><li></ul>";
+        						$('#moreBtn').hide();
         					}else{
+        						$('#moreBtn').show();
         						$.each(data,function(index,e){
+        							
             						htmls += "<ul>";
             						htmls += "<li>";
              						htmls += "<a>";
@@ -71,9 +77,9 @@
                         			htmls += "</li>"
             						htmls += "</ul>"
             					});
-            					$(".List").append(htmls);
-            					$(".List").append(htmls)
+            					
         					}
+        					$(".List").append(htmls);
         				},
         				error : function(request,status,error){
         					alert("code : " + request.status + "\n message : " + request.responseText + "\n" + "error: " + error);
@@ -96,8 +102,10 @@
            		success:function(data){
    					var htmls = "";
    					if(data.length<=0){
-   						var htmls = "<div>마지막입니다.</div>";
+   						var htmls = "<ul><li><h3>마지막입니다.</h3><li></ul>";
+   						$('#moreBtn').hide();
    					}else{
+   						$('#moreBtn').show();
    						$.each(data,function(index,e){
        						htmls += "<ul>";
        						htmls += "<li>";
@@ -117,10 +125,9 @@
                    			htmls += "</li>"
        						htmls += "</ul>"
        					});
-       					
-       					$(".List").append(htmls);
-       					
    					}
+   					
+   					$(".List").append(htmls);
    				},
    				error : function(request,status,error){
    					alert("code : " + request.status + "\n message : " + request.responseText + "\n" + "error: " + error);
@@ -144,7 +151,6 @@
                             <li>경제경영</li>
                             <li>자기계발</li>
                             <li>소설/시/희곡</li>
-                            <li>라이트노벨</li>
                             <li>에세이</li>
                             <li>인문학</li>
                             <li>사회과학</li>
@@ -172,9 +178,8 @@
             </article>
 
             <article id="main_article2" class="bodys" >
-            	<div id="page">
 					<div class="listB">
-                        <ul class="List">
+	                    <ul class="List">
 	                      	<c:forEach items="${cateBook}" var="item">
 		                       	<ul>
 			                       	<li>
@@ -188,13 +193,14 @@
 			                       	</li>
 		                       	</ul>
 		                      </c:forEach>
-		                      
-                         </ul>
-                    	</div>
-                    	<div id="foot">
-                    		<button id="moreBtn">더보기</button>
-                    	</div>
-                   </div>
+	                      </ul>
+	                     
+	                      <div id="foot">
+	     							<button id="moreBtn">더보기</button>
+							</div>	
+							<div>
+							</div>
+                    </div>
             </article>
         </section>
     </div>
