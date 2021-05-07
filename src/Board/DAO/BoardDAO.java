@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import Board.vo.Board;
 import Board.vo.Comment;
@@ -144,7 +145,8 @@ public class BoardDAO {
 		}
 		return getvo;
 	}
-
+	
+	
 	// 코멘트 내용 불러오기
 	public List<Comment> getComment(Comment co) {
 		
@@ -187,7 +189,9 @@ public class BoardDAO {
 		System.out.println("getComment: "+ cmt);
 		return cmt;
 	}
-
+	
+	
+	
 	//게시글 쓰기
 		public int boardWrite(Board vo) {
 			int result=0;
@@ -274,22 +278,61 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// 게시글 추천 기능 
-		// 빈 하트 버튼을 누르면 추천 
-
+	// TODO 
+	// 게시글 추천 여부 검사
+	
+	public int likeCheck(Board vo) {
 		
-		public int updateLike(Board vo) {
+		int result = 0 ;
+		
+		String sql ="select count(*) from likeboard where boardno = ?";
+		
+		try {
+			conn = JDBCTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, vo.getBoardno());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1) ;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		
+		return result;
+		
+	}
+	
+	// ******* 로그인 연동 후 수정 ***********
+//	public int likeCheck(Map<String, Object> m) {
+//		int result = 0 ;
+//		
+//		try {
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return result;
+//	}
+	
+		// 빈 하트 버튼을 누르면 추천 
+		
+		public int likeUpdate(Board vo) {
 			
 			int result = 0 ;
 			
-			String sql = "UPDATE board SET boardcount = boardcount+1 WHERE boardno=?";
+			String sql = "insert into likeboard(boardno) values(?)";
 			
 			
 			try {
 				conn = JDBCTemplate.getConnection();
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, vo.getBoardno());
-				pstmt.executeQuery();
+				result = pstmt.executeUpdate();
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -304,17 +347,17 @@ public class BoardDAO {
 		
 		// 빨간 하트 버튼을 누르면 추천 취소
 		
-		public int cancelLike(Board vo) {
+		public int likeDelete(Board vo) {
 			
 			int result = 0 ;
 			
-			String sql = "UPDATE board SET boardcount = boardcount-1 WHERE boardno=?";
+			String sql = "delete from likeboard where boardno = ?";
 			
 			try {
 				conn = JDBCTemplate.getConnection();
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, vo.getBoardno());
-				pstmt.executeQuery();
+				result = pstmt.executeUpdate();
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -327,12 +370,10 @@ public class BoardDAO {
 		}
 		
 
-		// 하트 버튼 아래에 추천수 찾기 
-		public int countLike(Board vo) {
-			
-			
-			String sql ="SELECT boardcount from board where WHERE boardno=?";
-			int like = 0;
+		// 하트 버튼 아래에 추천수 
+		public int likeCount(Board vo) {
+			String sql ="select count(*) from likeboard where boardno = ?";
+			int count = 0;
 			
 			try {
 				conn = JDBCTemplate.getConnection();
@@ -341,7 +382,8 @@ public class BoardDAO {
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
-					like = rs.getInt("boardcount");
+					count = rs.getInt(1);
+					System.out.println(count);
 				}
 				
 			} catch (SQLException e) {
@@ -350,55 +392,18 @@ public class BoardDAO {
 				close();
 			}
 			
-			return like; 
+			return count; 
 			
 		}
 		
+
 		
-		// 베스트 게시물 상단 고정 
+		
+		
+		// TODO: 베스트 게시물 상단 고정 
 	
-		// 코멘트 내용 불러오기
-		public List<Comment> getComment(Comment co) {
-			
-			conn = JDBCTemplate.getConnection();
-			
-			List<Comment> cmt=null;
-			int boardno = co.getBoardno();
-			System.out.println("getComment:" + boardno);
-			// 특정 게시물 번호에 해당하는 모든 코멘트를 가져오기 
-			String sql = "SELECT * FROM cmt WHERE boardno=?";
-			try {
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1,boardno);
-				rs = pstmt.executeQuery();
-				// 결과가 4개나 되는데.. 1개만 넣네요.
-				if(rs.next()) {
-					// 코멘트에 대한 정보를 담을 객체 생성
-					cmt=new ArrayList<Comment>();
-					do{
-					Comment getco=new Comment();
-					getco.setCommentno(rs.getInt("commentno"));
-					getco.setBoardno(boardno);
-					getco.setId(rs.getString("id"));
-					getco.setCmtcontent(rs.getString("cmtcontent"));
-					System.out.println("co:"+rs.getString("cmtcontent"));
-					getco.setCmtrootno(rs.getInt("cmtrootno"));
-					getco.setCmtstep(rs.getInt("cmtstep"));
-					getco.setCmtlevel(rs.getInt("cmtlevel"));
-					cmt.add(getco);
-					} while(rs.next());
-				} else {
-					System.out.println("안들어간다!!!");
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				close();
-			}
-			
-			// 위에서 co 변수에 setter를 잔뜩하고.. 
-			// return은 cmt 했네요.
-			System.out.println("getComment: "+ cmt);
-			return cmt;
-		}
+
+
+
+
 }
