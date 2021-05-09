@@ -30,7 +30,6 @@ public class JDBCTemplate {
 			}
 		} catch(Exception e) {
 			System.out.println("db 연결 실패");
-			e.printStackTrace();
 		}	
 		return conn;
 	}

@@ -63,7 +63,7 @@ public class BookMainControl extends HttpServlet {
 			//============================================
 			List<Book> userBook;
 			
-			if(genre.getGenre() == null) {
+			if(genre == null) {
 				//베스트 셀러 책 5권 가져오기
 				userBook = dao.bookBestSellerList();
 			}else {

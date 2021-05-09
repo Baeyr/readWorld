@@ -1,3 +1,9 @@
+<%@page import="java.io.Console"%>
+<%@page import="java.util.regex.Matcher"%>
+<%@page import="java.util.regex.Pattern"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="Board.vo.Board"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../Header.jsp"%>
@@ -8,7 +14,7 @@
 	driver="oracle.jdbc.driver.OracleDriver" user="ReadWorld"
 	password="1234" var="dt" scope="page" />
 <s:query
-	sql="select * from cmt where boardno = ${readboard.boardno} order by cmtrootno, cmtstep, cmtlevel"
+	sql="select id, cmtcontent, cmtstep from cmt where boardno = ${readboard.boardno} order by cmtrootno, cmtstep, cmtlevel"
 	var="d1" dataSource="${dt}" />
 <!DOCTYPE html>
 <html>
@@ -21,8 +27,15 @@
     <link rel="stylesheet" href="<%=request.getContextPath() %>/board/readStyle.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 <title>읽편한세상</title>
+	
+	<% 
+		Board board = (Board)request.getAttribute("readboard"); 
+		String content = board.getBoardcontent();
+		System.out.println(content);
+	%>
 </head>
 <body>
+
 <div class="header">
         <hr>
         <div>
@@ -33,7 +46,6 @@
     <div class="body">
         <div class="line">
             <form id="frm">
-            <div>
             <table class="thead">
                 <tr>
                     <td class="lineNo1">${readboard.boardno}</td>
@@ -43,13 +55,13 @@
                     <td class="lineNo5">${readboard.boardcount}</td>
                 </tr>
             </table>
-            </div>
                 <div>
                     <table class="table1">
                         <tr>
                             <td class="post">
                 	<input type="hidden" name="boardno" value="${readboard.boardno}"/>
-                                <p class="p">${readboard.boardcontent}</p>
+                				
+                                <p class="p"><%=board.getBoardcontent()%></p>
                             </td>
                         </tr>
                         <tr>
@@ -85,45 +97,36 @@
                     </table>
                 </div>
                 <div class="tbody">
+                <div>
                     <c:forEach var="i" items="${d1.rows}" varStatus="s">
-						<c:if test="${i['cmtstep']==1}">
-							<table class="table3-${i['cmtrootno']}">
+						<table class="table3-${s.count}">
 							<tr class="row3">
-								<td rowspan="2">
-								</td>
+								<c:if test="${i['cmtstep']>0}">
+									<td class="re" rowspan="2"><i id="icon"
+										class="fas fa-arrow-right fa-3x"></i></td>
+								</c:if>
 								<td class="row1"><i class="far fa-times-circle"></i>${i['id']}</td>
 								<td class="row2" rowspan="2">
 									<p class="reCmt">${i['cmtcontent']}</p>
 								</td>
+								<hr>
 							</tr>
 							<tr class="re">
 								<td><button type="button" class="srBtn reDel">답글</button>
 									<button type="button" class="smBtn reMod">수정</button></td>
 							</tr>
 						</table>
-							<hr>
-						</c:if>
-						<c:if test="${i['cmtstep']>1}">
-							<table class="table5-${i['cmtrootno']}">
-							<tr class="row3">
-								<td class="re" rowspan="2"><i id="icon"
-								class="fas fa-arrow-right fa-3x"></i></td>
-								<td class="row1"><i class="far fa-times-circle"></i>${i['id']}</td>
-								<td class="row2" rowspan="2">
-									<p class="reCmt">${i['cmtcontent']}</p>
-								</td>
-							</tr>
-							<tr class="re">
-								<td><button type="button" class="smBtn reMod">수정</button></td>
-							</tr>
-						</table>
-								<hr>
-						</c:if>
 					</c:forEach>
+                </div>
                 </div>
             </form>
         </div>
     </div>
+    <% 
+		String s 
+			= "<img alt=\"\" src=\"https://image.aladin.co.kr/product/26858/94/coversum/e612538997_1.jpg\" style=\"width: 54px; height: 80px;\" />";
+	
+	%>
     <script src="<%=request.getContextPath()%>/board/readScript.js"></script>	
 </body>
 </html>

@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<link href="${pageContext.request.contextPath}/book/CateCss.css?123q" rel="stylesheet" type = "text/css">
+	<link href="${pageContext.request.contextPath}/book/CateCss.css?ver1" rel="stylesheet" type = "text/css">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

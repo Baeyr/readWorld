@@ -17,14 +17,14 @@
 	</div>
 
 	<script>
-		function blankCheck(f) {
+		function blacnkCheck(f) {
 			var id = f.id.value;
 			id = id.trim();
-			if(!(id >='0' && id <='9') && !(id >='a' && id <='z') && !(id >= 'A' && id <='Z')) {
-				alert("아이디는 영문 대소문자와 숫자만 입력가능합니다");
-				
+			if(id.length<4) {
+				alert("아이디는 4자 이상 입력해주세요.");
 				return false;
 			}
+			return true;
 		}
 	</script>
 </body>

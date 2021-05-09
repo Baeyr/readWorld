@@ -7,7 +7,7 @@
 	<title>Insert title here</title>
 	<script type="text/javascript src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<link href="<%=request.getContextPath()%>/board/BoardListStyle.css" rel="stylesheet" type = "text/css">
+	<link href="<%=request.getContextPath()%>/board/BoardListStyle.css?ver1q" rel="stylesheet" type = "text/css">
 </head>
 <body>
 	<% request.setCharacterEncoding("utf-8"); %>

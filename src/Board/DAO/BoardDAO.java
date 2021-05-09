@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import Board.vo.Board;
 import Board.vo.Comment;
@@ -89,7 +88,7 @@ public class BoardDAO {
 			
 			conn = JDBCTemplate.getConnection();
 			
-			int cnt = 0;
+			int result = 0;
 			
 			String sql = "SELECT COUNT(*) FROM board";
 			
@@ -98,7 +97,7 @@ public class BoardDAO {
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
-					cnt = rs.getInt(1);
+					result = rs.getInt(1);
 				}
 				
 			} catch (SQLException e) {
@@ -108,7 +107,7 @@ public class BoardDAO {
 			}
 			
 			
-			return cnt;
+			return result;
 		}
 		
 	// 게시글 내용 불러오기
@@ -129,8 +128,7 @@ public class BoardDAO {
 			if(rs.next()) {
 				// 글에 대한 정보를 담을 객체 생성
 				getvo.setBoardno(boardno);
-//				getvo.setId(rs.getString("id"));
-				getvo.setId("test");
+				getvo.setId(rs.getString("id"));
 				getvo.setBoarddate(rs.getDate("boarddate"));
 				getvo.setBoardcontent(rs.getString("boardcontent"));
 				getvo.setBoardtitle(rs.getString("boardtitle"));
@@ -145,8 +143,7 @@ public class BoardDAO {
 		}
 		return getvo;
 	}
-	
-	
+
 	// 코멘트 내용 불러오기
 	public List<Comment> getComment(Comment co) {
 		
@@ -185,52 +182,53 @@ public class BoardDAO {
 		} finally {
 			close();
 		}
+
+		
 		return cmt;
 	}
-	
-	
-	
+
 	//게시글 쓰기
-		public int boardWrite(Board vo) {
-			int result=0;
-			int max=1;
+	public int boardWrite(Board vo) {
+		int result=0;
+		int max=1;
 
-			conn = JDBCTemplate.getConnection();
-				
-			String sql="insert into board values(?,?,current_timestamp,?,?,0,0,?)"; //테이블명 확인
-			String sqlMaxNo="select nvl(max(boardno),0)+1 from board"; //테이블명 확인
-			pstmt=null; rs=null;
-
-			try {
-				pstmt=conn.prepareStatement(sqlMaxNo); //글번호 지정
-				rs=pstmt.executeQuery();
-				
-				if(rs.next()) {
-					max=rs.getInt(1);
-				} else {
-					System.out.println("확인 요");
-					return 0;
-				}
-				
-				{
-					pstmt=conn.prepareStatement(sql);
-					pstmt.setInt(1, max);
-					pstmt.setString(2, vo.getId());
-					pstmt.setString(3, vo.getBoardcontent());
-					pstmt.setString(4, vo.getBoardtitle());
-					pstmt.setString(5, vo.getBoardfile());
-					
-					result=pstmt.executeUpdate();
-				}
-			}catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				close();
-			}
-			return result;
-		}
+		conn = JDBCTemplate.getConnection();
 		
-	// 게시글 수정
+		String sql="insert into board values(?,?,current_timestamp,?,?,0,0,?)"; //테이블명 확인
+		String sqlMaxNo="select nvl(max(boardno),0)+1 from board"; //테이블명 확인
+		pstmt=null; rs=null;
+
+		try {
+			pstmt=conn.prepareStatement(sqlMaxNo); //글번호 지정
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				max=rs.getInt(1);
+			} else {
+				System.out.println("확인 요");
+				return 0;
+			}
+			
+			
+			{
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, max);
+				pstmt.setString(2, vo.getId());
+				pstmt.setString(3, vo.getBoardcontent());
+				pstmt.setString(4, vo.getBoardtitle());
+				pstmt.setString(5, vo.getBoardfile());
+				
+				result=pstmt.executeUpdate();
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return result;
+	}
+	
+// 게시글 수정
 		public int boardReWrite(Board vo) {
 			
 			conn = JDBCTemplate.getConnection();
@@ -257,7 +255,6 @@ public class BoardDAO {
 			
 			return result;
 		}
-		
 	// 게시글 삭제
 	public int boardDelete(Board vo) {
 		conn = JDBCTemplate.getConnection();
@@ -317,6 +314,7 @@ public class BoardDAO {
 //		return result;
 //	}
 	
+		
 		// 빈 하트 버튼을 누르면 추천 
 		
 		public int likeUpdate(Board vo) {
@@ -368,8 +366,10 @@ public class BoardDAO {
 		}
 		
 
-		// 하트 버튼 아래에 추천수 
+		// 하트 버튼 아래에 추천수 찾기 
 		public int likeCount(Board vo) {
+			
+			
 			String sql ="select count(*) from likeboard where boardno = ?";
 			int count = 0;
 			
@@ -390,18 +390,11 @@ public class BoardDAO {
 				close();
 			}
 			
-			return count; 
+				return count; 
 			
 		}
 		
-
 		
-		
-		
-		// TODO: 베스트 게시물 상단 고정 
+		// 베스트 게시물 상단 고정 
 	
-
-
-
-
 }

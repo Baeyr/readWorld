@@ -53,14 +53,8 @@
 		<form action="<%=request.getContextPath() %>/login" method="POST">
 			<input type="text" placeholder="아이디" name="id" id="id">
 			<input type="password" placeholder="비밀번호" name="pwd" id="pwd"><br><br>
-			
-<%-- <a href = "<%=request.getContextPath() %>/member/searchId.jsp"><b>아이디 찾기</b></a>
-			<a href = "<%=request.getContextPath() %>/member/searchPw.jsp"><b>비밀번호 찾기</b></a> --%>
-			<a href="<%=request.getContextPath() %>/JoinGo" id="join">아직 회원이 아니신가요? &nbsp;</a><br>
-			<a href="<%=request.getContextPath() %>/member/searchIDPW.jsp" id="find">기억이 나지 않는다면 &nbsp;</a><br>
-			
-
-
+			<a href="JoinGo" id="join">아직 회원이 아니신가요? &nbsp;</a><br>
+			<a href="#" id="find">기억이 나지 않는다면 &nbsp;</a><br>
 			<!-- 로그인 버튼 -->
 			<div class="loginBtn">
 				<input type="submit" id="loginBtn" /> <i class="fas fa-play-circle fa-5x" id="loginIcon"></i>
