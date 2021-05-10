@@ -227,7 +227,7 @@
                     <tr>
                         <td class="labels">아이디</td>
                         <td>
-                            <input type = "text" name = "id" minlength = "4" maxlength = "20">
+                            <input type = "text" name = "id" minlength = "4" maxlength = "20" placeholder = "영문 대소문자+숫자조합">
                             <input class="btn" type = "button" value = "중복확인" onclick = "idCheck()">			
                         </td>
                     </tr>
@@ -235,7 +235,7 @@
                     <tr>
                         <td class="labels">비밀번호</td>
                         <td>
-                            <input type = "password" name = "password1" minlength = "4" maxlength = "20" placeholder = "영문자+숫자+특수문자조합">
+                            <input type = "password" name = "password1" minlength = "4" maxlength = "20" placeholder = "영문 대소문자+숫자+특수문자조합">
                             
                         </td>
                     </tr>
@@ -243,14 +243,14 @@
                     <tr>
                         <td class="labels">비밀번호 확인</td>
                         <td>
-                            <input type = "password" name = "password2" minlength = "4" maxlength = "20" placehplder = "다시 한번 입력해주세요">
+                            <input type = "password" name = "password2" minlength = "4" maxlength = "20" placeholder = "다시 한번 입력해주세요">
                         </td>
                     </tr>
                 
                     <tr>
                         <td class="labels">이메일</td>
                         <td>
-                            <input type = "text" name = "email" maxlength = "30"> @
+                            <input type = "text" name = "email" maxlength = "30" placeholder = "영문 대소문자+숫자조합"> @
                             <select name="email2">
                                 <option>naver.com</option>
                                 <option>daum.net</option>
@@ -335,8 +335,6 @@
                                 <label><input type = "checkbox" name = "chkBox" value="여행">여행</label>
                                 <label><input type = "checkbox" name = "chkBox" value="개인">개인</label>
                                 </td>
-                        </tr>
-                            </td>
                         </tr>
                 </table>
             </div>
