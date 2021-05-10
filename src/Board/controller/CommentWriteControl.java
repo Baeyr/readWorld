@@ -43,7 +43,7 @@ public class CommentWriteControl extends HttpServlet {
 			
 			int result=dao.commentWrite(co);
 			System.out.println(co);
-
+			
 			PrintWriter out  = response.getWriter();
 			if (result > 0) { 
 				out.println("<script>alert('등록')</script>");

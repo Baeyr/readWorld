@@ -42,7 +42,9 @@ public class BoardListControl extends HttpServlet {
 	}
 	
 	protected void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		
 		final int pageSize = 10 ; // 한 페이지당 게시글 수
 		final int pageBlock = 3;  // 화면에 나타날 페이지 링크 수
 		int cnt = 0 ;	// 총 글 개수

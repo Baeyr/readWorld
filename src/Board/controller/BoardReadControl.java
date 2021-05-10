@@ -48,7 +48,9 @@ public class BoardReadControl extends HttpServlet {
 	}
 
 	protected void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		
 		String boardno = request.getParameter("boardno");
 		
 		Board vo = new Board();
@@ -58,6 +60,8 @@ public class BoardReadControl extends HttpServlet {
 				if(vo!=null) {
 					vo.setBoardno(Integer.parseInt(boardno));
 					vo = dao.getBoard(vo);
+					dao.readCount(vo);
+					
 					if(vo!=null) {
 						
 						vo.setBoardcontent(replaceParam(vo.getBoardcontent()));

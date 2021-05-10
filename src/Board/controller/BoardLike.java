@@ -1,7 +1,9 @@
 package Board.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -10,8 +12,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import Board.DAO.BoardDAO;
 import Board.vo.Board;
+import Book.DAO.BookDAO;
+import Book.vo.Book;
 
 /**
  * Servlet implementation class BoardLikeUpdate
@@ -52,6 +59,7 @@ public class BoardLike extends HttpServlet {
 		vo.setBoardno(bordno);
 		
 		int result = 0 ;
+		String voResult = "";
 		
 		// 동일 게시물에 대한 추천 여부 검색
 		
@@ -80,7 +88,18 @@ public class BoardLike extends HttpServlet {
 			System.out.println("추천 기능 확인 바람");
 		}
 		
-			
+		
+
+		if(vo != null) {
+			Gson jobj = new GsonBuilder().create();
+			voResult = jobj.toJson(vo);
+		}
+		
+		PrintWriter out = response.getWriter();
+		out.println(result);
+		out.flush();
+		out.close();
+		
 
 ////		**** 로그인 연동 후 수정  *****
 //		// 게시물 번호와 id 값을 map에 저장

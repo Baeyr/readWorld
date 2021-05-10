@@ -66,7 +66,7 @@ public class MemberDAO {
 		int result2 = 0;
 		
 		
-		int maxNo = 0;
+		int maxNo = g.getGenre().size();
 		
 		String sql = "Insert into member values(?,?,?,?,?,?,?)";
 		

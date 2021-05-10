@@ -43,9 +43,13 @@ public class BookMainControl extends HttpServlet {
 	}
 	
 	protected void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		
 		HttpSession session = request.getSession();
 		Member member = new Member();
 		member = (Member) session.getAttribute("user");
+		
 		Genre genre = new Genre();
 		genre = (Genre) session.getAttribute("genre");
 		
@@ -63,12 +67,15 @@ public class BookMainControl extends HttpServlet {
 			//============================================
 			List<Book> userBook;
 			
-			if(genre == null) {
+			if(genre == null || genre.getGenre().size() <= 0) {
 				//베스트 셀러 책 5권 가져오기
 				userBook = dao.bookBestSellerList();
 			}else {
 				//유저 취향 책 가져오기
 				userBook = dao.bookUserList(genre);
+				if(userBook.size()<=0) {
+					userBook = dao.bookBestSellerList();
+				}
 			}
 			
 			//신간 5궈 가져오기

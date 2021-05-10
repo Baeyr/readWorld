@@ -204,13 +204,15 @@ public class BookDAO {
 		String sql1 ="";
 		List<String> genre = g.getGenre();
 		
-		if(g.getGenre() != null || g.getGenre().size()>0) {
+		if(g.getGenre() != null && g.getGenre().size()>0) {
+			System.out.println("사이즈 : " + g.getGenre().size());
 			int min = 0;
 			int size = genre.size()-1;
 			int random = (int)(Math.random()*(size - min +1)) + min;
 			
 			sql1 = "(select * from book where CategoryName like '%"+g.getGenre().get(random)+"%' order by siteRanks desc)";
 		}else {
+			System.out.println("사이즈 : " + g.getGenre().size());
 			sql1 = "(select * from book where CategoryName order by siteRanks desc)";
 		}
 		
@@ -287,6 +289,18 @@ public class BookDAO {
 			list = ListSave(sql2);
 			
 			return list;
+	}
+	
+	//로그인화면 노출 1개 가져오기
+	public List<Book> bookRandomOne(){
+		List<Book> list = null;
+		
+		String sql1 = "(select * from book where CategoryName like '%자기계발%' order by dbms_random.value)";
+		String sql2 = "select * from "+sql1+" where adult = 'false' and rownum<=1";
+		
+		list = ListSave(sql2);
+		
+		return list;
 	}
 	
 	

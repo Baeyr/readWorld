@@ -7,14 +7,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>읽기편한 세상</title>
-	<link href="mainCss.css?AA" rel="stylesheet" type = "text/css">
+	<link href="mainCss.css?ver=38" rel="stylesheet" type = "text/css">
 </head>
 <body>
 	<jsp:include page="Header.jsp"></jsp:include>
 	<div id="main_content">
         <section>
             <article id="main_article1">
-                <div id="bestseller">
+                <div id="bestseller" class="listM">
                     <table>
                         <caption><h2>맞춤 추천</h2></caption>
                         <c:forEach items="${userBook}" var="item">
@@ -31,7 +31,7 @@
                     </table>
                 </div>
     
-                <div id="newBook">
+                <div id="newBook" class="listM">
                     <table>
                         <caption><h2>추천 신간</h2></caption>
                         <c:forEach items="${newBook}" var="item">
@@ -48,7 +48,7 @@
                     </table>
                 </div>
     
-                <div id="rank">
+                <div id="rank" class="listM"> 
                     <table>
                         <caption><h2>최고의 별점</h2></caption>
                         <c:forEach items="${starBook}" var="item">

@@ -35,6 +35,7 @@ public class BoardWriteControl extends HttpServlet {
 	
 	// !!filepath 포함 확인부터!! 콘솔 삭제 예정
 	protected void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		BoardDAO dao=new BoardDAO();

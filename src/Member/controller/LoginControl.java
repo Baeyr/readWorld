@@ -2,6 +2,7 @@ package Member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import Book.DAO.BookDAO;
+import Book.vo.Book;
 import Member.DAO.MemberDAO;
 import Member.vo.Genre;
 import Member.vo.Member;
@@ -34,7 +37,12 @@ public class LoginControl extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("loginPage.jsp");
+		BookDAO dao = new BookDAO();
+		
+		List<Book> randomBookOne = dao.bookRandomOne();
+		System.out.println(randomBookOne);
+		request.setAttribute("randomBookOne", randomBookOne);
+		request.getRequestDispatcher("loginPage.jsp").forward(request, response);
 	}
 
 	/**
@@ -65,6 +73,7 @@ public class LoginControl extends HttpServlet {
 		} else {
 			System.out.println(genre.getGenre()+"취향");
 			out.println("<script>alert('로그인 성공!!')</script>");
+			session.setAttribute("logId",id); 
 			session.setAttribute("user", result);
 			session.setAttribute("genre", genre);
 			request.getRequestDispatcher("/main").forward(request, response);

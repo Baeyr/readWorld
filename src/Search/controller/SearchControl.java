@@ -36,6 +36,7 @@ public class SearchControl extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
+		
 		List<Book> list = new ArrayList<Book>();
 		List<Board> list1 = new ArrayList<Board>();
 		String search = request.getParameter("search");
@@ -48,7 +49,7 @@ public class SearchControl extends HttpServlet {
 			request.setAttribute("searchBook", list);
 			request.setAttribute("searchboard", list1);
 			request.setAttribute("result", "'" + search + "' 검색결과");
-			request.getRequestDispatcher("searchPage.jsp").forward(request, response);
+			request.getRequestDispatcher("/book/searchPage.jsp").forward(request, response);
 		}
 	}
 

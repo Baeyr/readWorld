@@ -114,7 +114,7 @@
 
 	<div class="searchWindow">
 		<img id="logo1" src="<%=request.getContextPath()%>/image/logo1.png">
-	<form id="searchF" action="<%=request.getContextPath()%>/search" method="post">
+	<form id="searchF" action="<%=request.getContextPath()%>/book/search" method="post">
 		<input type="text" id="search" name="search">
 		<button id="submit" type="submit"><img id="submitlodo" src="<%=request.getContextPath()%>/image/submitlodo.png"></button>
 	</form>

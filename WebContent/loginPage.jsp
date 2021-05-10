@@ -10,13 +10,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- **리셋/스타일/웹아이콘/폰트 경로 확인** -->
 <link rel="stylesheet" href="./reset.css">
-<link rel="stylesheet" href="./loginStyle.css">
+<link rel="stylesheet" href="./loginStyle.css?asd">
 <link rel="stylesheet"
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300&display=swap"
 	rel="stylesheet">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
 <body>
 	<!-- 이분할 왼쪽 -->
@@ -25,6 +26,7 @@
 		<div class="top">
 			<br>
 			<p class="intro">언제나 함께하는 도서관,</p>
+			
 			<br>
 			<p class="intro" id="intro">언제나 함께하는 읽기 편한</p>
 			<br>
@@ -33,8 +35,16 @@
 		<div class="recommend">
 			<div class='image-container'>
 				<ul class='slider-container'>
-					<li class='slide'><img src="image/p1.png"></li> 
-					<li class='slide'><img src="image/p2.png"></li>
+					<li class='slide slide1'>
+						<div>
+							<c:forEach items="${randomBookOne}" var="item">
+								<img class="bookimg" src="${item.cover}"/>
+								<p class="showBook1">지금 같이하면 읽을 수 있는 독서!</p>
+								<p class="showBook2">그 외에도 많은 책이 여러분을 기다립니다.</p>
+							</c:forEach>
+						</div>
+					</li> 
+					<li class='slide'><img class="bookimg2" src="image/p4.png"></li>
 					<li class='slide'><img src="image/p3.png"></li>
 				</ul>
 				<p class="pager"></p>

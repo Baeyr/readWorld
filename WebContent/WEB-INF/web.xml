@@ -10,7 +10,7 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
-	<!--<filter>
+	<!--  <filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>filter.FilterEncoding</filter-class>
 	</filter>
@@ -26,5 +26,5 @@
 	      <url-pattern>*.jpg</url-pattern>
 	      <url-pattern>*.md</url-pattern>
 	      <url-pattern>*.svg</url-pattern>
-	</filter-mapping> --> 
+	</filter-mapping> -->
 </web-app>

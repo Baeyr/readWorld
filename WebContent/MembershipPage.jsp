@@ -51,7 +51,7 @@
     		<li><a name="memberShipB" href="MemberShip.jsp"> 회원권 구매 </a></li>
     	</ul>
     </div>
-    
-    
+
+
 </body>
-</html>
+</html> 

@@ -50,6 +50,9 @@ public class BookCateControl extends HttpServlet {
 	}
 
 	protected void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		
 		BookDAO dao = new BookDAO();
 		String cate = request.getParameter("cate");
 		System.out.println(cate);

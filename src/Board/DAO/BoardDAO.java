@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import Board.vo.Board;
 import Board.vo.Comment;
@@ -143,7 +144,29 @@ public class BoardDAO {
 		}
 		return getvo;
 	}
+// 게시글 조회수 업데이트
 
+	public int readCount(Board vo) {
+				
+			int result = 0 ;
+			conn = JDBCTemplate.getConnection();
+				
+			int boardno = vo.getBoardno();
+				
+			String sql = "update board set boardplay = (boardplay + 1) where boardno = ?";
+				
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, boardno);
+				result = pstmt.executeUpdate();
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return result;
+				
+	}
 	// 코멘트 내용 불러오기
 	public List<Comment> getComment(Comment co) {
 		
@@ -183,7 +206,6 @@ public class BoardDAO {
 			close();
 		}
 
-		
 		return cmt;
 	}
 
@@ -194,7 +216,7 @@ public class BoardDAO {
 
 		conn = JDBCTemplate.getConnection();
 		
-		String sql="insert into board values(?,?,current_timestamp,?,?,0,0,?)"; //테이블명 확인
+		String sql="insert into board values(?,?,current_timestamp,?,?,0,0)"; //테이블명 확인
 		String sqlMaxNo="select nvl(max(boardno),0)+1 from board"; //테이블명 확인
 		pstmt=null; rs=null;
 
@@ -216,7 +238,6 @@ public class BoardDAO {
 				pstmt.setString(2, vo.getId());
 				pstmt.setString(3, vo.getBoardcontent());
 				pstmt.setString(4, vo.getBoardtitle());
-				pstmt.setString(5, vo.getBoardfile());
 				
 				result=pstmt.executeUpdate();
 			}
@@ -322,6 +343,7 @@ public class BoardDAO {
 			int result = 0 ;
 			
 			String sql = "insert into likeboard(boardno) values(?)";
+			String sql2 = "update board set BOARDCOUNT = (BOARDCOUNT+1) where boardno = ?";
 			
 			
 			try {
@@ -329,6 +351,16 @@ public class BoardDAO {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, vo.getBoardno());
 				result = pstmt.executeUpdate();
+			
+				JDBCTemplate.close(pstmt);
+				if(result == 1) {
+					
+					pstmt = conn.prepareStatement(sql2);
+					pstmt.setInt(1, vo.getBoardno());
+					result = pstmt.executeUpdate();
+				}else {
+					JDBCTemplate.rollback(conn);
+				}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -337,7 +369,6 @@ public class BoardDAO {
 			}
 			
 			return result ;
-			
 		}
 		
 		
@@ -348,12 +379,22 @@ public class BoardDAO {
 			int result = 0 ;
 			
 			String sql = "delete from likeboard where boardno = ?";
+			String sql2 = "update board set BOARDCOUNT = (BOARDCOUNT-1) where boardno = ?";
 			
 			try {
 				conn = JDBCTemplate.getConnection();
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, vo.getBoardno());
 				result = pstmt.executeUpdate();
+				
+				JDBCTemplate.close(pstmt);
+				if(result == 1) {
+					pstmt = conn.prepareStatement(sql2);
+					pstmt.setInt(1, vo.getBoardno());
+					result = pstmt.executeUpdate();
+				}else {
+					JDBCTemplate.rollback(conn);
+				}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
