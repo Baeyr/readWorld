@@ -103,7 +103,7 @@
     		<li><a class="menu" name="mainB" href="${pageContext.request.contextPath}/main">메인화면</a></li>
     		<li><a class="menu" name="genreB" href="${pageContext.request.contextPath}/BookCate">장르별</a></li>
     		<li><a class="menu" name="boardB" href="${pageContext.request.contextPath}/BoardList.do" >게시판</a></li>
-    		<li><a class="menu" name="memberShipB" href=""> 회원권 구매 </a></li>
+    		<li><a name="memberShipB" href="${pageContext.request.contextPath}/membership"> 회원권 구매 </a></li>
     	</ul>
     	
 	

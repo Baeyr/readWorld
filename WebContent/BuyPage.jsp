@@ -1,5 +1,15 @@
+<%@page import="Member.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%
+	Date nowTime = new Date();
+	SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM/dd");
+%>
+<%
+	Member vo = (Member)session.getAttribute("user");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +18,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>읽편한세상</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <style>
 .topnav {
     	overflow: hidden;
@@ -206,10 +217,14 @@
     .buyTitle {
     	font-weight: bold;
     	color: #400101;
-	}    
+	}
     .pay {
     	float: right;
     }
+    .won {
+    	float: right;
+    }
+	    
     .contentpay {
     	margin-top: 0px;
     }
@@ -217,6 +232,7 @@
     	border-top: 1px solid #ccc;
     	padding-top: 15px;
     	margin-bottom: 0px;
+
     }
     input[type='checkbox']{
     	 vertical-align: -2px;
@@ -266,19 +282,53 @@
 				}
 			}
 		}
+		
+		// 정기 구독 기간 설정
+		// 현재 시간
+		var now = new Date();
+		var date1 = moment(now).format('YYYY/MM/DD');
+		
+		// 회원권 클릭 시 회원권마다 정해진 기간 더해진 시간 
+		var subscription = new Date(now.setDate(now.getDate()+${mbs.membershipdate}));
+		var date2 = moment(subscription).format('YYYY/MM/DD');
+		
+		$("#date").html(date1+" ~ "+date2);
+		
+		// hidden에 담을 시간
+		$("userdate").val(date2);
+		
+		// 총 금액 계산
+		var money = $("#amounts").html();
+		var money1 = $("#discount").html();
+		console.log(money1);
+		$("#allAmounts").html(money+money1);
+		
+		
+		
 		// 결제버튼 클릭시 체크박스 선택 x 경고창 출력
+		$("#btn").click(function(){
+			var frm = document.getElementId("frm1");
+			if(all.checked == true){
+				frm.action = "<%=request.getContextPath()%>/purchase";
+				frm.method = "get";
+				frm.submit();
+			}else{
+				alert('약관에 동의해주세요.');
+			}
+		});
 		
 	});
 </script>
 </head>
 <body>
+ 	
 	<div class="topnav">
     	<img id="profile" src="<%=request.getContextPath()%>/image/profile.png">
     	<ul>
-    		<li><a name="mainB" href="Main.jsp">메인화면</a></li>
-    		<li><a name="genreB" href="">장르별</a></li>
-    		<li><a name="boardB" href="BookList.jsp" >게시판</a></li>
-    		<li><a name="memberShipB" href="MemberShip.jsp"> 회원권 구매 </a></li>
+    		<li><a name="mainB" href="${pageContext.request.contextPath}/main">메인화면</a></li>
+    		<li><a name="genreB" href="${pageContext.request.contextPath}/BookCate">장르별</a></li>
+    		<li><a name="boardB" href="${pageContext.request.contextPath}/BoardList.do">게시판</a></li>
+    		<li><a name="memberShipB" href="${pageContext.request.contextPath}/membership"> 회원권 구매 </a></li>
     	</ul>
     </div>
     <section>
@@ -288,14 +338,14 @@
     <div class="mainbody">
 	    <div class="content">
 	    	<p class="buyTitle">회원권 월 정기구독</p>
-	    	<p class="date"><span>구독기간</span><span> | </span><span>2021/05/06 ~ 2021/06/06</span></p>
+	    	<p class="date"><span>구독기간</span><span> | </span><span id="date"></span></p>
 	    </div>
 	    <div class="content2">
 	    	<p class="buyTitle">결제 금액</p>
 	    	<div class="payment">
-	    		<p class="contentpay">상품금액<span class="pay">9999</span></p>
-	    		<p>할인금액<span class="pay">9999</span></p>
-	    		<p class="allpay">총 결제금액<span class="pay">9999</span></p>
+	    		<p class="contentpay">상품금액<span class="won">원</span><span class="pay" id="amounts">${mbs.membershipprice }</span></p>
+	    		<p>할인금액<span class="won">원</span><span class="pay" id="discount">0</span></p>
+	    		<p class="allpay">총 결제금액<span class="won">원</span><span class="pay" id="allAmounts"></span></p>
 	    	</div>
 	    	<p class="buyTitle means">결제수단</p>
 	    	<div class="payment-option">
@@ -316,7 +366,7 @@
 	    <div class="content3">
 	    	<p class="buyTitle">결제정보 입력</p>
 	    	<p class="buydata">휴대폰 번호<span>*</span></p>
-	    	<input type="text" class="data">
+	    	<input type="text" class="data" value="<%= vo.getPhone()%>">;
 	    	<p class="buydata2"><span>연락받을 휴대폰번호를 작성해주세요</span></p>
 	    </div>
 	    <div class="content4">
@@ -331,8 +381,13 @@
 	    		<li>구독결제 갱신을 중단하고자 할 경우, 구독기간 종료 하루 전까지 구독을 해지하셔야 합니다.</li>
 	    	</ul>
 	    </div>
-	    <button type="button" class="btnBuy">결제하기</button>
+	    <form id="frm1">
+	    <input type="hidden" name="id" value="<%= vo.getId()%>">
+	    <input type="hidden" name="membershipno" value="${mbs.membershipno }">
+	    <input type="hidden" name="userdate" id="userdate">
+	    <button type="button" class="btnBuy" id="btn">결제하기</button>
+	    </form>
     </div>
     </section>
 </body>
-</html> 
+</html>

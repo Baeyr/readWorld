@@ -46,6 +46,7 @@ public class SeachDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			JDBCTemplate.close(rs);
 			JDBCTemplate.close(pstmt);
 			JDBCTemplate.close(conn);
 		}
@@ -81,6 +82,7 @@ public class SeachDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			JDBCTemplate.close(rs);
 			JDBCTemplate.close(pstmt);
 			JDBCTemplate.close(conn);
 		}
