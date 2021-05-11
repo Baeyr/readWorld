@@ -41,6 +41,9 @@ public class MemberJoinControl extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		
 		PrintWriter out = response.getWriter();
 		
 		String[] hobbyT = request.getParameterValues("chkBox");
