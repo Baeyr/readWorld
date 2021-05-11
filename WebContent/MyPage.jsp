@@ -12,7 +12,7 @@
 	
 	<h2>개인페이지  
 	<span style = "color : #400101; float:right;">
-	<a href = "./RentalticketTermination.jsp">대여권 해지</a>&nbsp;&nbsp;
+	<a href = "./RTermination">대여권 해지</a>&nbsp;&nbsp;
 	<a href = "./DeletePage">회원탈퇴</a></span></h2>
 	<hr>
 	

@@ -228,7 +228,6 @@
     	border-top: 1px solid #ccc;
     	padding-top: 15px;
     	margin-bottom: 0px;
-
     }
     input[type='checkbox']{
     	 vertical-align: -2px;

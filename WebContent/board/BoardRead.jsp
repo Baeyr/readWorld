@@ -9,7 +9,6 @@
 <%@include file="../Header.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="s"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <s:setDataSource url="jdbc:oracle:thin:@localhost:1521:xe"
 	driver="oracle.jdbc.driver.OracleDriver" user="ReadWorld"
 	password="1234" var="dt" scope="page" />
@@ -27,7 +26,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript"></script>
     <link rel="stylesheet" href="<%=request.getContextPath() %>/reset.css">
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/board/readStyle.css">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/board/readStyle.css?asd">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 </head>
 <body>
@@ -43,8 +42,7 @@
     </div>
     <div class="body">
         <div class="line">
-           
-		<div>
+ 	   		 <div>
             <table class="thead">
                 <tr>
                     <td class="lineNo1">${readboard.boardno}</td>
@@ -54,18 +52,17 @@
                     <td class="lineNo5">${readboard.boardplay}</td>
                 </tr>
             </table>
- 	    </div>
-	    	<form id="frm">
-	   
-            
+             </div>
+	 	    <form id="frm">
                 <div>
                     <table class="table1">
                         <tr>
                             <td class="post">
-                	        <input type="hidden" name="boardno" value="${readboard.boardno}"/>
-				<input type="hidden" id="loginId" value="<%= (String)request.getSession().getAttribute("logId")%>"/>            
-				<input type="hidden" name="boardfile" value="${readboard.boardfile }">
-                                <div class="p"><%=board.getBoardcontent()%></div>
+                				<input type="hidden" name="boardno" value="${readboard.boardno}"/>
+								<input type="hidden" name="boardId" id="loginId" value="<%= (String)request.getSession().getAttribute("logId")%>"/>            
+				    	        <input type="hidden" name="boardWriter" value="${readboard.id}"/> 
+				    	        <input type="hidden" name="boardfile" value="${readboard.boardfile }">
+                                <p class="p"><%=board.getBoardcontent()%></p>
                             </td>
                         </tr>
                         <tr>
@@ -78,8 +75,11 @@
                         <tr>
                             <td class="btns">
 							<!-- 게시글 작성자 id와 로그인한 id가 일치할 때만 수정, 삭제 버튼 보이도록 해야 됨 -->
-	                         <button type="button" class="bBtn mod" id="modB">수정하기</button>
-	                         <button type="button" class="bBtn del" id="delB">삭제하기</button>
+							<c:if test="${nowId eq readboard.id}">
+								<button type="button" class="bBtn mod" id="modB">수정하기</button>
+	                         	<button type="button" class="bBtn del" id="delB">삭제하기</button>
+							</c:if>
+	                         
                             </td>
                         </tr>
                     </table>
@@ -95,7 +95,7 @@
                             <td class="text">
                                 <textarea class="putCmt"></textarea>
                             </td>
-                            <td class="textBtn">
+                            <td class="btns textBtn">
                                 <button type="submit" class="bBtn" id="putCmt">입력하기</button>
                             </td>
                         </tr>
@@ -114,7 +114,8 @@
 								</td>
 							</tr>
 							<tr class="re">
-									<td><button type="button" class="srBtn reDel">답글</button>
+									<td class="btns"><button type="button" class="srBtn reDel">답글</button>
+									<input type="hidden" class="wrId" value="${i['id']}">								
 									<input type="hidden" class="cmtNo" value="${i['commentno']}">
 									<button type="button" class="smBtn reMod">수정</button></td>
 							</tr>
@@ -131,8 +132,9 @@
 									<p class="reCmt">${i['cmtcontent']}</p>
 								</td>
 							</tr>
-							<tr class="re">
-								<td><input type="hidden" class="cmtNo" value="${i['commentno']}">
+							<tr class="btns re">
+								<td><input type="hidden" class="wrId" value="${i['id']}">
+								<input type="hidden" class="cmtNo" value="${i['commentno']}">
 								<button type="button" class="smBtn reMod">수정</button></td>
 							</tr>
 						</table>
@@ -176,28 +178,37 @@
     			url:"boardLike.do", // 주소 확인
     			type:"POST",
     			data:{
-    				boardno : ${readboard.boardno }
+    				boardno : $('input[name=boardno]').val(),
+    				boardId : $('input[name=boardWriter]').val()
     			},
     			datatype:"json",
-    			success: function(){
-    				likeCount();
+    			success: function(result){
+    				if(result == 3){
+    					alert("본인이 작성한 글에는 추천할 수 없습니다.");
+    				}else{
+	    				likeCount();
+    				}
+    			},
+    			error:function(e){
+    				alert("에러");
     			}
     		})
     	});
     	
     	// 게시글 추천수
-    	
     	function likeCount(){
     		$.ajax({
     			url:"likeCount.do",	// 주소 확인 
         		type:"POST",
         		data:{
-        			boardno : ${readboard.boardno }
+        			boardno : $('input[name=boardno]').val()
         		},
         		datatype:"json",
         		success: function(count) {
         			$(".like_count").text(count);
-        		}
+        		},error: function (e) {
+                    alert("에러" + e);
+                }
     		})
     		
     	};

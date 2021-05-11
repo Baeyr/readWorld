@@ -32,10 +32,10 @@ public class BookDAO {
 		int result = 0;
 		String isbnV = "";
 		
-		String sql = "insert into book values(?,?,?,?,?,?,?,?,?,?,?,0)"; //책정보 insert sql
+		String sql = "insert into book values(?,?,?,?,?,?,?,?,?,?,?,0,0)"; //책정보 insert sql
 		String ibsnSearch = "select * from book where isbn=?"; //이미등록되어 있는 경우를 서치
 		
-		for(int i=1;i<=1;i++) {
+		for(int i=10;i<=13;i++) {
 
 			//api 값 불러오기
 			String key = "ttbripel10180824001";

@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<jsp:include page="Header.jsp"></jsp:include>
 	<br><br><br>
 	<style>
 		#d1{
@@ -65,10 +66,18 @@
 		function searchId() {
 			var name = document.getElementById("name").value;
 			var email = document.getElementById("email").value;
-			if(name == "" && email == "") {
-			alert("모든 정보를 입력해주세요.");
-				return;
+			//if(name == "" && email == "") {
+			//alert("모든 정보를 입력해주세요.");
+			//	return;
+			//}
+			if(name == "") {
+			alert("이름을 입력해주세요.");
+				return false;
 			}
+			if(email == "") {
+				alert("이메일을 입력해주세요.");
+					return false;
+				}
 			
 			var url = "<%=request.getContextPath()%>/SearchId";  //서블릿 요청url
 			var title = "searchId" // 윈도우 창 이름
@@ -87,11 +96,20 @@
 		function searchPw() {
 			var id2 = document.getElementById("id2").value;
 			var email2 = document.getElementById("email2").value;
-			if(id2 == "" && email2 =="") {
-				alert("모든 정보를 입력 해주세요.");
-				return;
+			//if(id2 == "" && email2 =="") {
+			//	alert("모든 정보를 입력 해주세요.");
+			//	return;
+			// }
+			
+			if(id2 == "" ) {
+				alert("아이디를 입력 해주세요.");
+				return false;
 			}
 			
+			if(email2 == "" ) {
+				alert("이메일을 입력 해주세요.");
+				return false;
+			}
 			var url = "<%=request.getContextPath()%>/SearchPw"; //서블릿요청url
 			var title = "searchPw"; // 윈도우 창이름
 			var status = "left=500px, top=100px, width=800px, height=500px, menubar-no, status=no, scrollbar=yes";
@@ -110,7 +128,7 @@
 	
 	<footer>	
 	<div id = "d1">
-		<a href = "../loginPage.jsp"><b>로그인 화면으로 돌아가기</b></a>
+		<a href = "<%=request.getContextPath() %>/login"><b>로그인 화면으로 돌아가기</b></a>
 	</div>	
 	</footer>
 </body>

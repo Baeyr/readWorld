@@ -12,12 +12,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
 import Board.DAO.BoardDAO;
 import Board.vo.Board;
 import Board.vo.Comment;
+import Member.vo.Member;
 
 /**
  * Servlet implementation class BoardReadControl
@@ -51,6 +53,10 @@ public class BoardReadControl extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
+		HttpSession session = request.getSession();
+		Member member = new Member();
+		member = (Member) session.getAttribute("user");
+		
 		String boardno = request.getParameter("boardno");
 		
 		Board vo = new Board();
@@ -66,8 +72,9 @@ public class BoardReadControl extends HttpServlet {
 						
 						vo.setBoardcontent(replaceParam(vo.getBoardcontent()));
 						vo.setBoardtitle(replaceParam(vo.getBoardtitle()));
-						
+
 						request.setAttribute("readboard", vo);
+						request.setAttribute("nowId", member.getId());
 					}
 					// TODO: 게시글 읽기 jsp로 이동 
 					request.getRequestDispatcher("/CommentReadControl").forward(request, response); 

@@ -1,4 +1,3 @@
-<%@page import="Member.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -114,7 +113,9 @@
 	});
 </script>
     <div class="topnav">
-    	<img id="profile" src="<%=request.getContextPath()%>/image/profile.png">
+    	<a href="${pageContext.request.contextPath}/MyPage" id="profile">
+	    	<img  src="<%=request.getContextPath()%>/image/profile.png">
+    	</a>
     	<ul>
     		<li><a class="menu" name="mainB" href="${pageContext.request.contextPath}/main">메인화면</a></li>
     		<li><a class="menu" name="genreB" href="${pageContext.request.contextPath}/BookCate">장르별</a></li>

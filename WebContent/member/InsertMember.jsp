@@ -243,7 +243,7 @@
                     <tr>
                         <td class="labels">비밀번호 확인</td>
                         <td>
-                            <input type = "password" name = "password2" minlength = "4" maxlength = "20" placeholder = "다시 한번 입력해주세요">
+                        	<input type = "password" name = "password2" minlength = "4" maxlength = "20" placeholder = "다시 한번 입력해주세요">
                         </td>
                     </tr>
                 
@@ -335,6 +335,8 @@
                                 <label><input type = "checkbox" name = "chkBox" value="여행">여행</label>
                                 <label><input type = "checkbox" name = "chkBox" value="개인">개인</label>
                                 </td>
+                        </tr>
+                            </td>
                         </tr>
                 </table>
             </div>

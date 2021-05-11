@@ -15,7 +15,7 @@
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
-	href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300&display=swap"
+	href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:.wght@300&display=swap"
 	rel="stylesheet">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
@@ -64,7 +64,7 @@
 			<input type="text" placeholder="아이디" name="id" id="id">
 			<input type="password" placeholder="비밀번호" name="pwd" id="pwd"><br><br>
 			<a href="JoinGo" id="join">아직 회원이 아니신가요? &nbsp;</a><br>
-			<a href="<%=request.getContextPath() %>/SearchIDPW" id="find">기억이 나지 않는다면 &nbsp;</a><br>
+			<a href="<%=request.getContextPath() %>/member/searchIDPW.jsp" id="find">기억이 나지 않는다면 &nbsp;</a><br>
 			<!-- 로그인 버튼 -->
 			<div class="loginBtn">
 				<input type="submit" id="loginBtn" /> <i class="fas fa-play-circle fa-5x" id="loginIcon"></i>

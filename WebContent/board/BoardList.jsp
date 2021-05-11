@@ -52,6 +52,7 @@
                         <td class="tableCon rank">${bl.boardcount}</td>
                     </tr>
 				
+				
 				</c:forEach>
 			</c:if>
                 </table>

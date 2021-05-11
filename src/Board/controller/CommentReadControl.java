@@ -42,6 +42,8 @@ public class CommentReadControl extends HttpServlet {
 		Board vo=(Board)request.getAttribute("readboard");
 		BoardDAO dao=new BoardDAO();
 		
+		HttpSession session=request.getSession();
+		System.out.println("아이디!!"+session.getAttribute("logId"));
 			cmt.setBoardno(vo.getBoardno());
 			co=dao.getComment(cmt);
 			

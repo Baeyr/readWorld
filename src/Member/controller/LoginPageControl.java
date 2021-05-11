@@ -1,4 +1,4 @@
-package MemberShip.controller;
+package Member.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MemberShipPageFrmCtrl
+ * Servlet implementation class LoginPage
  */
-@WebServlet("/membership")
-public class MemberShipPageFrmCtrl extends HttpServlet {
+@WebServlet({ "/LoginPage", "/" })
+public class LoginPageControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberShipPageFrmCtrl() {
+    public LoginPageControl() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,14 +26,13 @@ public class MemberShipPageFrmCtrl extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("MembershipPage.jsp").forward(request, response);
+		request.getRequestDispatcher("/loginPage.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

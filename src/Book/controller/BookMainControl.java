@@ -54,7 +54,7 @@ public class BookMainControl extends HttpServlet {
 		genre = (Genre) session.getAttribute("genre");
 		
 		//TODO 테스트 완료후 주석 해제 후 else 안에 넣기
-//		if(vo != null) {
+//		if(vo == null) {
 //			request.getRequestDispatcher("/login").forward(request, response);
 //		}
 //		else {}
