@@ -32,7 +32,9 @@
     #profile {
     	float:right;
     	width: 50px;
-    	padding-top: 10px;
+    	padding-top: 2px;
+    	padding-bottom: 10px;
+    	margin-right: 8px;
     }
     
      #searchF {
