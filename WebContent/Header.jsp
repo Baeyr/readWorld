@@ -1,6 +1,7 @@
+<%@page import="Member.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
     <style>
     
     .topnav {
@@ -92,18 +93,33 @@
     	height: 45px;
 		
     }
-    
+    #mbsUser {
+    	cursor: pointer;
+    }
     
     </style>
     
-	
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	$(function(){
+			$("#mbsUser").click(function(e){
+				var dd = ${user.membership};
+				if(dd == 0){
+					location.href='${pageContext.request.contextPath}/membership';
+				}else{
+					e.preventDefault();
+					alert('이미 회원권을 소유하고 있습니다.');
+				}
+			});
+	});
+</script>
     <div class="topnav">
     	<img id="profile" src="<%=request.getContextPath()%>/image/profile.png">
     	<ul>
     		<li><a class="menu" name="mainB" href="${pageContext.request.contextPath}/main">메인화면</a></li>
     		<li><a class="menu" name="genreB" href="${pageContext.request.contextPath}/BookCate">장르별</a></li>
     		<li><a class="menu" name="boardB" href="${pageContext.request.contextPath}/BoardList.do" >게시판</a></li>
-    		<li><a name="memberShipB" href="${pageContext.request.contextPath}/membership"> 회원권 구매 </a></li>
+    		<li><a class="menu" id="mbsUser" name="memberShipB"> 회원권 구매 </a></li>
     	</ul>
     	
 	
@@ -116,7 +132,7 @@
 		</a>
 	<form id="searchF" action="${pageContext.request.contextPath}/search" method="get">
 		<input type="text" id="search" name="search">
-		<button id="submit" type="submit"><img id="submitlodo" src="<%=request.getContextPath()%>/image/submitlodo.png"></button>
+		<button class="menu" id="submit" type="submit"><img id="submitlodo" src="<%=request.getContextPath()%>/image/submitlodo.png"></button>
 	</form>
 	</div>
 

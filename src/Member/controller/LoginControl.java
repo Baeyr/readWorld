@@ -72,11 +72,12 @@ public class LoginControl extends HttpServlet {
 			out.println("<script>alert('아이디 또는 비밀번호를 확인해주세요'); history.back()</script>");
 		} else {
 			System.out.println(genre.getGenre()+"취향");
+			System.out.println(result.getMembership());
 			out.println("<script>alert('로그인 성공!!')</script>");
 			session.setAttribute("logId",id); 
 			session.setAttribute("user", result);
 			session.setAttribute("genre", genre);
-			request.getRequestDispatcher("/main").forward(request, response);
+			response.sendRedirect("./main");
 		}
 	}
 

@@ -81,7 +81,7 @@ public class MemberJoinControl extends HttpServlet {
 		
 		if(result>0 && result2>0) {
 			out.println("<script>alert('회원가입 성공!!');</script>");
-			out.println("<script>location.href='loginPage.jsp';</script>");
+			out.println("<script>location.href='./ReadWorld';</script>");
 		} else {
 			out.println("<script>alert(회원가입 실패!!');</script>");
 			out.println("<script>history.back();</script>");

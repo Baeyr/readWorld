@@ -147,6 +147,7 @@ public class MemberDAO {
 					resultVo.setName(rs.getString("name"));
 					resultVo.setPhone(rs.getInt("phone"));
 					resultVo.setEmail(rs.getString("email"));
+					resultVo.setMembership(rs.getInt("membership"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

@@ -3,8 +3,6 @@
     
     <style>
     
-    
-    
     .topnav {
     	overflow: hidden;
     	background-color: #1C4025;

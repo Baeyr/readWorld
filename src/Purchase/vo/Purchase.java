@@ -1,4 +1,4 @@
-package MemberShip.vo;
+package Purchase.vo;
 
 import java.sql.Date;
 
@@ -6,7 +6,8 @@ public class Purchase {
 	private int buyno;
 	private String id;
 	private int membershipno;
-	private Date userdate;
+	private Date beforedate;
+	private Date afterdate;
 	
 	public int getBuyno() {
 		return buyno;
@@ -26,17 +27,23 @@ public class Purchase {
 	public void setMembershipno(int membershipno) {
 		this.membershipno = membershipno;
 	}
-	public Date getUserdate() {
-		return userdate;
+	public Date getBeforedate() {
+		return beforedate;
 	}
-	public void setUserdate(Date userdate) {
-		this.userdate = userdate;
+	public void setBeforedate(Date beforedate) {
+		this.beforedate = beforedate;
+	}
+	public Date getAfterdate() {
+		return afterdate;
+	}
+	public void setAfterdate(Date afterdate) {
+		this.afterdate = afterdate;
 	}
 	
 	@Override
 	public String toString() {
-		return "Purchase [buyno=" + buyno + ", id=" + id + ", membershipno=" + membershipno + ", userdate=" + userdate
-				+ "]";
+		return "Purchase [buyno=" + buyno + ", id=" + id + ", membershipno=" + membershipno + ", beforedate="
+				+ beforedate + ", afterdate=" + afterdate + "]";
 	}
 	
 }

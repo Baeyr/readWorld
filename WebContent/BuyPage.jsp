@@ -4,10 +4,6 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%
-	Date nowTime = new Date();
-	SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM/dd");
-%>
-<%
 	Member vo = (Member)session.getAttribute("user");
 %>
 <!DOCTYPE html>
@@ -286,34 +282,50 @@
 		// 정기 구독 기간 설정
 		// 현재 시간
 		var now = new Date();
-		var date1 = moment(now).format('YYYY/MM/DD');
+		var date1 = moment(now).format('YYYY-MM-DD');
 		
 		// 회원권 클릭 시 회원권마다 정해진 기간 더해진 시간 
 		var subscription = new Date(now.setDate(now.getDate()+${mbs.membershipdate}));
-		var date2 = moment(subscription).format('YYYY/MM/DD');
+		var date2 = moment(subscription).format('YYYY-MM-DD');
 		
 		$("#date").html(date1+" ~ "+date2);
 		
 		// hidden에 담을 시간
-		$("userdate").val(date2);
+		$("#beforedate").val(date1); // 회원권 구매 날짜
+		$("#afterdate").val(date2); // 회원권 끝나는 날짜
 		
 		// 총 금액 계산
 		var money = $("#amounts").html();
 		var money1 = $("#discount").html();
-		console.log(money1);
-		$("#allAmounts").html(money+money1);
+		var allmoney = parseInt(money)+parseInt(money1);
+		$("#allAmounts").html(allmoney);
 		
 		
 		
 		// 결제버튼 클릭시 체크박스 선택 x 경고창 출력
 		$("#btn").click(function(){
-			var frm = document.getElementId("frm1");
+			var frm = document.getElementById("frm1");
+			var radios = document.getElementsByName("way");
+			var chk = false;
+			var chk1 = false;
 			if(all.checked == true){
+				chk = true;
+			}else{
+				chk = false;
+			}
+			for(var i =0; i<radios.length; i++){
+				if(radios[i].checked == true){
+					chk1 = true;
+				} else {
+					chk2 = false;
+				}	
+			}
+			if(chk&&chk1){
 				frm.action = "<%=request.getContextPath()%>/purchase";
-				frm.method = "get";
+				frm.method = "post";
 				frm.submit();
 			}else{
-				alert('약관에 동의해주세요.');
+				alert('약관동의에 선택이 안되어있거나 결제수단이 선택되지않았습니다.');
 			}
 		});
 		
@@ -366,8 +378,8 @@
 	    <div class="content3">
 	    	<p class="buyTitle">결제정보 입력</p>
 	    	<p class="buydata">휴대폰 번호<span>*</span></p>
-	    	<input type="text" class="data" value="<%= vo.getPhone()%>">;
-	    	<p class="buydata2"><span>연락받을 휴대폰번호를 작성해주세요</span></p>
+	    	<input type="text" class="data" value="<%= vo.getPhone()%>">
+	    	<p class="buydata2"><span>등록된 휴대폰번호가 맞는지 확인해주세요. </span></p>
 	    </div>
 	    <div class="content4">
 	    	<p><input type="checkbox" id="clauseAll" class="clause"><label for="clauseAll">전체 약관 동의하기</label></p>
@@ -377,14 +389,15 @@
 	    	<ul class="warning">
 	    		<li>구독결제는 구독기간 마지막 날 결제되며, 결제 후 구독기간은 자동 갱신됩니다.</li>
 	    		<li>구독결제 갱신을 중단하고자 할 경우, 구독기간 종료 하루 전까지 구독을 해지하셔야 합니다.</li>
-	    		<li>구독결제 갱신을 중단하고자 할 경우, 구독기간 종료 하루 전까지 구독을 해지하셔야 합니다.</li>
-	    		<li>구독결제 갱신을 중단하고자 할 경우, 구독기간 종료 하루 전까지 구독을 해지하셔야 합니다.</li>
+	    		<li>개인정보는 가입하신 동안에만 저장 되어 있으며 탈퇴 시 삭제 처리 됩니다.</li>
+	    		<li>구독기간 내 하루라도 회원권을 사용하셨다면 환불처리가 되지 않습니다</li>
 	    	</ul>
 	    </div>
 	    <form id="frm1">
 	    <input type="hidden" name="id" value="<%= vo.getId()%>">
 	    <input type="hidden" name="membershipno" value="${mbs.membershipno }">
-	    <input type="hidden" name="userdate" id="userdate">
+	    <input type="hidden" name="beforedate" id="beforedate">
+	    <input type="hidden" name="afterdate" id="afterdate">
 	    <button type="button" class="btnBuy" id="btn">결제하기</button>
 	    </form>
     </div>
