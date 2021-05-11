@@ -3,6 +3,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+	<style>
+		#id{
+			position : relative;
+			float : right;
+		}
+	</style>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -11,6 +17,9 @@
 </head>
 <body>
 	<jsp:include page="Header.jsp"></jsp:include>
+	<aside>
+	<button type = "button" id ="id" onclick = "location.href ='./MyPage'"><h2>마이페이지</h2></button>
+	</aside>
 	<div id="main_content">
         <section>
             <article id="main_article1">
