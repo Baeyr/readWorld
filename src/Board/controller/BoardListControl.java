@@ -8,9 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Board.DAO.BoardDAO;
 import Board.vo.Board;
+import Member.vo.Member;
 
 /**
  * Servlet implementation class BoardListControl
@@ -44,6 +46,15 @@ public class BoardListControl extends HttpServlet {
 	protected void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
+		
+		HttpSession session = request.getSession();
+		Member member = new Member();
+		member = (Member) session.getAttribute("user");
+		
+//		if(member == null) {
+//			request.getRequestDispatcher("/login").forward(request, response);
+//		}
+		
 		
 		final int pageSize = 10 ; // 한 페이지당 게시글 수
 		final int pageBlock = 3;  // 화면에 나타날 페이지 링크 수

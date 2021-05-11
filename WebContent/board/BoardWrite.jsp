@@ -11,8 +11,9 @@
 <title>읽편한세상</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="/SEMI/board/BoardStyle.css?ver=1">
-<script type="text/javascript" src="/SEMI/ckeditor/ckeditor.js?ver=1"></script>
-<script type="text/javascript" src="/SEMI/ckeditor/config.js?ver=1"></script>
+<script type="text/javascript" src="/SEMI/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/SEMI/ckeditor/config.js"></script>
+
 </head>
 <body>
 <jsp:include page="../Header.jsp"></jsp:include>
@@ -26,10 +27,11 @@
     <div class="body">
     
     
-    <!-- 게시글을 새로 쓰는 경우 -->
-    <c:if test="${empty modvo.boardno }">
-       <form action="<%=request.getContextPath()%>/boardWrite" method="post" enctype="multipart/form-data" class="form">
+   <!-- 새로운 게시글 작성하는 경우 -->
+    <c:if test="${empty modvo }">
+       <form action="<%=request.getContextPath()%>/boardWrite.do" method="post" enctype="multipart/form-data" class="form">
     	<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+	    <input type="hidden" name="modiCheck" value="notmodify">	    
 	    <table class="board">
 	        <tr>
 	            <td><input type="text" name="BoardTitle" placeholder="제목"></td>
@@ -38,10 +40,12 @@
 	            <td>
 	            <textarea name="BoardContent" id="BoardContent" cols="71" rows="30" placeholder="내용을 입력하세요"></textarea>
 	            <script type="text/javascript">
-					 CKEDITOR.replace('BoardContent'
-	                , {height: 500                                                  
+					 CKEDITOR.replace('BoardContent', {
+						 height: 500,
+					 	 filebrowserUploadUrl: '${pageContext.request.contextPath }/img'
 	                 });
 				</script>
+				
 	            </td>
 	        </tr>
 	        <tr>
@@ -57,21 +61,23 @@
     </form>
     </c:if>
     
-    <!-- 게시글을 수정하는 경우 -->
-    <c:if test="${not empty modvo.boardno and modvo.boardno ne''}">
+    <!-- 존재하는 게시글을 수정하는 경우 -->
+    <c:if test="${not empty modvo }">
     
-          <form action="<%=request.getContextPath()%>/boardWrite" method="post" enctype="multipart/form-data" class="form">
+          <form action="<%=request.getContextPath()%>/boardWrite.do" method="post" enctype="multipart/form-data" class="form">
     	<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
-	    <table class="board">
+    	<input type="hidden" name="boardno" value="${modvo.boardno }">
+    	<input type="hidden" name="modiCheck" value="modify">	   
+	 <table class="board">
 	        <tr>
 	            <td><input type="text" name="BoardTitle" value="${modvo.boardtitle }"></td>
 	        </tr>
 	        <tr>
 	            <td>
-	            <textarea name="BoardContent" id="BoardContent" cols="71" rows="30" value="${modvo.boardcontent }"></textarea>
+	            <textarea name="BoardContent" id="BoardContent" cols="71" rows="30">${modvo.boardcontent }</textarea>
 	            <script type="text/javascript">
 					 CKEDITOR.replace('BoardContent'
-	                , {height: 500                                                  
+	                , {height: 500,filebrowserUploadUrl: '${pageContext.request.contextPath }/img'                                                 
 	                 });
 				</script>
 	            </td>
@@ -92,7 +98,6 @@
     
  
     </div>
-    
     <script>
     	// 파일 선택 해오면 파일명 이름으로 바뀌는 이벤트
    		$("#file").on('change',function(){

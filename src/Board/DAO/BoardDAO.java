@@ -216,7 +216,7 @@ public class BoardDAO {
 
 		conn = JDBCTemplate.getConnection();
 		
-		String sql="insert into board values(?,?,current_timestamp,?,?,0,0)"; //테이블명 확인
+		String sql="insert into board values(?,?,current_timestamp,?,?,0,0,?)" ; //테이블명 확인
 		String sqlMaxNo="select nvl(max(boardno),0)+1 from board"; //테이블명 확인
 		pstmt=null; rs=null;
 
@@ -238,7 +238,7 @@ public class BoardDAO {
 				pstmt.setString(2, vo.getId());
 				pstmt.setString(3, vo.getBoardcontent());
 				pstmt.setString(4, vo.getBoardtitle());
-				
+				pstmt.setString(5, vo.getBoardfile());
 				result=pstmt.executeUpdate();
 			}
 		}catch (SQLException e) {
@@ -297,20 +297,22 @@ public class BoardDAO {
 	// TODO 
 	// 게시글 추천 여부 검사
 	
-	public int likeCheck(Board vo) {
+	public int likeCheck(Board vo,String id) {
 		
 		int result = 0 ;
 		
-		String sql ="select count(*) from likeboard where boardno = ?";
+		String sql ="select * from likeboard where boardno = ? and id = ?";
 		
 		try {
 			conn = JDBCTemplate.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, vo.getBoardno());
+			pstmt.setString(2, id);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				result = rs.getInt(1) ;
+				System.out.println("이미추천함~");
+				result = 1;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -338,11 +340,11 @@ public class BoardDAO {
 		
 		// 빈 하트 버튼을 누르면 추천 
 		
-		public int likeUpdate(Board vo) {
+		public int likeUpdate(Board vo,String id) {
 			
 			int result = 0 ;
 			
-			String sql = "insert into likeboard(boardno) values(?)";
+			String sql = "insert into likeboard values(?,?)";
 			String sql2 = "update board set BOARDCOUNT = (BOARDCOUNT+1) where boardno = ?";
 			
 			
@@ -350,11 +352,11 @@ public class BoardDAO {
 				conn = JDBCTemplate.getConnection();
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, vo.getBoardno());
+				pstmt.setString(2, id);
 				result = pstmt.executeUpdate();
 			
 				JDBCTemplate.close(pstmt);
 				if(result == 1) {
-					
 					pstmt = conn.prepareStatement(sql2);
 					pstmt.setInt(1, vo.getBoardno());
 					result = pstmt.executeUpdate();
@@ -373,18 +375,18 @@ public class BoardDAO {
 		
 		
 		// 빨간 하트 버튼을 누르면 추천 취소
-		
-		public int likeDelete(Board vo) {
+		public int likeDelete(Board vo,String id) {
 			
 			int result = 0 ;
 			
-			String sql = "delete from likeboard where boardno = ?";
+			String sql = "delete from likeboard where boardno = ? and id = ?";
 			String sql2 = "update board set BOARDCOUNT = (BOARDCOUNT-1) where boardno = ?";
 			
 			try {
 				conn = JDBCTemplate.getConnection();
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, vo.getBoardno());
+				pstmt.setString(2,id);
 				result = pstmt.executeUpdate();
 				
 				JDBCTemplate.close(pstmt);

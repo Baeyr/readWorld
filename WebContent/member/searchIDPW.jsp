@@ -110,7 +110,6 @@
 				alert("이메일을 입력 해주세요.");
 				return false;
 			}
-
 			var url = "<%=request.getContextPath()%>/SearchPw"; //서블릿요청url
 			var title = "searchPw"; // 윈도우 창이름
 			var status = "left=500px, top=100px, width=800px, height=500px, menubar-no, status=no, scrollbar=yes";

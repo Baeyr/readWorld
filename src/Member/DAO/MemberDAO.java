@@ -15,12 +15,11 @@ public class MemberDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private Connection conn = JDBCTemplate.getConnection();
+	
 	private static MemberDAO dao = new MemberDAO();
-
 	public static MemberDAO getInstance() {
 		return dao;			
-		}
-	
+	}
 	//회원가입
 	public int generInsert(String id,Genre g,int i) {
 		int result = 0;
@@ -101,6 +100,115 @@ public class MemberDAO {
 		return result;
 	}
 	
+	// 회원 탈퇴
+		public int deleteId(String id, String pwd) {
+			int result = 0;
+			String dbpw = "";
+			try {
+				conn = JDBCTemplate.getConnection();
+				String sql = "select pwd from member where id = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					dbpw = rs.getString("pwd");
+					if (dbpw.equals(pwd)) {
+						try {
+							rs.close();
+						} catch (SQLException s) {
+							s.printStackTrace();
+						}
+						try {
+							pstmt.close();
+						} catch (SQLException s) {
+							s.printStackTrace();
+						}
+						String delsql = "delete from member where id = ?";
+						pstmt = conn.prepareStatement(delsql);
+						pstmt.setString(1, id);
+						result = pstmt.executeUpdate();
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					rs.close();
+				} catch (SQLException s) {
+					s.printStackTrace();
+				}
+				try {
+					pstmt.close();
+				} catch (SQLException s) {
+					s.printStackTrace();
+				}
+				try {
+					conn.close();
+				} catch (SQLException s) {
+					s.printStackTrace();
+				}
+			}
+			return result;
+		}
+
+		// 대여권 해지
+		public int TicketTermination(String id, String pwd) {
+			int result = 0;
+			String dbpw = "";
+			try {
+				conn = JDBCTemplate.getConnection();
+				String sql = "select pwd from member where id=?"; // 채우기
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					dbpw = rs.getString("pwd");
+					if (dbpw.equals(pwd)) {
+						try {
+							rs.close();
+						} catch (SQLException s) {
+							s.printStackTrace();
+						}
+						try {
+							pstmt.close();
+						} catch (SQLException s) {
+							s.printStackTrace();
+						}
+						String Tersql = "update member set membership = 0 where id = ?";
+						pstmt = conn.prepareStatement(Tersql);
+						pstmt.setString(1, id);
+						result = pstmt.executeUpdate();
+						// update 실패 한 경우. result : 0
+						// update 성공 한 경우. result : 1
+					} else {
+						System.out.println("pwd 틀렸음");	// result : 0			
+					}
+				} else  {
+					System.out.println("id가 없음");  // result : 0
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					rs.close();
+				} catch (SQLException s) {
+					s.printStackTrace();
+				}
+				try {
+					pstmt.close();
+				} catch (SQLException s) {
+					s.printStackTrace();
+				}
+				try {
+					conn.close();
+				} catch (SQLException s) {
+					s.printStackTrace();
+				}
+			}
+			return result;
+		}
+		
 	// 로그인
 	public Genre getGenre(String id) {
 		Genre genre = new Genre();
@@ -256,117 +364,5 @@ public class MemberDAO {
 		}
 		
 		return m;
-
-	}
-
-	// 회원 탈퇴
-	public int deleteId(String id, String pwd) {
-		int result = 0;
-		String dbpw = "";
-		try {
-			conn = JDBCTemplate.getConnection();
-			String sql = "select pwd from member where id = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				dbpw = rs.getString("pwd");
-				if (dbpw.equals(pwd)) {
-					try {
-						rs.close();
-					} catch (SQLException s) {
-						s.printStackTrace();
-					}
-					try {
-						pstmt.close();
-					} catch (SQLException s) {
-						s.printStackTrace();
-					}
-					String delsql = "delete from member where id = ?";
-					pstmt = conn.prepareStatement(delsql);
-					pstmt.setString(1, id);
-					result = pstmt.executeUpdate();
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-			} catch (SQLException s) {
-				s.printStackTrace();
-			}
-			try {
-				pstmt.close();
-			} catch (SQLException s) {
-				s.printStackTrace();
-			}
-			try {
-				conn.close();
-			} catch (SQLException s) {
-				s.printStackTrace();
-			}
 		}
-		return result;
-	}
-
-	// 대여권 해지
-	public int TicketTermination(String id, String pwd) {
-		int result = 0;
-		String dbpw = "";
-		try {
-			conn = JDBCTemplate.getConnection();
-			String sql = "select pwd from member where id=?"; // 채우기
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				dbpw = rs.getString("pwd");
-				if (dbpw.equals(pwd)) {
-					try {
-						rs.close();
-					} catch (SQLException s) {
-						s.printStackTrace();
-					}
-					try {
-						pstmt.close();
-					} catch (SQLException s) {
-						s.printStackTrace();
-					}
-					String Tersql = "update member set membership = 0 where id = ?";
-					pstmt = conn.prepareStatement(Tersql);
-					pstmt.setString(1, id);
-					result = pstmt.executeUpdate();
-					// update 실패 한 경우. result : 0
-					// update 성공 한 경우. result : 1
-				} else {
-					System.out.println("pwd 틀렸음");	// result : 0			
-				}
-			} else  {
-				System.out.println("id가 없음");  // result : 0
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-			} catch (SQLException s) {
-				s.printStackTrace();
-			}
-			try {
-				pstmt.close();
-			} catch (SQLException s) {
-				s.printStackTrace();
-			}
-			try {
-				conn.close();
-			} catch (SQLException s) {
-				s.printStackTrace();
-			}
-		}
-		return result;
-	}
-	
-	
 }

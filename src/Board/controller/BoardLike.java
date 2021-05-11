@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,6 +20,7 @@ import Board.DAO.BoardDAO;
 import Board.vo.Board;
 import Book.DAO.BookDAO;
 import Book.vo.Book;
+import Member.vo.Member;
 
 /**
  * Servlet implementation class BoardLikeUpdate
@@ -52,18 +54,54 @@ public class BoardLike extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json;charset=UTF-8");
 		
+		HttpSession session = request.getSession();
+		Member member = new Member();
+		member = (Member) session.getAttribute("user");
+		
+		PrintWriter out = response.getWriter();
+		
 		Board vo = new Board();
 		BoardDAO dao = new BoardDAO();
 		
 		int bordno = Integer.parseInt(request.getParameter("boardno"));
 		vo.setBoardno(bordno);
 		
+		String boardid = request.getParameter("boardId");
+		
+		
 		int result = 0 ;
-		String voResult = "";
 		
-		// 동일 게시물에 대한 추천 여부 검색
 		
-		result = dao.likeCheck(vo);
+		if(boardid.equals(member.getId())) {
+			out.println(3);
+			out.flush();
+			out.close();
+		}else {
+			result = dao.likeCheck(vo,member.getId()); // 동일 게시물에 대한 추천 여부 검색
+			
+			if(result>0) { // 추천이 되어있는 상태라면 클릭했을 때 추천 취소
+				//TODO 테스트 완료후 if문 삭제
+				dao.likeDelete(vo,member.getId());
+				System.out.println(result);
+				System.out.println("추천취소");
+			} else if (result==0) {	
+				dao.likeUpdate(vo,member.getId());
+				System.out.println(result);
+				System.out.println("추천");
+			} else {
+				System.out.println(result);
+				System.out.println("추천 기능 확인 바람");
+			}
+			
+
+			if(vo != null) {
+				Gson jobj = new GsonBuilder().create();
+			}
+			
+			out.println(result);
+			out.flush();
+			out.close();
+		}
 		
 //		if(result==0) {	// 추천이 되어있지 않은 상태라면 클릭했을 때 추천
 //			dao.likeUpdate(vo);
@@ -75,30 +113,7 @@ public class BoardLike extends HttpServlet {
 //			System.out.println("추천취소");
 //		}
 		
-		if(result>0) { // 추천이 되어있는 상태라면 클릭했을 때 추천 취소
-			dao.likeDelete(vo);
-			System.out.println(result);
-			System.out.println("추천취소");
-		} else if (result==0) {	
-			dao.likeUpdate(vo);
-			System.out.println(result);
-			System.out.println("추천");
-		} else {
-			System.out.println(result);
-			System.out.println("추천 기능 확인 바람");
-		}
 		
-		
-
-		if(vo != null) {
-			Gson jobj = new GsonBuilder().create();
-			voResult = jobj.toJson(vo);
-		}
-		
-		PrintWriter out = response.getWriter();
-		out.println(result);
-		out.flush();
-		out.close();
 		
 
 ////		**** 로그인 연동 후 수정  *****

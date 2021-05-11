@@ -7,20 +7,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+
 import Board.DAO.BoardDAO;
 import Board.vo.Board;
 
+
 /**
- * Servlet implementation class BoardModifyControl
+ * Servlet implementation class BoardLikeControl
  */
-@WebServlet("/BoardModify.do")
-public class BoardModifyControl extends HttpServlet {
+@WebServlet("/boardlike.do")
+public class BoardLikeControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardModifyControl() {
+    public BoardLikeControl() {
         super();
     }
 
@@ -39,21 +42,33 @@ public class BoardModifyControl extends HttpServlet {
 	}
 	
 	protected void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=utf-8");
-		
+	
+		int boardno = Integer.parseInt(request.getParameter("boardno"));
 		Board vo = new Board();
-		Board modvo = new Board();
 		BoardDAO dao = new BoardDAO();
 		
-		vo.setBoardno(Integer.parseInt(request.getParameter("boardno")));
-		vo.setBoardcontent(request.getParameter("boardcontent"));
-		vo.setBoardfile(request.getParameter("boardfile"));
-		modvo = dao.getBoard(vo);
-		System.out.println("수정전:"+modvo.getBoardcontent());
+		vo.setBoardno(boardno);
 		
-		request.setAttribute("modvo",modvo);
-		request.getRequestDispatcher("board/BoardWrite.jsp").forward(request, response);
+		
+		// TODO 
+		// 조건문 추가
+		// 빈 하트일 때 클릭하면 추천수 + 1
+		// 빨간 하트일 때 클릭하면 추천수 -1
+		//dao.likeUpdate(vo, id)(vo);
+		
+//		dao.cancelLike(vo);
+		
+		int like = 0 ;
+		like = dao.likeCount(vo);
+		
+		System.out.println("추천수:"+like);
+		
+		JSONObject obj = new JSONObject();
+		obj.put("like", like);
+		
+		response.setContentType("application/x-json; charset=UTF-8");
+		response.getWriter().print(obj);
+		
 	}
 
 }
