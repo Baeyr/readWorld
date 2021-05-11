@@ -9,17 +9,11 @@
 	<meta charset="UTF-8">
 	<title>읽기편한 세상</title>
 	<link href="mainCss.css?ver=38" rel="stylesheet" type = "text/css">
-	<style>
-		#id{
-			position : relative;
-			float : right;
-		}
-	</style>
+	
 </head>
 <body>
 	<jsp:include page="Header.jsp"></jsp:include>
 	<aside>
-	<button type = "button" id ="id" onclick = "location.href ='./MyPage'"><h2>마이페이지</h2></button>
 	</aside>
 	<div id="main_content">
         <section>
