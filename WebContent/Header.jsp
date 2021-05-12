@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
     <style>
+    
+    .all{
+		width: 1500px;
+    }
     
     .topnav {
     	overflow: hidden;
@@ -32,6 +35,7 @@
     #profile {
     	float:right;
     	width: 50px;
+    	padding-top: 10px;
     	padding-top: 2px;
     	padding-bottom: 10px;
     	margin-right: 8px;
@@ -45,7 +49,6 @@
     	padding-left: 650px; */
     	float:left;
     	width: 50%;
-
     } 
    
 	.searchWindow {
@@ -86,7 +89,6 @@
         padding-left: 10px;
         padding-top: 10px;
         cursor: pointer;
-
         
     }
     
@@ -114,6 +116,7 @@
 			});
 	});
 </script>
+	<div class="all">
     <div class="topnav">
     	<a href="${pageContext.request.contextPath}/MyPage" id="profile">
 	    	<img  src="<%=request.getContextPath()%>/image/profile.png">
@@ -128,7 +131,6 @@
 	
     </div>
 	
-
 	<div class="searchWindow">
 		<a href="">
 			<img id="logo1" src="<%=request.getContextPath()%>/image/logo1.png">
@@ -138,9 +140,4 @@
 		<button class="menu" id="submit" type="submit"><img id="submitlodo" src="<%=request.getContextPath()%>/image/submitlodo.png"></button>
 	</form>
 	</div>
-
-
-
-
-
-	
+	</div>
