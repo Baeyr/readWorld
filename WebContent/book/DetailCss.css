@@ -1,0 +1,177 @@
+@charset "UTF-8";
+
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+
+#body {
+	position: relative;
+	top: 100px;
+}
+
+.bookdetail {
+	padding-left: 250px;
+	padding-bottom: 20px;
+	width: 1300px;
+}
+
+.bookintro{
+	padding-left: 250px;
+	padding-bottom: 30px;
+}
+.bookscore{
+	padding-left: 250px;
+	padding-bottom: 50px;
+}
+
+
+h2 {
+	margin: 15px 4%;
+	color: #730202;
+}
+
+
+
+.bdiv {
+	margin-left: 20px;
+	margin-top: 25px;
+	padding-left: 35px;
+	padding-top: 5px;
+	padding-bottom: 10px;
+	float:left;
+	border: 2px solid #94A68F;
+	width: 700px;
+	height: 330px;
+	font-size: 17px;
+	border-radius: 10px;
+}
+
+
+span:first-child {
+	font-size: 40px;
+}
+
+.cover {
+	clear:both;
+	float:left;
+	margin-left: 100px;
+	margin-right: 23px;
+	margin-top: 25px;
+	width: 260px;
+	height: 400px;
+	border: 2px solid #94A68F;
+	border-radius: 10px;
+}
+
+.title {
+	margin: 15px 11%;
+	color: #730202;
+}
+
+.bookintro>p {
+	margin: 15px 11%;
+	color: #730202;
+	font-weight: bold;
+}
+
+hr {
+	width: 95%;
+	border: 2px solid #94A68F;
+}
+
+
+div>hr {
+	border: 1px solid #94A68F;
+	width: 95%;
+	margin:0;
+	
+}
+
+.bookintro{
+	width: 1500px;	
+}
+
+.bookintro hr {
+	width: 62%;
+	margin-left: 150px;
+	margin-right: 10px;
+}
+
+.bookintro p{
+	width: 58%;
+	margin-left: 180px;
+	margin-right: 30px;
+}
+
+.bookscore {
+	width: 1500px;	
+}
+
+.bookscore hr{
+	width: 62%;
+	margin-left: 150px;
+	margin-right: 10px;
+}
+
+.button{
+	font-size: 30px;
+	color: #F2EAC2;
+	background-color: #1C4025;
+	padding-left: 15px;
+	padding-right: 19px;
+	border-radius: 10px;
+}
+
+#b1 {
+	clear:both;
+	width: 650px;
+	height: 65px;
+	text-align: center;
+	margin-top: 23px;
+	margin-left: 68px;
+}
+
+#b2 {
+	clear:both;
+	position:relative;
+	float:left;
+	margin-right: 0px;
+	margin-top: 50px;
+	margin-left: 200px;
+}
+
+.rating {
+	clear:both;
+	position: relative;
+}
+
+.star {
+	padding-left: 350px;
+	height: 150px;
+}
+
+.star .star_radio {
+	display:none; 
+	
+}
+
+.star .star_radio+label {
+	position:relative;
+	display: inline-block;
+	cursor: pointer;
+	color:#ccc;
+	font-size: 80px;
+}
+
+
+	.star_radio:checked+label {
+	color:#F2EAC2;
+	font-size: 80px;
+}
+
+
+
+
