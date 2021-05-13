@@ -11,6 +11,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/a64ef4f2e5.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
 <jsp:include page="../Header.jsp"></jsp:include>
@@ -19,22 +20,22 @@
 	
 		<article class="bookdetail">
 			<hr>
-			<h2> 책 제목 출력</h2>
-			
-			<!-- <c:forEach items="${detailBook }" var="item"> -->
-			<!--</c:forEach> -->
+			<c:forEach items="${detailbook}" var="item">
+					<h2>${item.title }</h2>
 			
 			<h2 class="booktitle"></h2>	<!-- 책 제목 출력 -->
 			<hr>
 			<img class="cover" alt="책 표지" src="${item.cover }">
 			<div class="bdiv">
-				<p> <span>책 제목</span> <span>작가</span></p> <!-- ${item.title } ${item.author} -->
+				<p> <span>${item.title }</span> <span>${item.author}</span></p>
 				<hr>
-				<p>카테고리</p> <!-- ${item.CategoryName } -->
-				<p>출간일</p> <!-- ${item.pubDate } -->
-				<p>출판사</p> <!-- ${item.publisher } -->
-				<p>isbn</p> <!-- ${item.isbn } -->
+				<p>카테고리 값 출력</p>
+				<p>${item.pubDate }</p> 
+				<p>${item.publisher }</p> 
+				<p>${item.isbn }</p> 
 			</div>
+			</c:forEach>
+		
 			<input type="button" id="b1" class="button" value="읽기편한 세상 구독하고 무료로 보기"> <!-- 구독 버튼 -->
 
 		</article>

@@ -3,18 +3,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>읽기편한 세상</title>
-	<link href="mainCss.css?ver=38" rel="stylesheet" type = "text/css">
-	
+	<link href="mainCss.css?555" rel="stylesheet" type = "text/css">
 </head>
 <body>
 	<jsp:include page="Header.jsp"></jsp:include>
-	<aside>
-	</aside>
 	<div id="main_content">
         <section>
             <article id="main_article1">
@@ -23,12 +19,12 @@
                         <caption><h2>맞춤 추천</h2></caption>
                         <c:forEach items="${userBook}" var="item">
                         	<tr class="imgTr">
-                        		<td class="img"><a href="#"><img src="${item.cover}"></a></td>
+                        		<td class="img"><a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}"><img src="${item.cover}"></a></td>
                         	</tr>
                         	<tr class="titleTr">
-                        		<td class="title"><a href="#">${item.title}</a></td>
-                        	</tr class="authorTr">
-                        	<tr>
+                        		<td class="title"><a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}">${item.title}</a></td>
+                        	</tr>
+                        	<tr class="authorTr">
                         		<td class="author"><a href="#">${item.author}</a></td>
                         	</tr>
                         </c:forEach>
@@ -40,10 +36,10 @@
                         <caption><h2>추천 신간</h2></caption>
                         <c:forEach items="${newBook}" var="item">
                         	<tr >
-                        		<td class="img"><a href="#"><img src="${item.cover}"></a></td>
+                        		<td class="img"><a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}"><img src="${item.cover}"></a></td>
                         	</tr>
                         	<tr>
-                        		<td class="title"><a href="#">${item.title}</a></td>
+                        		<td class="title"><a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}">${item.title}</a></td>
                         	</tr>
                         	<tr>
                         		<td class="author"><a href="#">${item.author}</a></td>
@@ -57,10 +53,10 @@
                         <caption><h2>최고의 별점</h2></caption>
                         <c:forEach items="${starBook}" var="item">
                         	<tr>
-                        		<td class="img"><a href="#"><img src="${item.cover}"></a></td>
+                        		<td class="img"><a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}"><img src="${item.cover}"></a></td>
                         	</tr>
                         	<tr>
-                        		<td class="title"><a href="#">${item.title}</a></td>
+                        		<td class="title"><a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}">${item.title}</a></td>
                         	</tr>
                         	<tr>
                         		<td class="author"><a href="#">${item.author}</a></td>
@@ -77,13 +73,13 @@
                       	<c:forEach items="${randomBook}" var="item">
 	                      	<ul>
 		                       	<li>
-		                       		<a href="#"><img src="${item.cover}"></a>
+		                       		<a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}"><img src="${item.cover}"></a>
 		                       	</li>
 		                       	<li class="title">
-		                       		<a href="#">${item.title}</a>
+		                       		<a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}">${item.title}</a>
 		                       	</li>
 		                       	<li class="author">
-		                       		<a href="#">${item.author}</a>
+		                       		<a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}">${item.author}</a>
 		                       	</li>
 	                       	 </ul>
                      	</c:forEach>
@@ -98,10 +94,10 @@
                         <c:forEach items="${developBook}" var="item">
 	                      	<ul>
 		                       	<li>
-		                       		<a href="#"><img src="${item.cover}"></a>
+		                       		<a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}"><img src="${item.cover}"></a>
 		                       	</li>
 		                       	<li class="title">
-		                       		<a href="#">${item.title}</a>
+		                       		<a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}">${item.title}</a>
 		                       	</li>
 		                       	<li class="author">
 		                       		<a href="#">${item.author}</a>
@@ -119,10 +115,10 @@
                         	<c:forEach items="${comicBook}" var="item">
 	                      	<ul>
 		                       	<li>
-		                       		<a href="#"><img src="${item.cover}"></a>
+		                       		<a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}"><img src="${item.cover}"></a>
 		                       	</li>
 		                       	<li class="title">
-		                       		<a href="#">${item.title}</a>
+		                       		<a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}">${item.title}</a>
 		                       	</li>
 		                       	<li class="author">
 		                       		<a href="#">${item.author}</a>
@@ -140,10 +136,10 @@
                         	<c:forEach items="${languageBook}" var="item">
 	                      	<ul>
 		                       	<li>
-		                       		<a href="#"><img src="${item.cover}"></a>
+		                       		<a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}"><img src="${item.cover}"></a>
 		                       	</li>
 		                       	<li class="title">
-		                       		<a href="#">${item.title}</a>
+		                       		<a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}">${item.title}</a>
 		                       	</li>
 		                       	<li class="author">
 		                       		<a href="#">${item.author}</a>

@@ -23,7 +23,7 @@
 			<ul class="booklist">
 				<c:forEach items="${searchBook }" var="item">
 				<li>
-					<a href="#">
+					<a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}">
 						<img src="${item.cover }" alt="이미지좀 보여줘" class="bookcover">
 					</a>
 						<p class="bookTitle">${item.title}</p>
@@ -52,7 +52,9 @@
 	</section>
 </div>
 	<script>
-			
+	
+	
+	
 	</script>
 </body>
 </html>
