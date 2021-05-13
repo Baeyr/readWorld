@@ -72,13 +72,13 @@
                 <div id="page">
                     <ul id="moveP">
 					<c:if test="${startPage!=1}">
-		            	<li><a href="<%=request.getContextPath() %>/BoardList.do?PageNumber=${startPage-1}">◀</a></li>
+		            	<li><a href="<%=request.getContextPath() %>/BoardList.do?PageNumber=${startPage-1}&search=${search}">◀</a></li>
 					</c:if>
 					<c:forEach begin="${startPage}" end="${endPage}" var="page" step="1">
-                        <li><a href="<%=request.getContextPath() %>/BoardList.do?PageNumber=${page}">${page}</a></li>
+                        <li><a href="<%=request.getContextPath() %>/BoardList.do?PageNumber=${page}&search=${search}">${page}</a></li>
 					</c:forEach>
 					<c:if test="${endPage < pageCnt }">
-                        <li><a href="<%=request.getContextPath() %>/BoardList.do?PageNumber=${endPage+1}">▶</a></li>
+                        <li><a href="<%=request.getContextPath() %>/BoardList.do?PageNumber=${endPage+1}&search=${search}">▶</a></li>
 					</c:if>
                     </ul>
                 </div>

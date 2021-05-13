@@ -10,7 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- **리셋/스타일/웹아이콘/폰트 경로 확인** -->
 <link rel="stylesheet" href="./reset.css">
-<link rel="stylesheet" href="./loginStyle.css?asd">
+<link rel="stylesheet" href="./loginStyle.css?erersd">
 <link rel="stylesheet"
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 <link rel="preconnect" href="https://fonts.gstatic.com">

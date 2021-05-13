@@ -36,7 +36,7 @@ public class BoardDAO {
 	}
 
 	// 게시판 상위 10개 출력 
-	public List<Board> getBoardList(int start, int end){
+	public List<Board> getBoardList(int start, int end, String search){
 		
 		List<Board> list = null; 
 		
@@ -75,7 +75,18 @@ public class BoardDAO {
 				
 				pstmt=null; rs=null;
 				conn = JDBCTemplate.getConnection();
-				String sql4="SELECT b1.* FROM ( SELECT ROWNUM r, b.* from (select * from board where boardno not in  ( "+a+" , "+b+" , "+c+" ) )b ) b1  where r>=? and r<=?";
+				
+				// 검색 후 더보기 버튼 클릭시 게시판 출력
+				String sql4_1 = "(select * from board ";
+				if(search == null ) {
+					sql4_1 += "where boardno not in ( "+a+" , "+b+" , "+c+ " ) )b ) b1";
+				} else {
+					sql4_1 += "where boardcontent like '%" + search + "%' or boardtitle like '%" + search + "%' and boardno not in ( "+a+" , "+b+ " , "+c+ " ) )b ) b1";
+				}
+				
+				String sql4="SELECT b1.* FROM ( SELECT ROWNUM r, b.* from "
+							+ sql4_1 + " where r>=? and r<=?";
+				
 				pstmt=conn.prepareStatement(sql4);
 				
 				pstmt.setInt(1, start);
@@ -96,7 +107,7 @@ public class BoardDAO {
 					vo.setBoardtitle(rs.getString("boardtitle"));
 					vo.setBoardplay(rs.getInt("boardplay"));
 					vo.setBoardcount(rs.getInt("boardcount"));
-					vo.setBoardfile(rs.getString("boardfile"));
+//					vo.setBoardfile(rs.getString("boardfile"));
 					list.add(vo);
 					
 					} while(rs.next());
@@ -162,6 +173,8 @@ public class BoardDAO {
 		
 		return result;
 	}
+	
+	
 	
 	public List<Board> getMyBoardList(String id,int start,int end){
 		List<Board> list = null;

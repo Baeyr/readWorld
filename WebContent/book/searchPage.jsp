@@ -23,7 +23,7 @@
 			<ul class="booklist">
 				<c:forEach items="${searchBook }" var="item">
 				<li>
-					<a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}">
+					<a href="#">
 						<img src="${item.cover }" alt="이미지좀 보여줘" class="bookcover">
 					</a>
 						<p class="bookTitle">${item.title}</p>
@@ -34,27 +34,28 @@
 		</article>
 		<article class="boardsearch">
 			<hr>
-			<h2 class="title">게시판 <a href="#" class="moreBtn">더보기</a></h2>
+			<h2 class="title">게시판 <a href="<%=request.getContextPath()%>/BoardList.do?search=${search}" class="moreBtn">더보기</a></h2>
 			<div class="viewBoard">
+			<c:forEach items="${searchboard}" var="item" varStatus="status">
+				<c:set var="item1" value="${boardcnt[status.index]}" />
 			<table>
-				<c:forEach items="${searchboard}" var="item">
 				<tr>
 					<td rowspan="2" class="boardTitle">${item.boardtitle }</td>
+					<td>&nbsp;</td>
 					<td><p class="boardUser"><span>${item.boarddate }</span><span> | </span><span>${item.id }</span></p></td>
 				</tr>
 				<tr>
-					<td colspan="3" class="boardData">${item.boardcontent }</td>
+					<td>&nbsp;</td>
+					<td colspan="3" class="boardData">${item1.boardcontent }</td>
 				</tr>
-				</c:forEach>
 			</table>
+				</c:forEach>
 			</div>
 		</article>
 	</section>
 </div>
 	<script>
-	
-	
-	
+			
 	</script>
 </body>
 </html>
