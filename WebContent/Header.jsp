@@ -2,10 +2,9 @@
     pageEncoding="UTF-8"%>
     <style>
     
-    .all{
+	.all{
 		width: 1500px;
     }
-    
     .topnav {
     	overflow: hidden;
     	background-color: #1C4025;
@@ -16,6 +15,7 @@
  		width: 100%;
  		height : 70px;
  		z-index: 1000;
+ 		clear: both;
     }
     
     .topnav a{
@@ -35,10 +35,16 @@
     #profile {
     	float:right;
     	width: 50px;
-    	padding-top: 10px;
+	padding-top: 10px;
     	padding-top: 2px;
     	padding-bottom: 10px;
     	margin-right: 8px;
+    }
+   
+    
+    #logB{
+    	float:right;
+    	margin-top: 15px;
     }
     
      #searchF {
@@ -49,6 +55,7 @@
     	padding-left: 650px; */
     	float:left;
     	width: 50%;
+
     } 
    
 	.searchWindow {
@@ -57,6 +64,7 @@
 		width:100%;
 		height: 200px
 	}
+	
     #logo1 {
     	position:relative;
     	height: 120px;
@@ -89,6 +97,7 @@
         padding-left: 10px;
         padding-top: 10px;
         cursor: pointer;
+
         
     }
     
@@ -96,7 +105,7 @@
     	height: 45px;
 		
     }
-    #mbsUser {
+ #mbsUser {
     	cursor: pointer;
     }
     
@@ -116,23 +125,30 @@
 			});
 	});
 </script>
-	<div class="all">
+	
+	
+<div class="all">
     <div class="topnav">
-    	<a href="${pageContext.request.contextPath}/MyPage" id="profile">
+    	<a class="menu" href="${pageContext.request.contextPath}/MyPage" id="profile">
 	    	<img  src="<%=request.getContextPath()%>/image/profile.png">
     	</a>
+  		 <a class="menu" id="logB" name="logoutB" href="${pageContext.request.contextPath}/logout"> 로그아웃 </a>
+    	
+    	
+    	
     	<ul>
     		<li><a class="menu" name="mainB" href="${pageContext.request.contextPath}/main">메인화면</a></li>
     		<li><a class="menu" name="genreB" href="${pageContext.request.contextPath}/BookCate">장르별</a></li>
     		<li><a class="menu" name="boardB" href="${pageContext.request.contextPath}/BoardList.do" >게시판</a></li>
-    		<li><a class="menu" id="mbsUser" name="memberShipB"> 회원권 구매 </a></li>
+    		<li><a class="menu" name="memberShipB" id="mbsUser" href="${pageContext.request.contextPath}/membership"> 회원권 구매 </a></li>
     	</ul>
     	
 	
     </div>
 	
+
 	<div class="searchWindow">
-		<a href="">
+		<a href="" class="menu">
 			<img id="logo1" src="<%=request.getContextPath()%>/image/logo1.png">
 		</a>
 	<form id="searchF" action="${pageContext.request.contextPath}/search" method="get">
@@ -140,4 +156,9 @@
 		<button class="menu" id="submit" type="submit"><img id="submitlodo" src="<%=request.getContextPath()%>/image/submitlodo.png"></button>
 	</form>
 	</div>
-	</div>
+</div>
+
+
+
+
+	

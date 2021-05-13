@@ -80,42 +80,14 @@ public class BoardReadControl extends HttpServlet {
 					request.getRequestDispatcher("/CommentReadControl").forward(request, response); 
 				}
 		}
-	
-	
-//		private List<String> imgExtract(String imgText){
-//			System.out.println("imgtext: " + imgText);
-//			
-//			List<String> result = new ArrayList<String>();
-//			Pattern pattern = Pattern.compile("&lt;img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*/&gt");
-//			Matcher matcher = pattern.matcher(imgText);
-//			
-//			while (matcher.find()) {
-//				result.add(matcher.group(1));
-//			}
-//			System.out.println("실행되나");
-//			System.out.println(result);
-//			
-//			return result;
-//		 }
 
 		private String replaceParam(String param) {
 			String result="";
 			
-			System.out.println("전:"+param);
+			//System.out.println("전:"+param);
 			result = StringEscapeUtils.unescapeHtml(param);
 			result = StringEscapeUtils.unescapeHtml(result);
-			System.out.println("후:"+result);
-					
-					
-//			if(param!=null&&param!="") {
-//				result = param.replaceAll("&lt;", "");
-//				result= result.replaceAll("/&gt;/g", ">");
-//				result= result.replaceAll("&amp;", "&");
-//				result= result.replaceAll("&quot;", "\"");
-//				result= result.replaceAll("\"", "\\\\\"");
-//			}
-			
-//			System.out.println("result:"+result);
+			//System.out.println("후:"+result);
 			return result;
 		}
 	}

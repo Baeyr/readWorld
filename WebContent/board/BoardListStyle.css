@@ -59,6 +59,11 @@ section{
             width: 75%;
             padding-left: 10px;
         }
+		
+		.title a{
+			text-decoration: none;
+			color : #400101;
+		}
 
         .author{
             font-size: 18px;

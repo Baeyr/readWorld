@@ -37,8 +37,16 @@
     #profile {
     	float:right;
     	width: 50px;
-    	padding-top: 10px;
+    	padding-top: 2px;
+    	padding-bottom: 10px;
+    	margin-right: 8px;
     }
+    
+    #logB{
+    	float:right;
+    	margin-top: 15px;
+    }
+    
    	.contentmain{
    		max-width: 700px;
     	margin: 0px auto;
@@ -102,7 +110,11 @@
 </head>
 <body>
 	<div class="topnav">
-    	<img id="profile" src="<%=request.getContextPath()%>/image/profile.png">
+    	<a class="menu" href="${pageContext.request.contextPath}/MyPage" id="profile">
+	    	<img  src="<%=request.getContextPath()%>/image/profile.png">
+    	</a>
+  		<a class="menu" id="logB" name="logoutB" href="${pageContext.request.contextPath}/logout"> 로그아웃 </a>
+    	
     	<ul>
     		<li><a name="mainB" href="${pageContext.request.contextPath}/main">메인화면</a></li>
     		<li><a name="genreB" href="${pageContext.request.contextPath}/BookCate">장르별</a></li>

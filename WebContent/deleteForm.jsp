@@ -38,7 +38,7 @@
 	<div id = "d1">
 	<br><br>
 	<h1>회원을 탈퇴하시려면 비밀번호를 입력해주세요</h1>
-	<form name = "deleteform" action = "delete" method = "post" onsubmit = "return check()">
+	<form name = "deleteform" action = "/delete" method = "post" onsubmit = "return check()">
 	<input type = "hidden" name = "id" value="<%=vo.getId()%>">
 	<input type = "password" name = "pwd" class = "form-control" placeholder = "비밀번호를 입력해주세요"><br><br>	
 	<input type = "submit" value = "회원탈퇴">&nbsp;&nbsp;&nbsp;

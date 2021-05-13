@@ -60,10 +60,7 @@ public class BookCateControl extends HttpServlet {
 		//전체 책 가져오기
 		List<Book> cateBook = dao.bookCateList(cate,0);
 		
-		
-		request.setAttribute("cateBook", cateBook);
-		
-		PrintWriter out = response.getWriter();
+		request.setAttribute("cateBook", cateBook);		
 		request.getRequestDispatcher("book/cate.jsp").forward(request, response);
 	}
 }

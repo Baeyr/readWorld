@@ -59,15 +59,16 @@ public class BoardListControl extends HttpServlet {
 		final int pageSize = 10 ; // 한 페이지당 게시글 수
 		final int pageBlock = 3;  // 화면에 나타날 페이지 링크 수
 		int cnt = 0 ;	// 총 글 개수
+		int currentPage = 1; // 현재 페이지: 클릭시 바뀜
 		
 		BoardDAO dao = new BoardDAO();
 		List<Board> list = null;
 		
 		// 페이지 번호
 		cnt = dao.getBoardCount();
-		int pageCnt = (cnt/pageSize) + (cnt%pageSize == 0?0:1);	// 총 페이지 개수
+			int pageCnt = (cnt-7/pageSize) + 1 + (cnt%pageSize == 0?0:1);	// 총 페이지 개수 1페이지 일반글 7개 (공지글 3개 별도 출력)
 		
-		int currentPage = 1; // 현재 페이지: 클릭시 바뀜
+		
 		String PageNumber = request.getParameter("PageNumber");
 		
 		if(PageNumber!=null) {	// 클릭된 숫자가 현재 페이지 
@@ -92,9 +93,21 @@ public class BoardListControl extends HttpServlet {
 		if(endPage > pageCnt) {
 			endPage = pageCnt;
 		}
+		int startRnum = 8;
+		int endRnum = 0;
 		
-		int startRnum = (currentPage-1)*pageSize +1;
-		int endRnum = startRnum + pageSize - 1;
+	
+		
+	if(currentPage==1) {
+			pageSize=7;
+			startRnum = (currentPage-1)*pageSize +1;
+			endRnum = startRnum + pageSize - 1;
+		} else if (currentPage==2){
+			endRnum = startRnum + pageSize - 1;
+		} else {
+			startRnum = (currentPage-1)*pageSize -2;
+			endRnum = startRnum + pageSize - 1;
+		}
 		
 		if(endRnum > cnt) {
 			endRnum = cnt;
@@ -107,6 +120,8 @@ public class BoardListControl extends HttpServlet {
 		request.setAttribute("currentPage", currentPage);
 		request.setAttribute("pageCnt", pageCnt);
 		request.setAttribute("boardList", list);
+		System.out.println(request.getAttribute("boardList"));
+		System.out.println("현재페이지"+request.getAttribute("currentPage"));
 		
 		// TODO: 경로 확인
 		// 리스트 페이지로 이동 

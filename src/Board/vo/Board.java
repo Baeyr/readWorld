@@ -10,14 +10,7 @@ public class Board {
 	private String boardtitle;
 	private int boardplay;
 	private int boardcount;
-	private String boardfile;
 	
-	public String getBoardfile() {
-		return boardfile;
-	}
-	public void setBoardfile(String boardfile) {
-		this.boardfile = boardfile;
-	}
 	public int getBoardno() {
 		return boardno;
 	}

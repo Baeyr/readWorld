@@ -48,7 +48,6 @@ public class BoardModifyControl extends HttpServlet {
 		
 		vo.setBoardno(Integer.parseInt(request.getParameter("boardno")));
 		vo.setBoardcontent(request.getParameter("boardcontent"));
-		vo.setBoardfile(request.getParameter("boardfile"));
 		modvo = dao.getBoard(vo);
 		System.out.println("수정전:"+modvo.getBoardcontent());
 		

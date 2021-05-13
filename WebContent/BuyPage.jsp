@@ -44,8 +44,16 @@
     #profile {
     	float:right;
     	width: 50px;
-    	padding-top: 10px;
+    	padding-top: 2px;
+    	padding-bottom: 10px;
+    	margin-right: 8px;
     }
+    
+    #logB{
+    	float:right;
+    	margin-top: 15px;
+    }
+    
     .mainbody{
     	max-width: 700px;
     	margin: 0px auto;
@@ -334,7 +342,10 @@
 <body>
  	
 	<div class="topnav">
-    	<img id="profile" src="<%=request.getContextPath()%>/image/profile.png">
+    	<a class="menu" href="${pageContext.request.contextPath}/MyPage" id="profile">
+	    	<img  src="<%=request.getContextPath()%>/image/profile.png">
+    	</a>
+  		<a class="menu" id="logB" name="logoutB" href="${pageContext.request.contextPath}/logout"> 로그아웃 </a>
     	<ul>
     		<li><a name="mainB" href="${pageContext.request.contextPath}/main">메인화면</a></li>
     		<li><a name="genreB" href="${pageContext.request.contextPath}/BookCate">장르별</a></li>
@@ -377,7 +388,7 @@
 	    <div class="content3">
 	    	<p class="buyTitle">결제정보 입력</p>
 	    	<p class="buydata">휴대폰 번호<span>*</span></p>
-	    	<input type="text" class="data" value="<%= vo.getPhone()%>">
+	    	<input type="text" class="data" value="<%= vo.getPhone()%>">;
 	    	<p class="buydata2"><span>등록된 휴대폰번호가 맞는지 확인해주세요. </span></p>
 	    </div>
 	    <div class="content4">
@@ -393,11 +404,11 @@
 	    	</ul>
 	    </div>
 	    <form id="frm1">
-	    <input type="hidden" name="id" value="<%= vo.getId()%>">
-	    <input type="hidden" name="membershipno" value="${mbs.membershipno }">
-	    <input type="hidden" name="beforedate" id="beforedate">
-	    <input type="hidden" name="afterdate" id="afterdate">
-	    <button type="button" class="btnBuy" id="btn">결제하기</button>
+		    <input type="hidden" name="id" value="<%= vo.getId()%>">
+		    <input type="hidden" name="membershipno" value="${mbs.membershipno }">
+		    <input type="hidden" name="beforedate" id="beforedate">
+		    <input type="hidden" name="afterdate" id="afterdate">
+		    <button type="button" class="btnBuy" id="btn">결제하기</button>
 	    </form>
     </div>
     </section>

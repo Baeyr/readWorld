@@ -71,14 +71,18 @@ public class LoginControl extends HttpServlet {
 		if(result.getId() == null || !pwd.equals(result.getPwd())) {
 			out.println("<script>alert('아이디 또는 비밀번호를 확인해주세요'); history.back()</script>");
 		} else {
-			System.out.println(genre.getGenre()+"취향");
-			System.out.println(result.getMembership());
-			out.println("<script>alert('로그인 성공!!')</script>");
 			session.setAttribute("logId",id); 
 			session.setAttribute("user", result);
 			session.setAttribute("genre", genre);
-			response.sendRedirect("./main");
+			if(result.getId().equals("admin")) {
+				out.println("<script>alert('=====관리자 계정으로 접속=====')</script>");				
+			}else {
+				out.println("<script>alert('로그인 성공!!')</script>");				
+			}
+			out.println("<script>location.href='/SEMI/main'</script>");
+			//request.getRequestDispatcher("/main").forward(request, response);
 		}
+		
+		out.close();
 	}
-
 }

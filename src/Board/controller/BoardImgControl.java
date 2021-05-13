@@ -56,11 +56,13 @@ public class BoardImgControl extends HttpServlet {
 	    response.setContentType("text/html;charset=utf-8");
 		
 		String savePath = request.getContextPath()+"/files/";
+		String realPath = "/files/";
 		
 		try {
 			//폴더가 없을 경우 생성
 			String root = getServletContext().getRealPath("/");
-			File path = new File(savePath);
+			File path = new File(root+realPath);
+			//File path = new File(savePath);
 			
 			if(!path.exists()) {
 				path.mkdirs();
@@ -68,9 +70,9 @@ public class BoardImgControl extends HttpServlet {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		realPath = getServletContext().getRealPath("/files/");
 		MultipartRequest mRequest = new MultipartRequest(request, 
-									savePath,
+									realPath,
 									10*1024*1024,
 									"UTF-8",
 									new DefaultFileRenamePolicy());
@@ -81,6 +83,12 @@ public class BoardImgControl extends HttpServlet {
 		
 		//저장
 		File f1 = mRequest.getFile(fileName);
+		
+		if(f1 == null) {
+			System.out.println("성공");
+		}else {
+			System.out.println("실패");
+		}
 		
 		String path = savePath+fileName;
 		PrintWriter out = response.getWriter();
@@ -101,5 +109,6 @@ public class BoardImgControl extends HttpServlet {
 		
 		System.out.println("파일이름: " + fileName);
 		System.out.println("파일경로: " + path);
+		System.out.println("파일경로2: " + savePath);
 	}
 }

@@ -45,69 +45,39 @@ public class BoardWriteControl extends HttpServlet {
 		member = (Member) session.getAttribute("user");
 		
 		BoardDAO dao=new BoardDAO();
-		String saveDirectory=getServletContext().getRealPath("/files");
-		String encType="utf-8";
-		int maxSize=5*1024*1024; //파일크기 확인 후 수정
 		Board vo=new Board();
+		
 		int result = 0;
 		
-		try { //폴더 없을 경우 생성
-			File path=new File(saveDirectory);
-			System.out.println("path: "+path);
-			
-			if(!path.exists()) {
-				path.mkdirs();
-			}
-			
-			MultipartRequest mReq=new MultipartRequest(request, saveDirectory, maxSize, encType, new DefaultFileRenamePolicy());
-			String fileName="";
-			Enumeration<?> files=mReq.getFileNames();
-			
-			while(files.hasMoreElements()) {
-				String name=(String)files.nextElement();
-				fileName=mReq.getFilesystemName(name);
-				File f1=mReq.getFile(name);
-				if(f1==null) {
-					System.out.println("파일 업로드 실패");
-				} else {
-					System.out.println("파일 업로드 성공 : "+f1.length());
-				}
-			}
-			
-			
+		PrintWriter out=response.getWriter();
 
-			vo.setId(member.getId());
-			vo.setBoardcontent(replaceParam(mReq.getParameter("BoardContent")));
-			vo.setBoardtitle(replaceParam(mReq.getParameter("BoardTitle")));
-			vo.setBoardfile(fileName);
-			
-			String mcheck = mReq.getParameter("modiCheck");
+		vo.setId(member.getId());
+		vo.setBoardcontent(replaceParam(request.getParameter("BoardContent")));
+		vo.setBoardtitle(replaceParam(request.getParameter("BoardTitle")));
 		
-			if(mcheck.equals("notmodify")) {	// 새로운 게시글 작성하는 경우 
-				result=dao.boardWrite(vo);
-			} 
-			else {	//글을 수정하는 경우
-				int boardbno = Integer.parseInt(mReq.getParameter("boardno")) ;
-				vo.setBoardno(boardbno);
-				result = dao.boardReWrite(vo);
-				System.out.println("수정후 : " + vo.getBoardcontent());
-			}
-			PrintWriter out=response.getWriter();
-			
-			if(result>0) { //등록 성공시 알람창
-				System.out.println("입력");
-				System.out.println(mcheck);
-				out.println("<script>alert('등록완료');</script>"); //!!경로 입력!!
-				request.getRequestDispatcher("/BoardList.do").forward(request, response);
-			} else { //등록 실패시 알람창
-				System.out.println("실패");
-				System.out.println(mcheck);
-				out.println("<script>alert('등록실패'); history.back()</script>");
-			}
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
+		String mcheck = request.getParameter("modiCheck");
+	
+		System.out.println("mcheck확인~~~~~~~"+mcheck);
+		if(mcheck.equals("notmodify")) {	// 새로운 게시글 작성하는 경우 
+			result=dao.boardWrite(vo);
+		} 
+		else {	//글을 수정하는 경우
+			int boardbno = Integer.parseInt(request.getParameter("boardno")) ;
+			vo.setBoardno(boardbno);
+			result = dao.boardReWrite(vo);
+			System.out.println("수정후 : " + vo.getBoardcontent());
+		}
+		
+		
+		if(result>0) { //등록 성공시 알람창
+			System.out.println("입력");
+			System.out.println(mcheck);
+			out.println("<script>alert('등록완료');</script>"); //!!경로 입력!!
+			request.getRequestDispatcher("/BoardList.do").forward(request, response);
+		} else { //등록 실패시 알람창
+			System.out.println("실패");
+			System.out.println(mcheck);
+			out.println("<script>alert('등록실패'); history.back()</script>");
 		}
 	}
 

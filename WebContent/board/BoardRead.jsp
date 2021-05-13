@@ -61,7 +61,6 @@
                 				<input type="hidden" name="boardno" value="${readboard.boardno}"/>
 								<input type="hidden" name="boardId" id="loginId" value="<%= (String)request.getSession().getAttribute("logId")%>"/>            
 				    	        <input type="hidden" name="boardWriter" value="${readboard.id}"/> 
-				    	        <input type="hidden" name="boardfile" value="${readboard.boardfile }">
                                 <p class="p"><%=board.getBoardcontent()%></p>
                             </td>
                         </tr>
@@ -219,8 +218,6 @@
     
     });
     
-    
-
     </script>
 </body>
 </html>

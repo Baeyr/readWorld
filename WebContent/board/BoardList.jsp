@@ -39,6 +39,16 @@
 				</tr>
 			</c:if>
 			
+			<!-- 상위 고정 게시글 -->
+			<c:forEach var="i" items="${d1.rows}" varStatus="s">
+                    <tr class="fixed">
+                        <td class="tableCon no">${i['boardno']}</td>
+                        <td class="tableCon title"><a href="<%=request.getContextPath() %>/boardRead.do?boardno=${i['boardno']}">${i['boardtitle']}</a></td>
+                        <td class="tableCon author">${i['id']}</td>
+                        <td class="tableCon date"><fmt:formatDate value="${i['boarddate']}" pattern="yyyy-MM-dd"/></td>
+                        <td class="tableCon rank">${i['boardcount']}</td>
+                    </tr>
+			</c:forEach>
 			<!-- 작성한 게시물이 있는 경우 -->
 			<c:if test="${not empty boardList}">
 				
