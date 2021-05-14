@@ -1,3 +1,4 @@
+<%@page import="Book.vo.Book"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,9 +12,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/a64ef4f2e5.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
+<% 
+	String isbnV = (String)request.getAttribute("isbn");
+%>
 <jsp:include page="../Header.jsp"></jsp:include>
 <div id="body">
 	<section>
@@ -29,15 +32,18 @@
 			<div class="bdiv">
 				<p> <span>${item.title }</span> <span>${item.author}</span></p>
 				<hr>
-				<p><%=request.getAttribute("category") %></p>
-				<p>${item.pubDate }</p> 
+				<p>카테고리: <%=request.getAttribute("category") %></p>
+				<p>발매일: ${item.pubDate }</p> 
 				<p>${item.publisher }</p> 
 				<p>${item.isbn }</p>
-				<p class="agv"> <i class="fas fa-star"></i> 0.0 (0명)</p> <!-- 값 연결 -->
+				<p class="agv"> <i class="fas fa-star"></i> ${item.siteRanks}점  (${item.count}명) </p> 
 			</div>
 			</c:forEach>
-		
-			<input type="button" id="b1" class="button" value="읽기편한 세상 구독하고 무료로 보기"> <!-- 구독 버튼 -->
+			
+			<input type="button" id="b1" class="button" 
+				value="읽기편한 세상 구독하고 무료로 보기" 
+				onclick = "location='<%=request.getContextPath()%>/BookRental?isbn=<%=isbnV%>'">
+				
 		</article>
 		
 		
@@ -82,9 +88,6 @@
 	</section>
 	
 </div>
-
-
-
 <script>
 
 	var form = document.getElementById("frm");
@@ -128,7 +131,5 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 </script>
-
-
 </body>
 </html>
