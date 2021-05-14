@@ -29,7 +29,7 @@
 			<div class="bdiv">
 				<p> <span>${item.title }</span> <span>${item.author}</span></p>
 				<hr>
-				<p>카테고리 오류남</p>
+				<p><%=request.getAttribute("category") %></p>
 				<p>${item.pubDate }</p> 
 				<p>${item.publisher }</p> 
 				<p>${item.isbn }</p>

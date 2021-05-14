@@ -71,6 +71,8 @@ public class BookDetailControl extends HttpServlet {
 		if(isbn!=null) {
 			list = bookdao.getBook(isbn);
 			request.setAttribute("detailbook", list);
+			String category=list.get(0).getCategoryName(); //카테고리 값 null 에러 때문에 따로 받아옴
+			request.setAttribute("category", category);
 		}
 		
 		request.getRequestDispatcher("/book/Detail.jsp").forward(request, response);
