@@ -16,7 +16,17 @@ public class Book {
 	private String CategoryName;
 	private int siteRanks;
 	private int count;
+	private double avgsiteranks;
 	
+	
+	
+	
+	public double getAvgsiteranks() {
+		return avgsiteranks;
+	}
+	public void setAvgsiteranks(double avgsiteranks) {
+		this.avgsiteranks = avgsiteranks;
+	}
 	public int getCount() {
 		return count;
 	}
@@ -96,10 +106,16 @@ public class Book {
 	public void setSiteRanks(int siteRanks) {
 		this.siteRanks = siteRanks;
 	}
+	
 	@Override
 	public String toString() {
 		return "Book [isbn=" + isbn + ", title=" + title + ", author=" + author + ", publisher=" + publisher
 				+ ", pubDate=" + pubDate + ", description=" + description + ", pricesales=" + pricesales + ", cover="
-				+ cover + ", ranks=" + ranks + ", adult=" + adult + ", CategoryName=" + CategoryName + "]";
+				+ cover + ", ranks=" + ranks + ", adult=" + adult + ", CategoryName=" + CategoryName + ", siteRanks="
+				+ siteRanks + ", count=" + count + ", avgsiteranks=" + avgsiteranks + "]";
 	}
+	
+	
+	
+	
 }

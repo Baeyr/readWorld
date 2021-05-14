@@ -381,6 +381,7 @@ public class BookDAO {
 				book.setCategoryName(rs.getString("CategoryName"));
 				book.setSiteRanks(rs.getInt("siteranks"));
 				book.setCount(rs.getInt("count"));
+				book.setAvgsiteranks(rs.getDouble("avgsiteranks"));
 				
 				list.add(book);
 			}
@@ -423,27 +424,6 @@ public class BookDAO {
 		pstmt = null;
 		
 		String sql = "update book set count = count+1 where isbn=?";
-		try {
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setString(1,isbn);
-					result = pstmt.executeUpdate();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}finally {
-					JDBCTemplate.close(pstmt);
-					JDBCTemplate.close(conn);
-				}
-				return result;
-		}
-	// 별점 평균
-	
-	public int avgScore(String isbn) {
-
-		int result = 0;
-		conn = JDBCTemplate.getConnection();
-		pstmt = null;
-		
-		String sql = "update book set siteRanks = siteRanks/count where isbn=?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -452,6 +432,29 @@ public class BookDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	
+	// 별점 평균
+	
+	public int avgScore(String isbn) {
+
+		int result = 0;
+		conn = JDBCTemplate.getConnection();
+		pstmt = null;
+		
+		String sql = "update book set avgsiteranks = siteRanks/count where isbn=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,isbn);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
 			JDBCTemplate.close(pstmt);
 			JDBCTemplate.close(conn);
 		}
