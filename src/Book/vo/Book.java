@@ -15,7 +15,15 @@ public class Book {
 	private String adult;
 	private String CategoryName;
 	private int siteRanks;
+	private int count;
 	
+	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public String getIsbn() {
 		return isbn;
 	}
@@ -93,6 +101,9 @@ public class Book {
 	public String toString() {
 		return "Book [isbn=" + isbn + ", title=" + title + ", author=" + author + ", publisher=" + publisher
 				+ ", pubDate=" + pubDate + ", description=" + description + ", pricesales=" + pricesales + ", cover="
-				+ cover + ", ranks=" + ranks + ", adult=" + adult + ", CategoryName=" + CategoryName + "]";
+				+ cover + ", ranks=" + ranks + ", adult=" + adult + ", CategoryName=" + CategoryName + ", siteRanks="
+				+ siteRanks + ", count=" + count + "]";
 	}
+	
+	
 }

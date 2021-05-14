@@ -18,7 +18,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import Book.vo.Book;
+import Book.vo.BookRental;
 import Member.vo.Genre;
+import Member.vo.Member;
 import common.JDBCTemplate;
 
 public class BookDAO {
@@ -346,7 +348,6 @@ public class BookDAO {
 		return list;
 	}
 
-	
 	// 책 상세 정보 불러오기
 	public List<Book> getBook (String isbn) {
 		
@@ -379,6 +380,7 @@ public class BookDAO {
 				book.setAdult(rs.getString("adult"));
 				book.setCategoryName(rs.getString("CategoryName"));
 				book.setSiteRanks(rs.getInt("siteranks"));
+				book.setCount(rs.getInt("count"));
 				
 				list.add(book);
 			}
@@ -394,7 +396,6 @@ public class BookDAO {
 		
 		return list;
 	}
-
 	// 별점 등록
 	public int addScore(String isbn, int score) {
 		
@@ -402,7 +403,7 @@ public class BookDAO {
 		conn = JDBCTemplate.getConnection();
 		pstmt = null;
 		
-		String sql = "update book set siteRanks = ? where isbn=?";
+		String sql = "update book set siteRanks = siteRanks+? where isbn=?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -429,8 +430,181 @@ public class BookDAO {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(conn);
 		}
 		return result;
 	}
 	
+	// 별점 평균
+	
+	public int avgScore(String isbn) {
+
+		int result = 0;
+		conn = JDBCTemplate.getConnection();
+		pstmt = null;
+		
+		String sql = "update book set siteRanks = siteRanks/count where isbn=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,isbn);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	
+	//대여한 책 리스트 가져오기
+	public List<BookRental> bookRentalList(String id,int start,int end){
+		List<BookRental> list = null;
+		
+		conn = JDBCTemplate.getConnection();
+		
+		String sql1 = "(select rownum r, b.* from (select * from rentallist rr join book b on rr.isbn = b.isbn where id='"+id+"') b order by rentno)";
+		String sql2 = "select * from "+sql1+" where r>="+start+" and r<="+end+"";
+		
+		try {
+			pstmt = conn.prepareStatement(sql2);
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<BookRental>();
+			while(rs.next()) {
+				BookRental book = new BookRental();
+				book.setRentno(rs.getInt(2));
+				book.setId(rs.getString(3));
+				book.setIsbn(rs.getString("isbn"));
+				book.setTitle(rs.getString("title"));
+				book.setAuthor(rs.getString("author"));
+				book.setPublisher(rs.getString("publisher"));
+				book.setPubDate(rs.getDate("pubDate"));
+				book.setDescription(rs.getString("descriptions"));
+				book.setCover(rs.getString("cover"));
+				book.setRanks(rs.getInt("ranks"));
+				book.setAdult(rs.getString("adult"));
+				book.setCategoryName(rs.getString("CategoryName"));
+				book.setSiteRanks(rs.getInt("siteranks"));
+				
+				list.add(book);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(conn);
+		}
+		
+		return list;
+	}
+	
+	//책 대여수
+	public int getRentalCount(String id) {
+		
+		conn = JDBCTemplate.getConnection();
+		
+		int result = 0;
+		String sql ="";
+		
+		
+		sql = "SELECT COUNT(*) FROM rentallist where id = '"+id+"'";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(conn);
+		}
+		
+		
+		return result;
+	}
+	
+	//대여했는지체크하기
+	public int bookRentalCkeck(String id, String isbn) {
+		int result = 0;
+		
+		conn = JDBCTemplate.getConnection();
+		pstmt = null;
+		rs = null;
+		
+		String sql = "select * from rentallist where id=? and isbn = ?";
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2,isbn);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = 1;
+			}else {
+				result = 0;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(conn);
+		}
+		
+		
+		return result;
+	}
+	
+	//책 대여하기
+	public int bookRental(Member m, String isbn) {
+		int result = 0;
+		int max = 0;
+		
+		conn = JDBCTemplate.getConnection();
+		pstmt = null;
+		rs = null;
+		
+		String sql = "insert into rentallist values(?,?,?)";
+		String maxSql = "select NVL(max(rentno),0)+1 from rentallist";
+		
+		try {
+			pstmt=conn.prepareStatement(maxSql);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				max = rs.getInt(1);
+			}
+			
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, max);
+			pstmt.setString(2,m.getId());
+			pstmt.setString(3,isbn);
+			
+			result = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(conn);
+		}
+
+		
+		return result;
+	}
 }
