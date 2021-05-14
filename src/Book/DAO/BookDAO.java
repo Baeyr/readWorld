@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -345,4 +346,91 @@ public class BookDAO {
 		return list;
 	}
 
+	
+	// 책 상세 정보 불러오기
+	public List<Book> getBook (String isbn) {
+		
+		List<Book> list = null;
+		
+		conn = JDBCTemplate.getConnection();
+		pstmt = null;
+		rs = null;
+		
+		
+		// 특정 isbn에 해당하는 책 상세 정보 가져오기
+		String sql = "select * from book where isbn = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,isbn);
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<Book>();
+			while(rs.next()) {
+				Book book = new Book();
+				book.setIsbn(rs.getString("isbn"));
+				book.setTitle(rs.getString("title"));
+				book.setAuthor(rs.getString("author"));
+				book.setPublisher(rs.getString("publisher"));
+				book.setPubDate(rs.getDate("pubDate"));
+				book.setDescription(rs.getString("descriptions"));
+				book.setCover(rs.getString("cover"));
+				book.setRanks(rs.getInt("ranks"));
+				book.setAdult(rs.getString("adult"));
+				book.setCategoryName(rs.getString("CategoryName"));
+				book.setSiteRanks(rs.getInt("siteranks"));
+				
+				list.add(book);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(conn);
+		}
+		
+		return list;
+	}
+
+	// 별점 등록
+	public int addScore(String isbn, int score) {
+		
+		int result = 0;
+		conn = JDBCTemplate.getConnection();
+		pstmt = null;
+		
+		String sql = "update book set siteRanks = ? where isbn=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, score);
+			pstmt.setString(2,isbn);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	// 별점 등록한 회원수 세기
+	public int addCount(String isbn) {
+		int result = 0;
+		conn = JDBCTemplate.getConnection();
+		pstmt = null;
+		
+		String sql = "update book set count = count+1 where isbn=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,isbn);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 }
