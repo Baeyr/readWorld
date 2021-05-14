@@ -49,10 +49,11 @@ public class Termination extends HttpServlet {
 		
 
 		int result = dao.TicketTermination(id, pwd);
+		int result2 = dao.TicketTermination2(id, pwd);
 		System.out.println(result);
 		System.out.println("id:" + id);
 
-		if (result > 0) {
+		if (result > 0 && result2 > 0) {
 			System.out.println("00");
 			out.print("<script>alert('대여권이 해지되었습니다.마이페이지로 이동합니다.');</script>");
 			out.print("<script>location.href='./MyPage';</script>");

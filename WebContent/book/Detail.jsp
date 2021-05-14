@@ -26,16 +26,16 @@
 			<c:forEach items="${detailbook}" var="item">
 					<h2>${item.title }</h2>
 			
-			<h2 class="booktitle"></h2>
+			<h2 class="booktitle"></h2>	<!-- 책 제목 출력 -->
 			<hr>
 			<img class="cover" alt="책 표지" src="${item.cover }">
 			<div class="bdiv">
 				<p> <span>${item.title }</span> <span>${item.author}</span></p>
 				<hr>
 				<p>카테고리: <%=request.getAttribute("category") %></p>
-				<p>발매일: ${item.pubDate }</p> 
-				<p>${item.publisher }</p> 
-				<p>${item.isbn }</p>
+				<p>발매일: ${item.pubDate }</p>
+				<p>출판사: ${item.publisher }</p> 
+				<p>ISBN: ${item.isbn }</p> 
 				<p class="agv"> <i class="fas fa-star"></i> ${item.siteRanks}점  (${item.count}명) </p> 
 			</div>
 			</c:forEach>

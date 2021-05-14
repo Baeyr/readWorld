@@ -138,12 +138,14 @@ ul{
 
 .re,.row1{
     height: 100%;
+    display: relative;
     text-align: center;
     vertical-align: middle;
-    width: 10%;
+    width: 15%;
 }
 
 .re {
+	width: 10%;
 	padding-right:3%;
 }
 
@@ -169,9 +171,16 @@ ul{
     margin-left: 5%;
 }
 
-.btns{
+.Bbtns{
     text-align: right;
     padding-right: 5%;
+    padding-bottom: 1%;
+}
+.btns{
+	padding:1px;
+}
+.bt{
+	padding:1px;
 }
 
 .putCmt, .putReCmt, .inputReCmt{
@@ -199,7 +208,7 @@ span, .bBtn{
     color: #1C4025;
 }
 
-.bBtn, .reDel, .reMod{
+.bBtn, .srBtn, .sdBtn, .smBtn{
     background-color: white;
     border: none;
     font-weight: bold;
@@ -211,7 +220,7 @@ span, .bBtn{
     line-height: 85px;
 }
 
-.reDel, .reMod{
+.srBtn, .sdBtn, .smBtn{
     font-size: 12px;
     padding: 5px;
     color: #F2EAC2;

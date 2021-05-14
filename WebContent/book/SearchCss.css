@@ -14,9 +14,12 @@ hr {
 	border: 2px solid #94A68F;
 }
 
-.boardsearch {
+.booksearch {
 	position: relative;
-	top: 200px;
+}
+
+.boardsearch {
+	
 }
 
 .title {
@@ -25,12 +28,12 @@ hr {
 }
 
 .viewBoard {
-	margin: 0px 10%;
+	margin: 50px 10%;
 }
 
 .booklist {
+	margin-left: 10%;
 	list-style: none;
-	margin: 0px 10%;
 	padding: 0px;
 }
 
@@ -45,7 +48,7 @@ hr {
 	width: 250px;
 	height: 250px;
 	margin-top: 20px;
-	margin-bottom: 100px;
+	margin-bottom: 200px;
 	margin-left: 10px;
 	margin-right: 10px;
 	text-align: center;
@@ -69,13 +72,16 @@ hr {
 .boardTitle {
 	font-weight: bold;
 	font-size: 20px;
+	color: #1c4025;
 }
 
 .boardUser {
 	font-size: 13px;
-	color: gray;
+	color: #1c4025;
 }
 
 .boardData {
-	font-size: 13px;
+	font-size: 20px;
+	color: 94a68f;
+	padding-left: 50px;
 }

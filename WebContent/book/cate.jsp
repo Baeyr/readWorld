@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<link href="${pageContext.request.contextPath}/book/CateCss.css?456" rel="stylesheet" type = "text/css">
+	<link href="${pageContext.request.contextPath}/book/CateCss.css?ver1" rel="stylesheet" type = "text/css">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -61,17 +61,17 @@
         							
             						htmls += "<ul>";
             						htmls += "<li>";
-             						htmls += "<a>";
+             						htmls += "<a href=\"bookDetail.do?isbn="+e.isbn+"\">";
              						htmls += "<img src=\"" + e.cover + "\">";
              						htmls += "</a>";
             						htmls += "</li>";
-          							htmls += "<li>";
-           							htmls += "<a>";
+          							htmls += "<li class=\"title\">";
+           							htmls += "<a href=\"bookDetail.do?isbn="+e.isbn+"\">";
              						htmls += e.title;
              						htmls += "</a>";
                 					htmls += "</li>"
-                					htmls += "<li>"
-                						htmls += "<a>";
+                					htmls += "<li class=\"author\">"
+                						htmls += "<a href=\"bookDetail.do?isbn="+e.isbn+"\">";
              						htmls += e.author;
              						htmls += "</a>";	
                         			htmls += "</li>"
@@ -109,17 +109,17 @@
    						$.each(data,function(index,e){
        						htmls += "<ul>";
        						htmls += "<li>";
-        						htmls += "<a>";
+        						htmls += "<a href=\"bookDetail.do?isbn="+e.isbn+"\">";
         						htmls += "<img src=\"" + e.cover + "\">";
         						htmls += "</a>";
        						htmls += "</li>";
-     							htmls += "<li>";
-      							htmls += "<a>";
+     							htmls += "<li class=\"title\">";
+      							htmls += "<a href=\"bookDetail.do?isbn="+e.isbn+"\">";
         						htmls += e.title;
         						htmls += "</a>";
            					htmls += "</li>"
-           					htmls += "<li>"
-           						htmls += "<a>";
+           					htmls += "<li class=\"author\">"
+           						htmls += "<a href=\"bookDetail.do?isbn="+e.isbn+"\">";
         						htmls += e.author;
         						htmls += "</a>";	
                    			htmls += "</li>"

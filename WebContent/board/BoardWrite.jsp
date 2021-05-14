@@ -25,62 +25,86 @@
     </div>
     <div class="body">
     
+   <c:if test="${qna ne 0}">
+   		<!-- 새로운 게시글 작성하는 경우 -->
+   		<c:if test="${empty modvo }">
+	       <form action="<%=request.getContextPath()%>/boardWrite.do" method="post" class="form" onsubmit="return check()">
+	    	<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+		    <input type="hidden" name="modiCheck" value="notmodify">	    
+		    <table class="board">
+		        <tr>
+		            <td><input class="title" type="text" name="BoardTitle" placeholder="제목"></td>
+		        </tr>
+		        <tr>
+		            <td>
+		            <textarea name="BoardContent" id="BoardContent" cols="71" rows="30" placeholder="내용을 입력하세요"></textarea>
+		            <script type="text/javascript">
+						 CKEDITOR.replace('BoardContent', {
+							 height: 500,
+						 	 filebrowserUploadUrl: '${pageContext.request.contextPath }/img'
+		                 });
+					</script>
+					
+		            </td>
+		        </tr>
+		    </table>
+	    	<input type="submit" value="등록하기" class="btn1">
+	    </form>
+	    </c:if>
+	    
+	    <!-- 존재하는 게시글을 수정하는 경우 -->
+	    <c:if test="${not empty modvo }">
+	          <form action="<%=request.getContextPath()%>/boardWrite.do" method="post" enctype="multipart/form-data" class="form">
+	    	<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+	    	<input type="hidden" name="boardno" value="${modvo.boardno }">
+	    	<input type="hidden" name="modiCheck" value="modify">	   
+		 <table class="board">
+		        <tr>
+		            <td><input class="title" type="text" name="BoardTitle" value="${modvo.boardtitle }"></td>
+		        </tr>
+		        <tr>
+		            <td>
+		            <textarea name="BoardContent" id="BoardContent" cols="71" rows="30">${modvo.boardcontent }</textarea>
+		            <script type="text/javascript">
+						 CKEDITOR.replace('BoardContent'
+		                , {height: 500,filebrowserUploadUrl: '${pageContext.request.contextPath }/img'                                                 
+		                 });
+					</script>
+		            </td>
+		        </tr>
+		    </table>
+	    	<input type="submit" value="등록하기" class="btn1">
+	    </form>
+	    
+	    </c:if>
+   </c:if>
     
-   <!-- 새로운 게시글 작성하는 경우 -->
-    <c:if test="${empty modvo }">
-       <form action="<%=request.getContextPath()%>/boardWrite.do" method="post" class="form" onsubmit="return check()">
-    	<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
-	    <input type="hidden" name="modiCheck" value="notmodify">	    
-	    <table class="board">
-	        <tr>
-	            <td><input class="title" type="text" name="BoardTitle" placeholder="제목"></td>
-	        </tr>
-	        <tr>
-	            <td>
-	            <textarea name="BoardContent" id="BoardContent" cols="71" rows="30" placeholder="내용을 입력하세요"></textarea>
-	            <script type="text/javascript">
-					 CKEDITOR.replace('BoardContent', {
-						 height: 500,
-					 	 filebrowserUploadUrl: '${pageContext.request.contextPath }/img'
-	                 });
-				</script>
-				
-	            </td>
-	        </tr>
-	    </table>
-    	<input type="submit" value="등록하기" class="btn1">
-    </form>
-    </c:if>
-    
-    <!-- 존재하는 게시글을 수정하는 경우 -->
-    <c:if test="${not empty modvo }">
-    
-          <form action="<%=request.getContextPath()%>/boardWrite.do" method="post" enctype="multipart/form-data" class="form">
-    	<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
-    	<input type="hidden" name="boardno" value="${modvo.boardno }">
-    	<input type="hidden" name="modiCheck" value="modify">	   
-	 <table class="board">
-	        <tr>
-	            <td><input class="title" type="text" name="BoardTitle" value="${modvo.boardtitle }"></td>
-	        </tr>
-	        <tr>
-	            <td>
-	            <textarea name="BoardContent" id="BoardContent" cols="71" rows="30">${modvo.boardcontent }</textarea>
-	            <script type="text/javascript">
-					 CKEDITOR.replace('BoardContent'
-	                , {height: 500,filebrowserUploadUrl: '${pageContext.request.contextPath }/img'                                                 
-	                 });
-				</script>
-	            </td>
-	        </tr>
-	    </table>
-    	<input type="submit" value="등록하기" class="btn1">
-    </form>
-    
-    </c:if>
-    
- 
-    </div>
+   <!-- qna일 경우 -->
+   <c:if test="${qna eq 0}">
+   		<form action="<%=request.getContextPath()%>/Qna" method="post" class="form" onsubmit="return check()">
+	    	<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+		    <input type="hidden" name = "ref" value="${ref}">    
+		    <table class="board">
+		        <tr>
+		            <td><input class="title" type="text" name="BoardTitle" placeholder="제목"></td>
+		        </tr>
+		        <tr>
+		            <td>
+		            <textarea name="BoardContent" id="BoardContent" cols="71" rows="30" placeholder="내용을 입력하세요"></textarea>
+		            <script type="text/javascript">
+						 CKEDITOR.replace('BoardContent', {
+							 height: 500,
+						 	 filebrowserUploadUrl: '${pageContext.request.contextPath }/img'
+		                 });
+					</script>
+					
+		            </td>
+		        </tr>
+		    </table>
+	    	<input type="submit" value="등록하기" class="btn1">
+	    	</form>
+   </c:if>
+   </div>
 
     <script>
 		function check() {

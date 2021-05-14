@@ -423,20 +423,18 @@ public class BookDAO {
 		pstmt = null;
 		
 		String sql = "update book set count = count+1 where isbn=?";
-		
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,isbn);
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			JDBCTemplate.close(pstmt);
-			JDBCTemplate.close(conn);
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1,isbn);
+					result = pstmt.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}finally {
+					JDBCTemplate.close(pstmt);
+					JDBCTemplate.close(conn);
+				}
+				return result;
 		}
-		return result;
-	}
-	
 	// 별점 평균
 	
 	public int avgScore(String isbn) {
@@ -453,7 +451,7 @@ public class BookDAO {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
+		}finally {
 			JDBCTemplate.close(pstmt);
 			JDBCTemplate.close(conn);
 		}

@@ -67,7 +67,7 @@ public class PurchaseDAO {
  	public List<PurchaseJoin> memberShipList(String id){
  		List<PurchaseJoin> list = null;
 		
-		String sql1 = "(select * from purchase where id='"+id+"') a join membership";
+		String sql1 = "(select * from purchase where id='"+id+"' order by beforedate desc) a join membership";
 		String sql2 = "select a.*,membership.membershipname from "+sql1+" on a.membershipno = membership.membershipno " + 
 				"where rownum<=5";
 		

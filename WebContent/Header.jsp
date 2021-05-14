@@ -116,6 +116,7 @@
 	$(function(){
 			$("#mbsUser").click(function(e){
 				var dd = ${user.membership};
+				console.log(dd);
 				if(dd == 0){
 					location.href='${pageContext.request.contextPath}/membership';
 				}else{

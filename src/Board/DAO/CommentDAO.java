@@ -108,4 +108,24 @@ public class CommentDAO {
 		}
 		return result;
 	}
+	//코멘트 삭제
+	
+		public int commentDelete(Comment co) {
+			int result=0;
+			String sql="delete from cmt where commentno=?";
+			conn=JDBCTemplate.getConnection();
+			pstmt=null;
+			
+			try {
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, co.getCommentno());
+				result=pstmt.executeUpdate();
+				System.out.println(result);
+			} catch(SQLException e) {
+				e.printStackTrace();
+			} finally {
+				dao.close();
+			}
+			return result;
+		}
 }

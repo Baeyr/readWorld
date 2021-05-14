@@ -19,7 +19,7 @@ public class SeachDao {
 		ResultSet rs = null;
 		conn = JDBCTemplate.getConnection();
 		
-		String sql = "select * from book where title like '%"+ search +"%'";
+		String sql = "select * from book where title like '%"+ search +"%' and adult = 'false'";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -60,7 +60,7 @@ public class SeachDao {
 		ResultSet rs = null;
 		conn = JDBCTemplate.getConnection();
 		
-		String sql = "select * from board where boardtitle like '%"+ search +"%' or boardcontent like '%"+ search + "%'";
+		String sql = "select * from board where boardtitle like '%"+ search +"%' or boardcontent like '%"+ search + "%' or id like '%" + search + "%'";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

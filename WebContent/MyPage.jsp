@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>마이페이지</title>
-<link href="MypageStyle.css?ver=39" rel="stylesheet" type = "text/css">
-
+<link href="MypageStyle.css?ver=32" rel="stylesheet" type = "text/css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <jsp:include page="Header.jsp"></jsp:include>
@@ -18,13 +18,23 @@
             <article id="main_article1" class="header">
                 <hr>
                 <div>
-                    <span class="s">게인페이지</span></a>
-                    <span class="s s1" >
+                    <span class="s">
+                    	게인페이지 :
+                    	<c:if test="${msckeck ne 0}">
+                    		회원권 적용중
+                    	</c:if>
+                    </span>
+                    
+                    <c:if test="${id ne 'admin'}">
+                    	<span class="s s1" >
                         <a href = "./RTermination">대여권 해지</a>&nbsp;&nbsp;
                         <a href = "./DeletePage">회원탈퇴</a>
                     </span>
+                    </c:if>
                 </div>
+                
                 <hr>
+                <c:if test="${id ne 'admin'}">
                 <div class="msBuy">
                     <h3>회원권 구매내역</h3>
                     <!-- 회원권을 구매한적이 없을경우 -->
@@ -34,8 +44,14 @@
                     
                     <!-- 회원권을 구매한적이 있을경우 -->
                     <c:if test="${not empty purchases}">
-                    	<c:forEach items="${purchases}" var="pli">
+                    	<c:forEach items="${purchases}" var="pli" varStatus="status">
                     		<ul class="msList">
+		                        <c:if test="${delM[status.index] eq 1}">
+		                        	<li class="delM">중도해지</li>
+			                     </c:if>
+			                     <c:if test="${delM[status.index] eq 2}">
+			                     	<li class="delM">&nbsp;</li>
+			                     </c:if>
                     			<c:choose>
                     				<c:when test="${pli.membershipno == 1}">
 		                        		<li><img src="/SEMI/image/1week.png"></li>
@@ -61,7 +77,8 @@
                     	</c:forEach>
                     </c:if>
                 </div>
-
+				</c:if>
+				<c:if test="${id ne 'admin'}">
                 <hr class="line">
 
                 <div class="bookBuy">
@@ -70,16 +87,31 @@
                     	<h2>대여한 책이 없습니다.</h2>
                     </c:if>
                     <c:if test="${not empty rentalBook}">
-                    	<ul class="msList">
-	                        <li class="cover"><a href="#"><img src="${item.cover}"></a></li>
-	                        <li class="title"><a href="#">${item.title}</a></li>
-	                        <li class="author"><a href="#">${item.author}</a></li>
-	                    </ul>
+                    	<c:forEach items="${rentalBook}" var="item">
+                    		<ul class="msList">
+	                        	<li class="cover"><a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}"><img src="${item.cover}"></a></li>
+	                        	<li class="title"><a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}">${item.title}</a></li>
+	                        	<li class="author"><a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}">${item.author}</a></li>
+	                    	</ul>
+                    	</c:forEach>
+	                    <div id="page">
+		                    <ul id="moveP">
+							<c:if test="${startPage4!=1}">
+				            	<li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${startPage4-1}">◀</a></li>
+							</c:if>
+							<c:forEach begin="${startPage4}" end="${endPage4}" var="page" step="1">
+		                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${page}">${page}</a></li>
+							</c:forEach>
+							<c:if test="${endPage4 < pageCnt4 }">
+		                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${endPage4+1}">▶</a></li>
+							</c:if>
+		                    </ul>
+                		</div>
                     </c:if>
                 </div>
 
                 <hr class="line">
-
+				</c:if>
                 <div class="myBoard">
                     <h3>내가 쓴 글</h3>
                     <table class="board" border="1">
@@ -121,24 +153,115 @@
 	                    </ul>
                 	</div>
                 </div>
-
+                
+				<c:if test="${id ne 'admin'}">
                 <hr class="line">
-
-                <div class="myBoard">
+                <div class="myQna">
+                    <h3>1대1 문의글</h3>
+                    <a id="qnaW" href="<%=request.getContextPath()%>/QnaWrite?qna=0"><h3>문의하기</h3></a>
+                    <table id="qnaT" border="1">
+                    	<c:if test = "${empty myQna}">
+                    		<tr>
+                    			<td><h3>작성한 문의글이 없습니다.</h3></td>
+                    		</tr>
+                    	</c:if>
+                    	<c:if test = "${not empty myQna}">
+                    		<c:forEach items="${myQna}" var="bl">
+	                    		<tr class="accordian">
+	                            <td class="tableCon no">${bl.qnano}</td>
+	                            <c:if test="${bl.id eq 'admin'}">
+	                            	<td class="tableCon title">-▶ 답변 : ${bl.qnatitle}</td>
+	                            </c:if>
+	                            <c:if test ="${bl.id ne 'admin'}">
+	                            	<td class="tableCon title">${bl.qnatitle}</td>
+	                            </c:if>
+	                            <td class="tableCon author" style="text-align: center;">${bl.id}</td>
+	                            <td class="tableCon date" style="text-align: center;">${bl.qnadate}</td>
+		                        </tr>
+		                        <tr class="pannel">
+		                        	<td colspan="4">
+		                        		<p>&nbsp; ${bl.qnacontent}</p>
+		                        	</td>
+		                        </tr>
+	                        </c:forEach>
+                    	</c:if>
+                    </table>
+                    <div id="page">
+	                    <ul id="moveP">
+						<c:if test="${startPage2!=1}">
+			            	<li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${startPage2-1}">◀</a></li>
+						</c:if>
+						<c:forEach begin="${startPage2}" end="${endPage2}" var="page" step="1">
+	                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${page}">${page}</a></li>
+						</c:forEach>
+						<c:if test="${endPage2 < pageCnt2 }">
+	                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${endPage2+1}">▶</a></li>
+						</c:if>
+	                    </ul>
+                	</div>
+                </div>
+                </c:if>
+                
+                <c:if test="${id eq 'admin'}">
+                <hr class="line">
+                <div class="QnaAll">
                     <h3>1대1 문의글</h3>
                     <table border="1">
-                        <tr>
-                            <td class="btitle" rowspan="2"><h3>글제목ss</h3></td>
-                            <td class="Bdate bb">2020-01-05</td>
-                            <td class="BID bb">아이디</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="Bcont bb">글내용숄라로쇼ㅕㄹ라랄라라라라라~~~~</td>
-                        </tr>
+                    	<c:if test = "${empty allQna}">
+                    		<tr>
+                    			<td><h3>작성한 문의글이 없습니다.</h3></td>
+                    		</tr>
+                    	</c:if>
+                        <c:if test = "${not empty allQna}">
+                    		<c:forEach items="${myQna}" var="bl">
+	                    		<tr class="accordian">
+	                            <td class="tableCon no">${bl.qnano}</td>
+	                            <c:if test="${bl.id eq 'admin'}">
+	                            	<td class="tableCon title">-▶ 답변 : ${bl.qnatitle}</td>
+	                            </c:if>
+	                            <c:if test ="${bl.id ne 'admin'}">
+	                            	<td class="tableCon title">${bl.qnatitle}</td>
+	                            </c:if>
+	                            <td class="tableCon author" style="text-align: center;">${bl.id}</td>
+	                            <td class="tableCon date" style="text-align: center;">${bl.qnadate}</td>
+		                        </tr>
+		                        <tr class="pannel">
+		                        	<td colspan="4">
+		                        		<p>&nbsp; ${bl.qnacontent}</p>
+		                        		<c:if test ="${bl.id ne 'admin'}">
+			                        		<a href="<%=request.getContextPath()%>/QnaWrite?qna=0&ref=${bl.qnano}" id="qnaW"><p>&nbsp;답변하기&nbsp;</p></a>	                        		
+		                        		</c:if>
+		                        	</td>
+		                        </tr>
+	                        </c:forEach>
+                    	</c:if>
                     </table>
+                    <div id="page">
+	                    <ul id="moveP">
+						<c:if test="${startPage3!=1}">
+			            	<li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${startPage3-1}">◀</a></li>
+						</c:if>
+						<c:forEach begin="${startPage3}" end="${endPage3}" var="page" step="1">
+	                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${page}">${page}</a></li>
+						</c:forEach>
+						<c:if test="${endPage3 < pageCnt3 }">
+	                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${endPage3+1}">▶</a></li>
+						</c:if>
+	                    </ul>
+                	</div>
                 </div>
+                </c:if>
             </article>
         </section>
     </div>
 </body>
+
+<script>
+	$(function(){
+	    $('.accordian').click(function(e){
+	        e.preventDefault();
+	        $(this).next().slideToggle();
+	    })
+	});
+</script>
 </html>

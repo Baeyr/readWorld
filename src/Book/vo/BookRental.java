@@ -2,7 +2,9 @@ package Book.vo;
 
 import java.sql.Date;
 
-public class Book {
+public class BookRental {
+	private int rentno;
+	private String id;
 	private String isbn;
 	private String title;
 	private String author;
@@ -15,13 +17,18 @@ public class Book {
 	private String adult;
 	private String CategoryName;
 	private int siteRanks;
-	private int count;
 	
-	public int getCount() {
-		return count;
+	public int getRentno() {
+		return rentno;
 	}
-	public void setCount(int count) {
-		this.count = count;
+	public void setRentno(int rentno) {
+		this.rentno = rentno;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getIsbn() {
 		return isbn;

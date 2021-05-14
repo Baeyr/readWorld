@@ -1,6 +1,8 @@
 package Board.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -46,16 +48,19 @@ public class BoardListControl extends HttpServlet {
 	protected void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		
 		HttpSession session = request.getSession();
 		Member member = new Member();
 		member = (Member) session.getAttribute("user");
-		
-		
 		String search = request.getParameter("search");
-//		if(member == null) {
-//			request.getRequestDispatcher("/login").forward(request, response);
-//		}
+		
+		if(member == null || member.getId() == null) {
+			out.println("<script>alert('로그인 후 이용해주세요')</script>");
+			out.println("<script>location.href='/SEMI/login'</script>");
+			out.close();
+			//request.getRequestDispatcher("/login").forward(request, response);
+		}
 		
 		
 		int pageSize = 10 ; // 한 페이지당 게시글 수
@@ -65,13 +70,16 @@ public class BoardListControl extends HttpServlet {
 		
 		BoardDAO dao = new BoardDAO();
 		List<Board> list = null;
+		List<Integer> cnt1=new ArrayList<Integer>();
+		cnt1=dao.fixedList();
+		int cnt2=cnt1.size();
+		System.out.println(cnt2);
 		
 		// 페이지 번호
 		cnt = dao.getBoardCount();
-		
-		int pageCnt = (cnt-7/pageSize) + 1 + (cnt%pageSize == 0?0:1);	// 총 페이지 개수 1페이지 일반글 7개 (공지글 3개 별도 출력)
-		
-		
+		int pageCnt = (cnt/pageSize) + (cnt%pageSize == 0?0:1);	
+		System.out.println("페이지"+cnt);
+		System.out.println("페이징"+pageCnt);		
 		String PageNumber = request.getParameter("PageNumber");
 		
 		if(PageNumber!=null) {	// 클릭된 숫자가 현재 페이지 
@@ -91,61 +99,53 @@ public class BoardListControl extends HttpServlet {
 			startPage = (currentPage/pageBlock)*pageBlock  + 1;
 		}
 		endPage = startPage + pageBlock - 1;
+		System.out.println("페이지"+startPage+" 끝"+endPage+" 합"+pageCnt);
 		
 		//총 페이지 개수보다 endPage가 더 클 수 없음
 		if(endPage > pageCnt) {
 			endPage = pageCnt;
 		}
-		int startRnum = 8;
-		int endRnum = 0;
+		int startRnum = cnt-cnt2;
+		int endRnum = startRnum-6;
 		
-	
-		
-	if(currentPage==1) {
-			pageSize=7;
-			startRnum = (currentPage-1)*pageSize +1;
-			endRnum = startRnum + pageSize - 1;
-		} else if (currentPage==2){
-			endRnum = startRnum + pageSize - 1;
+		if(currentPage==1) {
+			System.out.println("시작1 "+startRnum+"끝1 "+endRnum);
+		} else if(currentPage==2) {
+			pageSize = 7;
+			startRnum -= pageSize;
+			endRnum = startRnum-pageSize-2;
+			System.out.println("시작2 "+startRnum+"끝2 "+endRnum);
 		} else {
-			startRnum = (currentPage-1)*pageSize -2;
-			endRnum = startRnum + pageSize - 1;
+			pageSize=10;
+			startRnum = startRnum - pageSize*(currentPage-2) - 7;
+			endRnum = startRnum - pageSize*(currentPage-2) + 1;
+			System.out.println("시작3 "+startRnum+"끝3 "+endRnum);
+			
+	
 		}
 		
-		if(endRnum > cnt) {
-			endRnum = cnt;
-		}
 		
-		
-		list = dao.getBoardList(startRnum, endRnum, search);
-		
+			
 		if(search !=null && !search.equals("")) {
+			list = dao.getBoardList(startRnum, endRnum,search);
 			request.setAttribute("startPage", startPage);
 			request.setAttribute("endPage", endPage);
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("pageCnt", pageCnt);
 			request.setAttribute("boardList", list);
 			request.setAttribute("search", search);
-			System.out.println("@@@@@@@@@@@");
-			// TODO: 경로 확인
-			// 리스트 페이지로 이동 
+			
 			request.getRequestDispatcher("board/BoardList.jsp").forward(request, response);
 		}else {
+			list = dao.getBoardList(startRnum, endRnum);
 			request.setAttribute("startPage", startPage);
 			request.setAttribute("endPage", endPage);
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("pageCnt", pageCnt);
 			request.setAttribute("boardList", list);
-			System.out.println("!!!!!!!!!!!");
-			System.out.println(request.getAttribute("boardList"));
-			System.out.println("현재페이지"+request.getAttribute("currentPage"));
 			
-			// TODO: 경로 확인
-			// 리스트 페이지로 이동 
 			request.getRequestDispatcher("board/BoardList.jsp").forward(request, response);
 		}
-		
-		
 	}
 
 	

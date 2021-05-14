@@ -9,7 +9,7 @@
 <%@include file="../Header.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="s"%>
-<s:setDataSource url="jdbc:oracle:thin:@localhost:1521:xe"
+<s:setDataSource url="jdbc:oracle:thin:@112.221.156.36:1521:xe"
 	driver="oracle.jdbc.driver.OracleDriver" user="ReadWorld"
 	password="1234" var="dt" scope="page" />
 <s:query
@@ -26,8 +26,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript"></script>
     <link rel="stylesheet" href="<%=request.getContextPath() %>/reset.css">
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/board/readStyle.css?asd">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/board/readStyle.css?123">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css?123" />
 </head>
 <body>
 <% 
@@ -72,11 +72,29 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="btns">
+                            <td class="Bbtns btns1">
 							<!-- 게시글 작성자 id와 로그인한 id가 일치할 때만 수정, 삭제 버튼 보이도록 해야 됨 -->
 							<c:if test="${nowId eq readboard.id}">
 								<button type="button" class="bBtn mod" id="modB">수정하기</button>
 	                         	<button type="button" class="bBtn del" id="delB">삭제하기</button>
+								<script>
+									var delB = document.getElementById("delB");
+								    var modB = document.getElementById("modB");
+								    var form = document.getElementById("frm"); 
+								    
+								    delB.onclick = function(){
+								    	form.action	= "boardDelete.do";
+								    	form.method="post";
+								    	form.submit();
+								    }
+								    
+								    modB.onclick = function(){
+								    	form.action = "BoardModify.do";
+								    	form.method = "post";
+								    	form.submit();
+								    	
+								    }
+								</script>
 							</c:if>
 	                         
                             </td>
@@ -94,7 +112,7 @@
                             <td class="text">
                                 <textarea class="putCmt"></textarea>
                             </td>
-                            <td class="btns textBtn">
+                            <td class="textBtn">
                                 <button type="submit" class="bBtn" id="putCmt">입력하기</button>
                             </td>
                         </tr>
@@ -105,18 +123,20 @@
 						<c:if test="${i['cmtstep']==1}">
 							<table class="table3-${i['cmtrootno']}">
 							<tr class="row3">
-								<td rowspan="2">
-								</td>
-								<td class="row1"><i class="far fa-times-circle"></i>${i['id']}</td>
-								<td class="row2" rowspan="2">
+								<td class="row1" colspan="2"><i class="far fa-times-circle"></i>${i['id']}</td>
+								<td></td>
+								<td class="row2" rowspan="2" colspan="2">
 									<p class="reCmt">${i['cmtcontent']}</p>
 								</td>
 							</tr>
 							<tr class="re">
-									<td class="btns"><button type="button" class="srBtn reDel">답글</button>
-									<input type="hidden" class="wrId" value="${i['id']}">								
+									<td><button type="button" class="srBtn">답글</button></td>
+									<c:if test="${nowId eq i['id']}">
+									<td class="btns">
 									<input type="hidden" class="cmtNo" value="${i['commentno']}">
-									<button type="button" class="smBtn reMod">수정</button></td>
+									<button type="button" class="smBtn">수정</button>
+									<button type="button" class="sdBtn">삭제</button></td>
+									</c:if>
 							</tr>
 						</table>
 							<hr>
@@ -131,10 +151,12 @@
 									<p class="reCmt">${i['cmtcontent']}</p>
 								</td>
 							</tr>
-							<tr class="btns re">
-								<td><input type="hidden" class="wrId" value="${i['id']}">
-								<input type="hidden" class="cmtNo" value="${i['commentno']}">
-								<button type="button" class="smBtn reMod">수정</button></td>
+							<tr class="re">
+							<c:if test="${nowId eq i['id']}">
+								<td class="btns"><input type="hidden" class="cmtNo" value="${i['commentno']}">
+								<button type="button" class="smBtn">수정</button>
+								<button type="button" class="sdBtn">삭제</button></td>
+							</c:if>
 							</tr>
 						</table>
 								<hr>
@@ -147,23 +169,7 @@
     
     <script src="<%=request.getContextPath()%>/board/readScript.js"></script>	
 <script>
-    
-    var delB = document.getElementById("delB");
-    var modB = document.getElementById("modB");
-    var form = document.getElementById("frm"); 
-    
-    delB.onclick = function(){
-    	form.action	= "boardDelete.do";
-    	form.method="post";
-    	form.submit();
-    }
-    
-    modB.onclick = function(){
-    	form.action = "BoardModify.do";
-    	form.method = "post";
-    	form.submit();
-    	
-    }
+	
     
     
     $(function(){
@@ -211,11 +217,8 @@
     		})
     		
     	};
-    	
-    	
     
-    likeCount(); // 처음 시작했을 때 실행되도록 해당 함수 호출
-    
+    	likeCount(); // 처음 시작했을 때 실행되도록 해당 함수 호출
     });
     
     </script>

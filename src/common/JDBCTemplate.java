@@ -8,20 +8,24 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 
 
 
 public class JDBCTemplate {
 	public static Connection getConnection() {
 		Connection conn = null;
-		Properties prop = new Properties();
 		
 		try {
-			String currentPath = JDBCTemplate.class.getResource("./").getPath();
-			prop.load(new BufferedReader(new FileReader(currentPath+"driver.properties"))); 
-			Class.forName(prop.getProperty("driver")); 
-			conn = DriverManager.getConnection(prop.getProperty("url"), 
-					prop.getProperty("user"), prop.getProperty("pwd"));
+			Context initContext = new InitialContext();
+			Context initContext2 = (Context)initContext.lookup("java:/comp/env"); 
+				//web.xml파일로 가서 찾기
+			DataSource ds = (DataSource)initContext2.lookup("jdbc/readWolrd"); 
+				//xml내에서 db관련 찾기
+			conn = ds.getConnection();
 			
 			if(conn != null) {
 				System.out.println("db 연결 성공");

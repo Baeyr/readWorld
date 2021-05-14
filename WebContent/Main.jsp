@@ -3,14 +3,18 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>읽기편한 세상</title>
-	<link href="mainCss.css?555" rel="stylesheet" type = "text/css">
+	<link href="mainCss.css?ver=38" rel="stylesheet" type = "text/css">
+	
 </head>
 <body>
 	<jsp:include page="Header.jsp"></jsp:include>
+	<aside>
+	</aside>
 	<div id="main_content">
         <section>
             <article id="main_article1">
@@ -24,7 +28,7 @@
                         	<tr class="titleTr">
                         		<td class="title"><a href="<%=request.getContextPath()%>/bookDetail.do?isbn=${item.isbn}">${item.title}</a></td>
                         	</tr>
-                        	<tr class="authorTr">
+                        	<tr class="authorTr">	
                         		<td class="author"><a href="#">${item.author}</a></td>
                         	</tr>
                         </c:forEach>

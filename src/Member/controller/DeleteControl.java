@@ -63,7 +63,7 @@ public class DeleteControl extends HttpServlet {
 
 		if(result > 0) {
 			System.out.println("05"); // ?
-			out.print("<script>alert('삭제되었습니다. 맨처음페이지로 이동합니다.');location.href='SEMI/login'</script>");
+			out.print("<script>alert('삭제되었습니다. 맨처음페이지로 이동합니다.'); location.href='./login'</script>"); // 경로문제..
 		} else {
 			System.out.println("06");
 			out.print("<script>alert('비밀번호를 다시 확인해주세요');history.back()</script>");

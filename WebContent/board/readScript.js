@@ -2,6 +2,16 @@ var cnt=0;
 var idx1="";
 var idx2="";
 
+$(function(){
+	var id=String($('#loginId').val());
+	var wrId=String($('.lineNo3').text());
+	
+	if(id==wrId){
+	$('.btns1').css('display','block');
+	} else {
+	$('.btns1').css('display','none');
+	}
+})
 $(".mod").click(function(){
     location.href="#";
 })
@@ -132,6 +142,23 @@ $(document).on("click","#modReCmt",function(){
 	});
 })
 
+$(document).on("click",".sdBtn",function(){
+	var cmtno=String($(this).prev().prev().val());
+	$.ajax({
+		url:'commentDelete',
+		type:'POST',
+		data:{
+			commentno:cmtno
+		},
+		success: function(msg){
+			alert("성공");
+			location.reload(true);
+		},
+		error:function(request, error){
+			alert("code"+request.status+"\n"+"message:"+request.responseText+"\n"+"error"+error);
+		}
+	});
+})
 $(".reDel").click(function(){
 	
 })

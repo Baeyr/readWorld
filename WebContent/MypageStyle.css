@@ -1,0 +1,180 @@
+@charset "UTF-8";
+
+ section{
+            height:1000px;
+            margin: auto;
+            background-color: white;
+        }
+
+        #main_article1,#main_article2{
+            height: 100px;
+            margin: auto;
+            clear: both;
+        }
+
+        .header,.bodys {
+            clear: both;
+            position: relative;
+            top: 50px;
+        }
+        
+        hr,table{
+            width: 80%;
+            border: 2px solid #94A68F;
+        }
+
+        hr.line{
+            width: 80%;
+            border: 1px solid #94A68F;
+        }
+
+        table{
+            margin-left: 10%;
+            margin-top: 30px;
+        }
+
+        span {
+            margin-left: 15%;
+            color: #730202;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .s1 {
+            float: right;
+            margin-right: 15%;
+        }
+
+        .s1 a{
+            text-decoration: none;
+            color : #F2EAC2;
+        }
+
+        .msBuy,.bookBuy,.myBoard,.myQna,.QnaAll{
+            width: 80%;
+            height: 300px;
+            margin-left: 10%;
+        }
+        
+        .delM{
+        	color: #730202;
+        	font-size: 20px;
+        	font-weight: bold;
+        }
+
+        .msList{
+            list-style: none;
+            float: left;
+            width: 160px;
+            text-align: center;
+        }
+
+        .msList li{
+            margin-top: 4px;
+        }
+
+        .msList img{
+            width:150px;
+        }
+
+        .header h3{
+           color: #730202;
+        }
+
+        .bookBuy img{
+            width: 100px;
+        }
+        
+        .tableTop{
+            color: #F2EAC2 ;
+        }
+
+        .tableCon{
+            color:#400101;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        
+        .no{
+            width: 15px;
+            text-align: center;
+        }
+
+        .title{
+            width: 75%;
+            padding-left: 10px;
+        }
+		
+		.title a{
+			text-decoration: none;
+			color : #400101;
+			font-size: 15px;
+		}
+
+        .author a{
+        	color : #400101;
+            font-size: 13px;
+            text-decoration: none;
+        }
+        
+        #page{
+            height: 100px;
+            margin: auto;
+            clear: both;
+            text-align: center;
+        }
+        
+         #moveP{
+           display: inline-block;
+        }
+
+        #moveP li{
+            float: left;
+            list-style: none;
+            border: 1px solid #1C4025;
+            border-radius: 5px;
+            padding: 2px 5px;
+            margin: 3px;
+        }
+
+        #moveP a{
+            text-decoration: none;
+            color: #400101;
+        }
+        
+        .accordian{
+            width: 100%;
+            padding: 20px;
+            border: none;
+            transition: .7s;
+        }
+        
+        .accordian tr:hover{
+            background-color: #94A68F;
+            color : #F2EAC2;
+        }
+        
+        .pannel{
+            display: none;
+            overflow: hidden;
+        }
+        
+        #qnaW{
+        	display: block;
+        	text-decoration: none;
+        	float: right;
+        }
+        
+        .myQna h3{
+        	display: block;
+        	float: left;
+        }
+        
+        .myQna{
+        	clear: both;
+        }
+        
+        #qnaT{
+        	clear: both;
+        }
+        

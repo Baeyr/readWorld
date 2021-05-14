@@ -18,6 +18,7 @@ public class BoardDAO {
 	private PreparedStatement pstmt=null;
 	private ResultSet rs=null;
 	private Connection conn=null;
+	int a=0, b=0, c=0;
 
 	public void close() {
 		try {
@@ -34,71 +35,148 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	//게시판 상단 고정
+	public List<Integer> fixedList(){
+		List<Integer> n = new ArrayList<Integer>();
+		conn=JDBCTemplate.getConnection();
 
-	// 게시판 상위 10개 출력 
+		String sql1="select b1.boardno from (select rownum r, b.* from (select * from board where id='admin' order by boardno desc) b) b1 where b1.r<=2";
+		String sql2="select b2.boardno from (select rownum r, b1.* from (select b.* from board b order by boardcount desc) b1) b2 where b2.r=1";
+
+		try {
+			pstmt=conn.prepareStatement(sql1);
+			rs=pstmt.executeQuery();
+
+			if(rs.next()) 
+				a=rs.getInt(1);
+				n.add(a);
+			if(rs.next()) 
+				b=rs.getInt(1);
+				n.add(b);
+			close();
+
+			pstmt=null; rs=null;
+			conn = JDBCTemplate.getConnection();
+			pstmt=conn.prepareStatement(sql2);
+			rs=pstmt.executeQuery();
+
+			if(rs.next()) {
+				c=rs.getInt(1);
+				n.add(c);
+			}
+			close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return n;
+	}
+	
+	//게시판 10개 추출
 	public List<Board> getBoardList(int start, int end, String search){
-		
 		List<Board> list = null; 
-		
+		List<Integer> n = new ArrayList<Integer>();
 		conn = JDBCTemplate.getConnection();
 		
-		//공지 및 추천수 순 수정
-		int a=0, b=0, c=0;
-		
-		
+		try {
+			
+			String sql1="select b1.boardno from (select rownum r, b.* from (select * from board where id='admin' order by boardno desc) b) b1 where b1.r<=2";
+			String sql2="select b2.boardno from (select rownum r, b1.* from (select b.* from board b order by boardcount desc) b1) b2 where b2.r=1";
 
-	String sql1="select d2.boardno from (select rownum r, d1.* from board d1 where id='admin') d2 where d2.r<=2";
-	String sql2="select b2.boardno from (select rownum r, b1.* from (select b.* from board b order by boardcount desc) b1) b2 where b2.r=1";
+		
+			pstmt=conn.prepareStatement(sql1);
+			rs=pstmt.executeQuery();
+
+			if(rs.next()) 
+				a=rs.getInt(1);
+				n.add(a);
+			if(rs.next()) 
+				b=rs.getInt(1);
+				n.add(b);
+			close();
+
+			pstmt=null; rs=null;
+			conn = JDBCTemplate.getConnection();
+			pstmt=conn.prepareStatement(sql2);
+			rs=pstmt.executeQuery();
+
+			if(rs.next()) {
+				c=rs.getInt(1);
+				n.add(c);
+			}
+			
+			close();
+			
+			conn = JDBCTemplate.getConnection();
+			pstmt=null; rs=null;
+			
+			// 검색 후 더보기 버튼 클릭시 게시판 출력
+			String sql4_1 = "(select * from board where boardcontent like '%" + search + "%' or boardtitle like '%" + search + "%' and boardno not in ( "+a+" , "+b+ " , "+c+ " ) )b ) b1";
+			
+			String sql4="SELECT b1.* FROM ( SELECT ROWNUM r, b.* from "+ sql4_1 + " where r>=1 and r<=3";
+			
+			pstmt=conn.prepareStatement(sql4);
+			//pstmt.setInt(1, start);
+			//pstmt.setInt(2, end);
+			
+			System.out.println(sql4);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				list=new ArrayList<Board>();
+				
+				do {
+				Board vo = new Board();
+				vo.setBoardno(rs.getInt("boardno"));
+				vo.setId(rs.getString("id"));
+				vo.setBoarddate(rs.getDate("boarddate"));
+				vo.setBoardcontent(rs.getString("boardcontent"));
+				vo.setBoardtitle(rs.getString("boardtitle"));
+				vo.setBoardplay(rs.getInt("boardplay"));
+				vo.setBoardcount(rs.getInt("boardcount"));
+				
+				list.add(vo);
+				} while(rs.next());
+			}else {
+				System.out.println("왜 null이냐~~~~~없음:"+list);
+			}
+			close();
+				
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		
-	try {
-				pstmt=conn.prepareStatement(sql1);
-				rs=pstmt.executeQuery();
-				
-				if(rs.next()) 
-					a=rs.getInt(1);
-				if(rs.next()) 
-					b=rs.getInt(1);
-				
-				close();
-				
-				pstmt=null; rs=null;
-				conn = JDBCTemplate.getConnection();
-				pstmt=conn.prepareStatement(sql2);
-				rs=pstmt.executeQuery();
+		return list;
+	}
 
-				if(rs.next()) {
-					c=rs.getInt(1);
-				}
-				
-				close();
-				
-				pstmt=null; rs=null;
-				conn = JDBCTemplate.getConnection();
-				
-				// 검색 후 더보기 버튼 클릭시 게시판 출력
-				String sql4_1 = "(select * from board ";
-				if(search == null ) {
-					sql4_1 += "where boardno not in ( "+a+" , "+b+" , "+c+ " ) )b ) b1";
-				} else {
-					sql4_1 += "where boardcontent like '%" + search + "%' or boardtitle like '%" + search + "%' and boardno not in ( "+a+" , "+b+ " , "+c+ " ) )b ) b1";
-				}
-				
-				String sql4="SELECT b1.* FROM ( SELECT ROWNUM r, b.* from "
-							+ sql4_1 + " where r>=? and r<=?";
-				
-				pstmt=conn.prepareStatement(sql4);
-				
-				pstmt.setInt(1, start);
-				pstmt.setInt(2, end);
-				System.out.println(sql4);
+	//게시판 상단 고정
+	
+	
+	// 게시판 고정 제외 게시글
+	public List<Board> getBoardList(int start, int end){
+		List<Board> list = null; 
+		conn = JDBCTemplate.getConnection();
 
-				rs=pstmt.executeQuery();
-				
-				if(rs.next()) {
-					list=new ArrayList<Board>();
-					
-					do {
+		try {
+			String sql4="SELECT b1.boardno, b1.id, b1.boarddate, b1.boardcontent, b1.boardtitle, b1.boardplay, b1.boardcount "
+					+ "FROM ( SELECT ROWNUM r, b.* from (select * from board where boardno not in  ( "+a+" , "+b+" , "+c+" ) order by boardno )b ) b1"
+							+ " where r>=? and r<=? order by boardno desc";
+			System.out.println("시작"+a+"/"+b);
+			pstmt=conn.prepareStatement(sql4);
+
+			pstmt.setInt(1, end);
+			pstmt.setInt(2, start);
+			System.out.println(sql4);
+
+			rs=pstmt.executeQuery();
+
+			if(rs.next()) {
+				list=new ArrayList<Board>();
+				do {
 					Board vo = new Board();
 					vo.setBoardno(rs.getInt("boardno"));
 					vo.setId(rs.getString("id"));
@@ -107,17 +185,16 @@ public class BoardDAO {
 					vo.setBoardtitle(rs.getString("boardtitle"));
 					vo.setBoardplay(rs.getInt("boardplay"));
 					vo.setBoardcount(rs.getInt("boardcount"));
-//					vo.setBoardfile(rs.getString("boardfile"));
 					list.add(vo);
-					
-					} while(rs.next());
-				}
-				close();
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
+				} while(rs.next());
 			}
-			return list;
+			close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	
 	}
 	
 	// 총 게시글 개수 가져오기
@@ -173,8 +250,6 @@ public class BoardDAO {
 		
 		return result;
 	}
-	
-	
 	
 	public List<Board> getMyBoardList(String id,int start,int end){
 		List<Board> list = null;

@@ -10,7 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- **리셋/스타일/웹아이콘/폰트 경로 확인** -->
 <link rel="stylesheet" href="./reset.css">
-<link rel="stylesheet" href="./loginStyle.css?erersd">
+<link rel="stylesheet" href="./loginStyle.css?asd">
 <link rel="stylesheet"
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -45,7 +45,7 @@
 						</div>
 					</li> 
 					<li class='slide'><img class="bookimg2" src="image/p4.png"></li>
-					<li class='slide'><img src="image/p3.png"></li>
+					<li class='slide'></li>
 				</ul>
 				<p class="pager"></p>
 				<i class="fas fa-angle-left fa-9x" id="prev"></i>
@@ -64,7 +64,7 @@
 			<input type="text" placeholder="아이디" name="id" id="id">
 			<input type="password" placeholder="비밀번호" name="pwd" id="pwd"><br><br>
 			<a href="JoinGo" id="join">아직 회원이 아니신가요? &nbsp;</a><br>
-			<a href="<%=request.getContextPath() %>/member/searchIDPW.jsp" id="find">기억이 나지 않는다면 &nbsp;</a><br>
+			<a href="<%=request.getContextPath() %>/SearchIDPW" id="find">기억이 나지 않는다면 &nbsp;</a><br>
 			<!-- 로그인 버튼 -->
 			<div class="loginBtn">
 				<input type="submit" id="loginBtn" /> <i class="fas fa-play-circle fa-5x" id="loginIcon"></i>
