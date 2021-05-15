@@ -54,7 +54,7 @@
 	    
 	    <!-- 존재하는 게시글을 수정하는 경우 -->
 	    <c:if test="${not empty modvo }">
-	          <form action="<%=request.getContextPath()%>/boardWrite.do" method="post" enctype="multipart/form-data" class="form">
+	          <form action="<%=request.getContextPath()%>/boardWrite.do" method="post" class="form">
 	    	<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
 	    	<input type="hidden" name="boardno" value="${modvo.boardno }">
 	    	<input type="hidden" name="modiCheck" value="modify">	   

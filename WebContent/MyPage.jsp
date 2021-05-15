@@ -6,28 +6,40 @@
 <head>
 <meta charset="UTF-8">
 <title>마이페이지</title>
-<link href="MypageStyle.css?ver=32" rel="stylesheet" type = "text/css">
+<link href="MypageStyle.css?444" rel="stylesheet" type = "text/css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <jsp:include page="Header.jsp"></jsp:include>
 	<br><br><br>
-
+	<script>
+		$(function(){
+			$("#dddd").click(function(){
+				var ww = ${user.membership}; 
+				if(ww>0){
+					location.href = "./RTermination"; 
+				}else{
+					alert("구매하신 회원권이 없어서 해지가 불가능합니다.");
+				}
+				console.log(ww);
+			});
+		});
+	</script>
 	<div id="main_content">
         <section>
             <article id="main_article1" class="header">
                 <hr>
                 <div>
                     <span class="s">
-                    	게인페이지 :
+                    	게인페이지 
                     	<c:if test="${msckeck ne 0}">
-                    		회원권 적용중
+                    		: 회원권 적용중
                     	</c:if>
                     </span>
                     
                     <c:if test="${id ne 'admin'}">
                     	<span class="s s1" >
-                        <a href = "./RTermination">대여권 해지</a>&nbsp;&nbsp;
+                        <a href = "./RTermination" id="dddd">대여권 해지</a>&nbsp;&nbsp;
                         <a href = "./DeletePage">회원탈퇴</a>
                     </span>
                     </c:if>
@@ -97,13 +109,13 @@
 	                    <div id="page">
 		                    <ul id="moveP">
 							<c:if test="${startPage4!=1}">
-				            	<li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${startPage4-1}">◀</a></li>
+				            	<li><a href="<%=request.getContextPath() %>/MyPage?PageNumber4=${startPage4-1}">◀</a></li>
 							</c:if>
 							<c:forEach begin="${startPage4}" end="${endPage4}" var="page" step="1">
-		                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${page}">${page}</a></li>
+		                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber4=${page}">${page}</a></li>
 							</c:forEach>
 							<c:if test="${endPage4 < pageCnt4 }">
-		                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${endPage4+1}">▶</a></li>
+		                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber4=${endPage4+1}">▶</a></li>
 							</c:if>
 		                    </ul>
                 		</div>
@@ -189,13 +201,13 @@
                     <div id="page">
 	                    <ul id="moveP">
 						<c:if test="${startPage2!=1}">
-			            	<li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${startPage2-1}">◀</a></li>
+			            	<li><a href="<%=request.getContextPath() %>/MyPage?PageNumber2=${startPage2-1}">◀</a></li>
 						</c:if>
 						<c:forEach begin="${startPage2}" end="${endPage2}" var="page" step="1">
-	                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${page}">${page}</a></li>
+	                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber2=${page}">${page}</a></li>
 						</c:forEach>
 						<c:if test="${endPage2 < pageCnt2 }">
-	                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${endPage2+1}">▶</a></li>
+	                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber2=${endPage2+1}">▶</a></li>
 						</c:if>
 	                    </ul>
                 	</div>
@@ -239,13 +251,13 @@
                     <div id="page">
 	                    <ul id="moveP">
 						<c:if test="${startPage3!=1}">
-			            	<li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${startPage3-1}">◀</a></li>
+			            	<li><a href="<%=request.getContextPath() %>/MyPage?PageNumber3=${startPage3-1}">◀</a></li>
 						</c:if>
 						<c:forEach begin="${startPage3}" end="${endPage3}" var="page" step="1">
-	                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${page}">${page}</a></li>
+	                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber3=${page}">${page}</a></li>
 						</c:forEach>
 						<c:if test="${endPage3 < pageCnt3 }">
-	                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber=${endPage3+1}">▶</a></li>
+	                        <li><a href="<%=request.getContextPath() %>/MyPage?PageNumber3=${endPage3+1}">▶</a></li>
 						</c:if>
 	                    </ul>
                 	</div>
