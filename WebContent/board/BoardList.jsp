@@ -52,7 +52,7 @@
 				<c:forEach var="i" items="${d1.rows}" varStatus="s">
                     <tr class="fixed1">
                         <td class="tableCon no">${i['boardno']}</td>
-                        <td class="tableCon title"><a href="<%=request.getContextPath() %>/boardRead.do?boardno=${i['boardno']}">${i['boardtitle']}</a></td>
+                        <td class="tableCon title fixT"><a href="<%=request.getContextPath() %>/boardRead.do?boardno=${i['boardno']}">${i['boardtitle']}</a></td>
                         <td class="tableCon author">${i['id']}</td>
                         <td class="tableCon date"><fmt:formatDate value="${i['boarddate']}" pattern="yyyy-MM-dd"/></td>
 	                        <td class="tableCon rank">${i['boardcount']}</td>
@@ -61,7 +61,7 @@
 					<c:forEach var="j" items="${d2.rows}">
 	                    <tr class="fixed2">
 	                        <td class="tableCon no">${j['boardno']}</td>
-	                        <td class="tableCon title"><a href="<%=request.getContextPath() %>/boardRead.do?boardno=${j['boardno']}">${j['boardtitle']}</a></td>
+	                        <td class="tableCon title fixT"><a href="<%=request.getContextPath() %>/boardRead.do?boardno=${j['boardno']}">${j['boardtitle']}</a></td>
 	                        <td class="tableCon author">${j['id']}</td>
 	                        <td class="tableCon date"><fmt:formatDate value="${j['boarddate']}" pattern="yyyy-MM-dd"/></td>
 	                        <td class="tableCon rank">${j['boardcount']}</td>

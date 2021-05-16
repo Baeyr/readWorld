@@ -40,6 +40,7 @@ section{
             margin-bottom: 50px;
             border-spacing: 0;
             border-collapse: seperate;
+            font-weight: bold;
         }
 
         span {
@@ -65,10 +66,6 @@ section{
             color: #F2EAC2 ;
         }
         
-        .tableTop{
-    	    font-weight: bold;
-        }
-        
         .fixed1, .fixed2 {
     	    background-color: #94a68f;
 			color: #f2eac2;        	
@@ -79,20 +76,21 @@ section{
             font-size: 15px;
             height: 35px;
             padding: 10px;
-            font-weight: bold;
         }
-
 
         .title{
             width: 50%;
-            padding-left: 10px;
-            border-right: none;
             border: 1px solid #1c4025;
+            border-right: none;
         }
 		
 		.title a{
 			text-decoration: none;
 			color : #400101;
+		}
+
+		.fixT a{
+			color : #f2eac2;
 		}
 
         .author{
