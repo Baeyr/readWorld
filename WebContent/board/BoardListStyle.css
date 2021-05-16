@@ -39,7 +39,7 @@ section{
             margin-top: 30px;
             margin-bottom: 50px;
             border-spacing: 0;
-            border-collapse: sererate;
+            border-collapse: seperate;
         }
 
         span {
@@ -62,8 +62,7 @@ section{
         
         .topR {
 			height: 50px;
-            background-color: #F2EAC2 ;
-            color: #1c4025;
+            color: #F2EAC2 ;
         }
         
         .tableTop{
@@ -83,14 +82,12 @@ section{
             font-weight: bold;
         }
 
-        .no{
-            width: 10px;
-            text-align: center;
-        }
 
         .title{
             width: 50%;
             padding-left: 10px;
+            border-right: none;
+            border: 1px solid #1c4025;
         }
 		
 		.title a{
@@ -101,14 +98,29 @@ section{
         .author{
             font-size: 18px;
             width: 15%;
+            border-right: none;
+            border-top: 1px solid #1c4025;
+            border-bottom: 1px solid #1c4025;
         }
         
         .date{
             width: 15%;
+            border-right: none;
+            border-top: 1px solid #1c4025;
+            border-bottom: 1px solid #1c4025;
         }
         
         .rank{
             width: 10%;
+            border: 1px solid #1c4025;
+            border-left: none;
+        }
+
+        .no{
+            width: 10px;
+            text-align: center;
+            background-color: white;
+            border: 1px solid #1c4025;
         }
 
         #page{
@@ -124,6 +136,7 @@ section{
         #moveP li{
             float: left;
             list-style: none;
+            border: 1px solid #1c4025;
             border-radius: 5px;
             padding: 2px 5px;
             margin: 3px;

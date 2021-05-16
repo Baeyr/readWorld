@@ -37,7 +37,7 @@
                 <div class="boardD">
                 <table class="board">
                     <tr class=topR>
-                        <td class="tableTop no">NO
+                        <td class="tableTop no1">NO
 			<input type="hidden" id="currentP" value="<%=request.getAttribute("currentPage")%>"/>
                         </td>
                         <td class="tableTop">제목</td>
