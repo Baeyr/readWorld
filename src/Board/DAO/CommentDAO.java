@@ -13,8 +13,12 @@ public class CommentDAO {
 	private ResultSet rs=null;
 	private Connection conn=null;
 
-	BoardDAO dao=new BoardDAO();
-
+	static public void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
+		JDBCTemplate.close(conn);
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+	}
+	
 	//코멘트 쓰기
 	public int commentWrite(Comment co) {
 		int result=0;
@@ -30,8 +34,6 @@ public class CommentDAO {
 		String cmtRoot="select NVL(max(cmtrootno),0)+1 from cmt where boardno=?";
 		String cmtLev="select NVL(max(cmtlevel),0)+1 from cmt where boardno=? and cmtrootno=? and cmtstep=?";
 		pstmt=null; rs=null;
-		System.out.println(12);
-
 		try {
 			pstmt=conn.prepareStatement(cmtNo); //글번호 지정
 			rs=pstmt.executeQuery();
@@ -41,12 +43,12 @@ public class CommentDAO {
 				System.out.println("글번호문제");
 				return 0;
 			}
-
+			close(conn, pstmt, rs);
+			conn=JDBCTemplate.getConnection();
+			pstmt=null; rs=null;
 			pstmt=conn.prepareStatement(cmtLev); 
 			pstmt.setInt(1, bno);
 			pstmt.setInt(2, root);
-
-			
 			pstmt.setInt(3, step);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
@@ -55,6 +57,10 @@ public class CommentDAO {
 				System.out.println("레벨문제");
 				return 0;
 			}
+			close(conn, pstmt, rs);
+			
+			conn=JDBCTemplate.getConnection();
+			pstmt=null; rs=null;
 			if(root==0) {
 				pstmt=conn.prepareStatement(cmtRoot);
 				pstmt.setInt(1, bno);
@@ -67,6 +73,10 @@ public class CommentDAO {
 				}
 			}
 			{
+			close(conn, pstmt, rs);
+			
+			conn=JDBCTemplate.getConnection();
+			pstmt=null; rs=null;
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setInt(1, max);
 				pstmt.setInt(2, bno);
@@ -82,7 +92,7 @@ public class CommentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			dao.close();
+			close(conn, pstmt, rs);
 		}
 		return result;
 	}
@@ -104,12 +114,12 @@ public class CommentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			dao.close();
+			close(conn, pstmt, rs);
 		}
 		return result;
 	}
-	//코멘트 삭제
 	
+	//코멘트 삭제	
 		public int commentDelete(Comment co) {
 			int result=0;
 			String sql="delete from cmt where commentno=?";
@@ -124,7 +134,7 @@ public class CommentDAO {
 			} catch(SQLException e) {
 				e.printStackTrace();
 			} finally {
-				dao.close();
+				close(conn, pstmt, rs);
 			}
 			return result;
 		}

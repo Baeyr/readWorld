@@ -20,23 +20,12 @@ public class BoardDAO {
 	private Connection conn=null;
 	int a=0, b=0, c=0;
 
-	public void close() {
-		try {
-			if(rs!=null) {
-				rs.close();
-			}
-			if(pstmt!=null) {
-				pstmt.close();
-			}
-			if(conn!=null) {
-				conn.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	static public void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
+		JDBCTemplate.close(conn);
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
 	}
-	
-	
+
 	//게시판 상단 고정
 	public List<Integer> fixedList(){
 		List<Integer> n = new ArrayList<Integer>();
@@ -55,7 +44,7 @@ public class BoardDAO {
 			if(rs.next()) 
 				b=rs.getInt(1);
 				n.add(b);
-			close();
+			close(conn, pstmt, rs);
 
 			pstmt=null; rs=null;
 			conn = JDBCTemplate.getConnection();
@@ -66,7 +55,7 @@ public class BoardDAO {
 				c=rs.getInt(1);
 				n.add(c);
 			}
-			close();
+			close(conn, pstmt, rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -95,8 +84,7 @@ public class BoardDAO {
 			if(rs.next()) 
 				b=rs.getInt(1);
 				n.add(b);
-			close();
-
+			close(conn, pstmt, rs);
 			pstmt=null; rs=null;
 			conn = JDBCTemplate.getConnection();
 			pstmt=conn.prepareStatement(sql2);
@@ -107,7 +95,7 @@ public class BoardDAO {
 				n.add(c);
 			}
 			
-			close();
+			close(conn, pstmt, rs);
 			
 			conn = JDBCTemplate.getConnection();
 			pstmt=null; rs=null;
@@ -142,7 +130,7 @@ public class BoardDAO {
 			}else {
 				System.out.println("왜 null이냐~~~~~없음:"+list);
 			}
-			close();
+			close(conn, pstmt, rs);
 				
 			
 		} catch (SQLException e) {
@@ -188,7 +176,7 @@ public class BoardDAO {
 					list.add(vo);
 				} while(rs.next());
 			}
-			close();
+			close(conn, pstmt, rs);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -217,7 +205,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close();
+			close(conn, pstmt, rs);
 		}
 		
 		
@@ -244,10 +232,32 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close();
+			close(conn, pstmt, rs);
 		}
-		
-		
+		return result;
+	}
+
+	public int getBoardCount2(String search) {
+
+		conn = JDBCTemplate.getConnection();
+
+		int result = 0;
+
+		String sql = "SELECT COUNT(*) FROM board where boardcontent like '%" + search + "%' or boardtitle like '%" + search + "%'";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(conn, pstmt, rs);
+		}
 		return result;
 	}
 	
@@ -323,7 +333,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close();
+			close(conn, pstmt, rs);
 		}
 		return getvo;
 	}
@@ -345,6 +355,8 @@ public class BoardDAO {
 			
 			} catch (SQLException e) {
 				e.printStackTrace();
+		} finally {
+			close(conn, pstmt, rs);
 			}
 			
 			return result;
@@ -387,7 +399,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close();
+			close(conn, pstmt, rs);
 		}
 
 		return cmt;
@@ -427,7 +439,7 @@ public class BoardDAO {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close();
+			close(conn, pstmt, rs);
 		}
 		return result;
 	}
@@ -446,14 +458,14 @@ public class BoardDAO {
 			pstmt.setString(1, vo.getId());
 			pstmt.setString(2, vo.getBoardtitle());
 			pstmt.setString(3, vo.getBoardcontent());
-			pstmt.setInt(5, boardno);
+			pstmt.setInt(4, boardno);
 			
 			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close();
+			close(conn, pstmt, rs);
 		}
 		
 		return result;
@@ -472,7 +484,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close();
+			close(conn, pstmt, rs);
 		}
 		return result;
 	}
@@ -499,7 +511,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close();
+			close(conn, pstmt, rs);
 		}
 		
 		
@@ -536,7 +548,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close();
+			close(conn, pstmt, rs);
 		}
 		
 		return result ;
@@ -570,7 +582,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close();
+			close(conn, pstmt, rs);
 		}
 		
 		return result ;
@@ -599,14 +611,8 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close();
-		}
-		
-			return count; 
-		
+			close(conn, pstmt, rs);
+		}	
+			return count; 		
 	}
-	
-	
-	// 베스트 게시물 상단 고정 
-	
 }

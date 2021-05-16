@@ -40,8 +40,9 @@ public class JDBCTemplate {
 	
 	public static void close(Connection con) {
 		try {
-			if(con != null && !con.isClosed()) {
+			if(con != null) {
 				con.close();
+				System.out.println("db 연결해제");
 			}
 		} catch (Exception e) {
 
@@ -50,7 +51,7 @@ public class JDBCTemplate {
 	
 	public static void close(Statement stmt) {
 		try {
-			if(stmt != null && !stmt.isClosed()) {
+			if(stmt != null) {
 				stmt.close();
 			}
 		} catch (Exception e) {
@@ -60,7 +61,7 @@ public class JDBCTemplate {
 	
 	public static void close(ResultSet rs) {
 		try {
-			if(rs != null && !rs.isClosed()) {
+			if(rs != null) {
 				rs.close();
 			}
 		} catch (Exception e) {

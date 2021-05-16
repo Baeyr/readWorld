@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+*{
+	box-sizing: border-box;
+}
+
 section{
             height:1000px;
             margin: auto;
@@ -18,14 +22,24 @@ section{
             top: 50px;
         }
         
-        hr,table {
-            width: 80%;
-            border: 2px solid #94A68F;
+        hr{
+        	width: 80%;
+            border: 2px solid #94a68f;
+        }
+        
+        .boardD{
+        	width: 80%;
+            margin-left: 10%;
+            display: relative;
         }
 
         table{
-            margin-left: 10%;
+	        width: 90%;
+            margin-left: 5%;
             margin-top: 30px;
+            margin-bottom: 50px;
+            border-spacing: 0;
+            border-collapse: sererate;
         }
 
         span {
@@ -39,24 +53,43 @@ section{
             float: right;
             margin-right: 15%;
         }
-
+        
+        tr {
+	        width: 100%;
+    	    text-align: center;
+    	    padding: 5px;
+        }
+        
+        .topR {
+			height: 50px;
+            background-color: #F2EAC2 ;
+            color: #1c4025;
+        }
+        
         .tableTop{
-            color: #F2EAC2 ;
+    	    font-weight: bold;
+        }
+        
+        .fixed1, .fixed2 {
+    	    background-color: #94a68f;
+			color: #f2eac2;        	
         }
 
         .tableCon{
             color:#400101;
-            font-weight: bold;
             font-size: 15px;
+            height: 35px;
+            padding: 10px;
+            font-weight: bold;
         }
 
         .no{
-            width: 15px;
+            width: 10px;
             text-align: center;
         }
 
         .title{
-            width: 75%;
+            width: 50%;
             padding-left: 10px;
         }
 		
@@ -67,6 +100,15 @@ section{
 
         .author{
             font-size: 18px;
+            width: 15%;
+        }
+        
+        .date{
+            width: 15%;
+        }
+        
+        .rank{
+            width: 10%;
         }
 
         #page{
@@ -82,7 +124,6 @@ section{
         #moveP li{
             float: left;
             list-style: none;
-            border: 1px solid #1C4025;
             border-radius: 5px;
             padding: 2px 5px;
             margin: 3px;

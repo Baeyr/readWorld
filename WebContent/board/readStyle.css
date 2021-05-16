@@ -35,7 +35,7 @@ ul{
 }
 
 .body{
-    width:90%;
+    width:80%;
     height: 100;
     margin: auto;
     padding:5% 0;
@@ -141,11 +141,10 @@ ul{
     display: relative;
     text-align: center;
     vertical-align: middle;
-    width: 15%;
+    width: 20%;
 }
 
 .re {
-	width: 10%;
 	padding-right:3%;
 }
 
@@ -227,6 +226,6 @@ span, .bBtn{
 }
 
 hr{
-    width: 90%;
+    width: 80%;
     border: 2px solid #94A68F;
 }

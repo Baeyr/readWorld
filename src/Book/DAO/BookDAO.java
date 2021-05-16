@@ -109,6 +109,7 @@ public class BookDAO {
 					
 					JDBCTemplate.close(rs);
 					JDBCTemplate.close(pstmt);
+					JDBCTemplate.close(conn);
 					
 					//별점이 null일경우 0 으로 처리
 					if(customerReviewRank == null) {
@@ -116,6 +117,7 @@ public class BookDAO {
 					}
 					
 					//책 insert하기
+					conn = JDBCTemplate.getConnection();
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1,isbn);
 					pstmt.setString(2,title);
@@ -590,7 +592,9 @@ public class BookDAO {
 			
 			JDBCTemplate.close(rs);
 			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(conn);		
 			
+			conn = JDBCTemplate.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, max);
 			pstmt.setString(2,m.getId());

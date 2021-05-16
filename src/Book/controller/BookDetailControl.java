@@ -71,10 +71,8 @@ public class BookDetailControl extends HttpServlet {
 			list = bookdao.getBook(isbn);
 			request.setAttribute("isbn", isbn);
 			request.setAttribute("detailbook", list);
-			
 			String category=list.get(0).getCategoryName(); //카테고리 값 null 에러 때문에 따로 받아옴
 			request.setAttribute("category", category);
-
 			
 			double avg = Math.round(list.get(0).getAvgsiteranks()*1000/1000.0);
 			request.setAttribute("avg", avg);

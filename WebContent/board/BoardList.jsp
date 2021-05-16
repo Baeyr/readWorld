@@ -34,9 +34,10 @@
             </article>
 
             <article id="main_article2" class="header">
-                <table  border="1" class="board">
-                    <tr>
-                        <td class="tableTop">NO
+                <div class="boardD">
+                <table class="board">
+                    <tr class=topR>
+                        <td class="tableTop no">NO
 			<input type="hidden" id="currentP" value="<%=request.getAttribute("currentPage")%>"/>
                         </td>
                         <td class="tableTop">제목</td>
@@ -92,6 +93,7 @@
 				</c:forEach>
 			</c:if>
                 </table>
+			</div>
 			
 			<!-- 게시판 페이징 -->
 			

@@ -49,9 +49,11 @@ public class MemberDAO {
 		
 		JDBCTemplate.close(rs);
 		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(conn);
 		
 		//저장
 		try {
+			conn = JDBCTemplate.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1,maxNo);
 			pstmt.setString(2, id);
@@ -62,13 +64,15 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 		
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(conn);
 		
 		return result;
 	}
 	public int MemberInsert(Member m,Genre g) {
 		int result = 0;
 		int result2 = 0;
-		
 		
 		int maxNo = g.getGenre().size();
 		
@@ -123,10 +127,20 @@ public class MemberDAO {
 						} catch (SQLException s) {
 							s.printStackTrace();
 						}
+						try {
+							conn.close();
+						} catch (SQLException s) {
+							s.printStackTrace();
+						}
+						conn = JDBCTemplate.getConnection();
 						String delsql = "delete from member where id = ?";
 						pstmt = conn.prepareStatement(delsql);
 						pstmt.setString(1, id);
 						result = pstmt.executeUpdate();
+						
+						JDBCTemplate.close(rs);
+						JDBCTemplate.close(pstmt);
+						JDBCTemplate.close(conn);
 					}
 				}
 			} catch (Exception e) {
@@ -174,12 +188,22 @@ public class MemberDAO {
 						} catch (SQLException s) {
 							s.printStackTrace();
 						}
+						try {
+							conn.close();
+						} catch (SQLException s) {
+							s.printStackTrace();
+						}
+						conn = JDBCTemplate.getConnection();
+	
 						String Tersql = "update member set membership = 0 where id = ?";
 						pstmt = conn.prepareStatement(Tersql);
 						pstmt.setString(1, id);
 						result = pstmt.executeUpdate();
 						// update 실패 한 경우. result : 0
 						// update 성공 한 경우. result : 1
+						JDBCTemplate.close(rs);
+						JDBCTemplate.close(pstmt);
+						JDBCTemplate.close(conn);
 					} else {
 						System.out.println("pwd 틀렸음");	// result : 0			
 					}
@@ -282,14 +306,16 @@ public class MemberDAO {
 			while(rs.next()) {
 				String gen = rs.getString("genre");
 				text.add(gen);
-			}
-			
+			}			
 			genre.setGenre(text);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(conn);
+		}		
 		return genre;
 	}
 	
@@ -353,6 +379,10 @@ public class MemberDAO {
 		 }
 	 } catch(Exception e) {
 		 System.out.println("아이디 중복 확인 실패 : " + e );
+	 	} finally {
+	 		JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(conn);
 	 	}
 	 return cnt;
 	}
@@ -420,7 +450,6 @@ public class MemberDAO {
 			JDBCTemplate.close(pstmt);
 			JDBCTemplate.close(conn);
 		}
-		
 		return m;
 		}
 }

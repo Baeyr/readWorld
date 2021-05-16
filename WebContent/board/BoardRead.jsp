@@ -166,12 +166,8 @@
             </form>
         </div>
     </div>
-    
     <script src="<%=request.getContextPath()%>/board/readScript.js"></script>	
-<script>
-	
-    
-    
+	<script>
     $(function(){
     	
     	$("#like").click(function(){
