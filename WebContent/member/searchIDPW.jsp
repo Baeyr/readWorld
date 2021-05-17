@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@include file="../Header.jsp"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="Header.jsp"></jsp:include>
+	<%-- <jsp:include page="Header.jsp"></jsp:include> --%>
 	<br><br><br>
 	<style>
 		#d1{
@@ -18,10 +19,11 @@
     	width: 300px;
     	height: 25px;
     	top: 10px;
+    	left:1100px;
     	border-color:  #1C4025;
     	border-radius: 5px;
     	margin-left: 20px;
-    }
+    	}
 	</style>
 	<section>
 	<div id = "d1">
@@ -124,6 +126,13 @@
 			searchFrm2.submit();
 			
 		}
+		
+
+		//비회원 메뉴 클릭 이동 방지
+		$(".menu").click(function(e){
+			e.preventDefault();
+			alert("로그인 후 이용해주세요.");
+		});
 	</script>
 	
 	<footer>	

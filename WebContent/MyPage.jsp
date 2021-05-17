@@ -20,6 +20,7 @@
 					location.href = "./RTermination"; 
 				}else{
 					alert("구매하신 회원권이 없어서 해지가 불가능합니다.");
+					location.href = "./MyPage";
 				}
 				console.log(ww);
 			});
@@ -31,7 +32,7 @@
                 <hr>
                 <div>
                     <span class="s">
-                    	게인페이지 
+                    	개인페이지 
                     	<c:if test="${msckeck ne 0}">
                     		: 회원권 적용중
                     	</c:if>
@@ -39,7 +40,7 @@
                     
                     <c:if test="${id ne 'admin'}">
                     	<span class="s s1" >
-                        <a href = "./RTermination" id="dddd">대여권 해지</a>&nbsp;&nbsp;
+                        <a href = "#" id="dddd">회원권 해지</a>&nbsp;&nbsp;
                         <a href = "./DeletePage">회원탈퇴</a>
                     </span>
                     </c:if>

@@ -40,7 +40,7 @@
 	<input type = "hidden" name = "id" value="<%=vo.getId()%>">
 	<input type = "password" name = "pwd" class = "form-control" placeholder = "비밀번호를 입력해주세요"><br><br>
 	<input type = "submit" value = "해지">&nbsp;&nbsp;&nbsp;
-	<input type = "button" value = "취소" onclick = "location.href= './TerminationCancel'"/>
+	<input type = "button" value = "취소" onclick = "location.href= './MyPage'"/>
 	</form>
 	</div>
 </body>

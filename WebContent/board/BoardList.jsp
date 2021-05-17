@@ -99,6 +99,21 @@
 			
                 <div id="page">
                     <ul id="moveP">
+                    <!-- 검색했을때 페이지 번호 -->
+                    <c:if test="${not empty search}">
+					<c:if test="${startPage!=1}">
+		            	<li><a href="<%=request.getContextPath() %>/BoardList.do?PageNumber=${startPage-1}&search=${search}">◀</a></li>
+					</c:if>
+					<c:forEach begin="${startPage}" end="${endPage}" var="page" step="1">
+                        <li><a href="<%=request.getContextPath() %>/BoardList.do?PageNumber=${page}&search=${search}">${page}</a></li>
+					</c:forEach>
+					<c:if test="${endPage < pageCnt }">
+                        <li><a href="<%=request.getContextPath() %>/BoardList.do?PageNumber=${endPage+1}&search=${search}">▶</a></li>
+					</c:if>
+					</c:if>
+					
+					<!-- 검색안했을때 페이지 번호 -->
+                    <c:if test="${empty search}">
 					<c:if test="${startPage!=1}">
 		            	<li><a href="<%=request.getContextPath() %>/BoardList.do?PageNumber=${startPage-1}">◀</a></li>
 					</c:if>
@@ -107,6 +122,7 @@
 					</c:forEach>
 					<c:if test="${endPage < pageCnt }">
                         <li><a href="<%=request.getContextPath() %>/BoardList.do?PageNumber=${endPage+1}">▶</a></li>
+					</c:if>
 					</c:if>
                     </ul>
                 </div>

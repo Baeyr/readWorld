@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,7 +70,9 @@
 			searchFrm.action = url;
 			searchFrm.method = "post";
 			searchFrm.submit();
-			}			
+			}		
+		
+		
 	</script>
 </body>
 </html>

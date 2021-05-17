@@ -105,7 +105,8 @@
     	height: 45px;
 		
     }
- #mbsUser {
+    
+ 	#mbsUser {
     	cursor: pointer;
     }
     
