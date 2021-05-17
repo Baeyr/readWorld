@@ -60,6 +60,10 @@ public class MemberDAO {
 			
 		}catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(conn);
 		}
 		
 		

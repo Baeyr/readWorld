@@ -78,7 +78,6 @@ public class MemberJoinControl extends HttpServlet {
 			result2 = new MemberDAO().generInsert(member.getId(),genre,i);
 		}
 		
-		
 		if(result>0 && result2>0) {
 			out.println("<script>alert('회원가입 성공!!');</script>");
 			out.println("<script>location.href='./login';</script>");

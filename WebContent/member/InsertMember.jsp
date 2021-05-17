@@ -193,8 +193,8 @@
 		
 		function checkCehck(){
 			var num = $('input:checkbox[name=chkBox]:checked').length;
-			if(num==0){
-				alert("선호장르를 한 개 이상 선택해주세요.")
+			if(num==0 || num>=6){
+				alert("선호장르를 1~5개만 선택해주세요.")
 				return false;
 			}
 			
