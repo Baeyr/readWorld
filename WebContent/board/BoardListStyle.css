@@ -82,6 +82,7 @@ section{
             width: 50%;
             border: 1px solid #1c4025;
             border-right: none;
+            text-align: left;
         }
 		
 		.title a{
@@ -92,7 +93,11 @@ section{
 		.fixT a{
 			color : #f2eac2;
 		}
-
+		
+		.topT {
+            text-align: left;
+		}
+		
         .author{
             font-size: 18px;
             width: 15%;

@@ -25,7 +25,8 @@ public class BoardDAO {
 		JDBCTemplate.close(pstmt);
 		JDBCTemplate.close(rs);
 	}
-
+	
+	
 	//게시판 상단 고정
 	public List<Integer> fixedList(){
 		List<Integer> n = new ArrayList<Integer>();
@@ -85,6 +86,7 @@ public class BoardDAO {
 				b=rs.getInt(1);
 				n.add(b);
 			close(conn, pstmt, rs);
+
 			pstmt=null; rs=null;
 			conn = JDBCTemplate.getConnection();
 			pstmt=conn.prepareStatement(sql2);
@@ -234,33 +236,36 @@ public class BoardDAO {
 		} finally {
 			close(conn, pstmt, rs);
 		}
+		
+		
 		return result;
 	}
-
-	public int getBoardCount2(String search) {
-
+	
+		public int getBoardCount2(String search) {
+		
 		conn = JDBCTemplate.getConnection();
-
+		
 		int result = 0;
-
+		
 		String sql = "SELECT COUNT(*) FROM board where boardcontent like '%" + search + "%' or boardtitle like '%" + search + "%'";
-
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-
+			
 			if(rs.next()) {
 				result = rs.getInt(1);
 			}
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(conn, pstmt, rs);
 		}
+		
+		
 		return result;
 	}
-	
 	public List<Board> getMyBoardList(String id,int start,int end){
 		List<Board> list = null;
 		
@@ -355,7 +360,7 @@ public class BoardDAO {
 			
 			} catch (SQLException e) {
 				e.printStackTrace();
-		} finally {
+			} finally {
 			close(conn, pstmt, rs);
 			}
 			
@@ -612,7 +617,10 @@ public class BoardDAO {
 			e.printStackTrace();
 		} finally {
 			close(conn, pstmt, rs);
-		}	
-			return count; 		
+		}
+		
+			return count; 
+		
 	}
+	
 }

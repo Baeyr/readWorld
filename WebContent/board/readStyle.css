@@ -120,11 +120,11 @@ ul{
     width: 95%;
     text-align: left;
     margin-left: 5%;
-    margin: 20px auto;
+    margin: 50px auto;
 }
 
-.table3, .table4, .table5{
-    height: 120px;
+.tb{
+    height: 100px;
 }
 
 .text{
@@ -138,14 +138,13 @@ ul{
 
 .re,.row1{
     height: 100%;
-    display: relative;
     text-align: center;
     vertical-align: middle;
     width: 20%;
 }
 
 .re {
-	padding-right:3%;
+	padding-right:5%;
 }
 
 .row1{
@@ -153,8 +152,7 @@ ul{
 }
 
 #icon{
-    text-align: center;
-    vertical-align: middle;
+    vertical-align: 40%;
     color: #1C4025;
 }
 
@@ -196,7 +194,7 @@ ul{
 }
 
 .row2{
-	padding: 3%;
+	padding: 3% 10%;
     width: 90%;
     height: 100%;
 }

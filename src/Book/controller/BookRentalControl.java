@@ -64,27 +64,27 @@ public class BookRentalControl extends HttpServlet {
 		if(member.getMembership() == 0) {
 			out.println("<script>alert('회원권 구매 후 이용해주세요')</script>");
 			out.println("<script>location.href='/SEMI/membership'</script>");
-		}
-		
-		String isbn = request.getParameter("isbn");
-		
-		
-		//이미 등록했는지 확인
-		result = dao.bookRentalCkeck(member.getId(),isbn);
-		if(result == 1) {
-			out.println("<script>alert('이미 대여한 책입니다.')</script>");
-			out.println("<script>history.back()</script>");
-		}
-		
-		//북렌탈 등록
-		result = dao.bookRental(member,isbn);
-		
-		if(result == 0) {
-			out.println("<script>alert('대여에 실패하였습니다.')</script>");
 		}else {
-			out.println("<script>alert('책을 대여했습니다!')</script>");
-			out.println("<script>location.href='/SEMI/bookDetail.do?isbn="+isbn+"'</script>");
+			String isbn = request.getParameter("isbn");
 			
+			
+			//이미 등록했는지 확인
+			result = dao.bookRentalCkeck(member.getId(),isbn);
+			if(result == 1) {
+				out.println("<script>alert('이미 대여한 책입니다.')</script>");
+				out.println("<script>history.back()</script>");
+			}else {
+				//북렌탈 등록
+				result = dao.bookRental(member,isbn);
+				
+				if(result == 0) {
+					out.println("<script>alert('대여에 실패하였습니다.')</script>");
+				}else {
+					out.println("<script>alert('책을 대여했습니다!')</script>");
+					out.println("<script>location.href='/SEMI/bookDetail.do?isbn="+isbn+"'</script>");
+					
+				}
+			}
 		}
 	}
 

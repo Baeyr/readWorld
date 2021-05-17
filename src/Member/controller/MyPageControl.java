@@ -1,6 +1,7 @@
 package Member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,6 +66,14 @@ public class MyPageControl extends HttpServlet {
 		Member member = new Member();
 		member = (Member) session.getAttribute("user");
 		
+		if(member == null || member.getId() == null) {
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('로그인 후 이용해주세요')</script>");
+			out.println("<script>location.href='/SEMI/login'</script>");
+			out.close();
+		}
+		
+		
 		//==========================================================
 		//회원권 구매 내역 검색
 		PurchaseDAO pdao = new PurchaseDAO();
@@ -110,15 +119,17 @@ public class MyPageControl extends HttpServlet {
 		BookDAO dao = new BookDAO();
 		List<BookRental> rentalBook = null;
 		
-		final int pageSize4 = 3 ; // 한 페이지당 게시글 수
+		final int pageSize4 = 5 ; // 한 페이지당 게시글 수
 		final int pageBlock4 = 3;  // 화면에 나타날 페이지 링크 수
 		int cnt4 = 0 ;	// 총 글 개수
 		
 			// 페이지 번호
 		cnt4 = dao.getRentalCount(member.getId());
+		System.out.println("cnt확인중~~~~~~~"+cnt4);
 		int pageCnt4 = (cnt4/pageSize4) + (cnt4%pageSize4 == 0?0:1);	// 총 페이지 개수
 		
 		int currentPage4 = 1; // 현재 페이지: 클릭시 바뀜
+		
 		String PageNumber4 = request.getParameter("PageNumber4");
 		
 		if(PageNumber4!=null) {	// 클릭된 숫자가 현재 페이지 
@@ -264,6 +275,7 @@ public class MyPageControl extends HttpServlet {
 		
 			// 페이지 번호
 		cnt3 = qdao.getBoardCount(member.getId());
+		
 		int pageCnt3 = (cnt3/pageSize3) + (cnt3%pageSize3 == 0?0:1);	// 총 페이지 개수
 		
 		int currentPage3 = 1; // 현재 페이지: 클릭시 바뀜
@@ -322,6 +334,11 @@ public class MyPageControl extends HttpServlet {
 		request.setAttribute("endPage3", endPage3);
 		request.setAttribute("currentPage3", currentPage3);
 		request.setAttribute("pageCnt3", pageCnt3);
+		
+		request.setAttribute("startPage4", startPage2);
+		request.setAttribute("endPage4", endPage2);
+		request.setAttribute("currentPage4", currentPage2);
+		request.setAttribute("pageCnt4", pageCnt2);
 		
 		request.setAttribute("myQna", myQna);
 		request.setAttribute("allQna",allQna);

@@ -66,19 +66,19 @@
 			                     </c:if>
                     			<c:choose>
                     				<c:when test="${pli.membershipno == 1}">
-		                        		<li><img src="/SEMI/image/1week.png"></li>
+		                        		<li><img src="<%=request.getContextPath()%>/image/1week.png"></li>
 		                        	</c:when>
 		                        	<c:when test="${pli.membershipno == 2}">
-		                        		<li><img src="/SEMI/image/1month.png"></li>
+		                        		<li><img src="<%=request.getContextPath()%>/image/1month.png"></li>
 		                        	</c:when>
 		                        	<c:when test="${pli.membershipno == 3}">
-		                        		<li><img src="/SEMI/image/3month.png"></li>
+		                        		<li><img src="<%=request.getContextPath()%>/image/3month.png"></li>
 		                        	</c:when>
 		                        	<c:when test="${pli.membershipno == 4}">
-		                        		<li><img src="/SEMI/image/6month.png"></li>
+		                        		<li><img src="<%=request.getContextPath()%>/image/6month.png"></li>
 		                        	</c:when>
 		                        	<c:otherwise>
-		                        		<li><img src="/SEMI/image/12month.png"></li>
+		                        		<li><img src="<%=request.getContextPath()%>/image/12month.png"></li>
 		                        	</c:otherwise>
                     			</c:choose>
 		                        <li>${pli.membershipname} 회원권</li>

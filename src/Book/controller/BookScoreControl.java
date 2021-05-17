@@ -71,15 +71,12 @@ public class BookScoreControl extends HttpServlet {
 		int result = 0;
 		int result2 = 0;
 		
-		
 		BookDAO dao = new BookDAO();
 		result = dao.addScore(isbn, score);
 		result2 = dao.addCount(isbn);
 		
 		dao.avgScore(isbn);
-		
 		if(result>0&&result2>0) {
-			
 			System.out.println("별점이 등록됐습니다.");
 			out.println("<script>");
 			out.println("alert('별점이 등록됐습니다.');");
@@ -90,11 +87,10 @@ public class BookScoreControl extends HttpServlet {
 			out.println("<script>");
 			out.println( "history.back();");
 			out.println("</script>");
-
 		}
-		
 		out.close();
-
+		
+		
 	}
 	
 

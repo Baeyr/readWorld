@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Member.DAO.MemberDAO;
+import Member.vo.Member;
 
 /**
  * Servlet implementation class Termination
@@ -37,11 +39,14 @@ public class Termination extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
+		HttpSession session = request.getSession();
+		Member member = new Member();
+		member = (Member) session.getAttribute("user");
+		
 		MemberDAO dao = MemberDAO.getInstance();
 //		String id = (String) request.getSession().getAttribute("id");
 		String id = request.getParameter("id");
@@ -49,16 +54,17 @@ public class Termination extends HttpServlet {
 		
 
 		int result = dao.TicketTermination(id, pwd);
-		int result2 = dao.TicketTermination2(id, pwd);
-		System.out.println(result);
-		System.out.println("id:" + id);
 
-		if (result > 0 && result2 > 0) {
-			System.out.println("00");
+		
+		Member resultVo = new Member();
+		resultVo = new MemberDAO().login(member);
+		
+		if (result > 0) {
+			session.removeAttribute("user");
+			session.setAttribute("user", resultVo);
 			out.print("<script>alert('대여권이 해지되었습니다.마이페이지로 이동합니다.');</script>");
 			out.print("<script>location.href='./MyPage';</script>");
 		} else {
-			System.out.println("01");
 			out.print("<script>alert('비밀번호를 다시 확인해주세요.');history.back()</script>");
 		}
 

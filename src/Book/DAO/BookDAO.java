@@ -35,7 +35,7 @@ public class BookDAO {
 		int result = 0;
 		String isbnV = "";
 		
-		String sql = "insert into book values(?,?,?,?,?,?,?,?,?,?,?,0,0)"; //책정보 insert sql
+		String sql = "insert into book values(?,?,?,?,?,?,?,?,?,?,?,0,0,0)"; //책정보 insert sql
 		String ibsnSearch = "select * from book where isbn=?"; //이미등록되어 있는 경우를 서치
 		
 		for(int i=1;i<=2;i++) {
@@ -109,7 +109,6 @@ public class BookDAO {
 					
 					JDBCTemplate.close(rs);
 					JDBCTemplate.close(pstmt);
-					JDBCTemplate.close(conn);
 					
 					//별점이 null일경우 0 으로 처리
 					if(customerReviewRank == null) {
@@ -117,7 +116,6 @@ public class BookDAO {
 					}
 					
 					//책 insert하기
-					conn = JDBCTemplate.getConnection();
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1,isbn);
 					pstmt.setString(2,title);
@@ -130,7 +128,6 @@ public class BookDAO {
 					pstmt.setInt(9,Integer.parseInt(customerReviewRank));
 					pstmt.setString(10,String.valueOf(adult));
 					pstmt.setString(11,CategoryName);
-					
 					result = pstmt.executeUpdate();
 					
 //					System.out.println("----- "+(j+1)+"번째 검색 결과 -----");
@@ -426,20 +423,18 @@ public class BookDAO {
 		pstmt = null;
 		
 		String sql = "update book set count = count+1 where isbn=?";
-		
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,isbn);
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			JDBCTemplate.close(pstmt);
-			JDBCTemplate.close(conn);
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1,isbn);
+					result = pstmt.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}finally {
+					JDBCTemplate.close(pstmt);
+					JDBCTemplate.close(conn);
+				}
+				return result;
 		}
-		return result;
-	}
-	
 	// 별점 평균
 	
 	public int avgScore(String isbn) {
@@ -448,7 +443,7 @@ public class BookDAO {
 		conn = JDBCTemplate.getConnection();
 		pstmt = null;
 		
-		String sql = "update book set avgsiteranks = siteRanks/count where isbn=?";
+			String sql = "update book set avgsiteranks = siteRanks/count where isbn=?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -456,7 +451,7 @@ public class BookDAO {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
+		}finally {
 			JDBCTemplate.close(pstmt);
 			JDBCTemplate.close(conn);
 		}
@@ -592,9 +587,8 @@ public class BookDAO {
 			
 			JDBCTemplate.close(rs);
 			JDBCTemplate.close(pstmt);
-			JDBCTemplate.close(conn);		
 			
-			conn = JDBCTemplate.getConnection();
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, max);
 			pstmt.setString(2,m.getId());

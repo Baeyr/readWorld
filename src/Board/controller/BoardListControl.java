@@ -61,6 +61,10 @@ public class BoardListControl extends HttpServlet {
 			out.close();
 			//request.getRequestDispatcher("/login").forward(request, response);
 		}
+		if (search !=null) {
+		} else {
+			search = null;
+		}
 		
 		
 		int pageSize = 10 ; // 한 페이지당 게시글 수
@@ -76,7 +80,13 @@ public class BoardListControl extends HttpServlet {
 		System.out.println(cnt2);
 		
 		// 페이지 번호
-		cnt = dao.getBoardCount();
+		if (search == null) {
+			System.out.println("검색이 없을때");
+			cnt = dao.getBoardCount();
+		} else {
+			System.out.println("검색했을때");
+			cnt = dao.getBoardCount2(search);
+		}
 		int pageCnt = (cnt/pageSize) + (cnt%pageSize == 0?0:1);	
 		System.out.println("페이지"+cnt);
 		System.out.println("페이징"+pageCnt);		
@@ -93,6 +103,10 @@ public class BoardListControl extends HttpServlet {
 		int startPage = 1;	// 화면에 나타날 시작 페이지
 		int endPage = 1; 	// 화면에 나타날 마지막 페이지
 		
+		int startRnum = 0;
+		int endRnum = 0;
+		if (search == null) {
+			System.out.println("검색이 없을때1");
 		if ((currentPage % pageBlock) == 0) {
 			startPage = ((currentPage/pageBlock)-1) * pageBlock  + 1;
 		}else {			
@@ -105,8 +119,8 @@ public class BoardListControl extends HttpServlet {
 		if(endPage > pageCnt) {
 			endPage = pageCnt;
 		}
-		int startRnum = cnt-cnt2;
-		int endRnum = startRnum-6;
+		startRnum = cnt - cnt2;
+			endRnum = startRnum - 6;
 		
 		if(currentPage==1) {
 			System.out.println("시작1 "+startRnum+"끝1 "+endRnum);
@@ -120,32 +134,53 @@ public class BoardListControl extends HttpServlet {
 			startRnum = startRnum - pageSize*(currentPage-2) - 7;
 			endRnum = startRnum - pageSize*(currentPage-2) + 1;
 			System.out.println("시작3 "+startRnum+"끝3 "+endRnum);
-			
-	
 		}
+			
+		} else {
+			System.out.println("검색했을때1");
+			if ((currentPage % pageBlock) == 0) {
+				startPage = ((currentPage / pageBlock) - 1) * pageBlock + 1;
+			} else {
+				startPage = (currentPage / pageBlock) * pageBlock + 1;
+			
+			}
+			endPage = startPage + pageBlock - 1;
+
+			if (endPage > pageCnt) {
+				endPage = pageCnt;
+			}
+
+			
+
+			startRnum = (currentPage - 1) * pageSize + 1;
+			endRnum = startRnum + pageSize - 1;
+
 		
-		
+
+			if (endRnum > cnt) {
+				endRnum = cnt;
+			}
+		}
 			
 		if(search !=null && !search.equals("")) {
-			list = dao.getBoardList(startRnum, endRnum,search);
-			request.setAttribute("startPage", startPage);
-			request.setAttribute("endPage", endPage);
-			request.setAttribute("currentPage", currentPage);
-			request.setAttribute("pageCnt", pageCnt);
-			request.setAttribute("boardList", list);
-			request.setAttribute("search", search);
-			
-			request.getRequestDispatcher("board/BoardList.jsp").forward(request, response);
+			list = dao.getBoardList(startRnum, endRnum, search);
+
 		}else {
 			list = dao.getBoardList(startRnum, endRnum);
-			request.setAttribute("startPage", startPage);
-			request.setAttribute("endPage", endPage);
-			request.setAttribute("currentPage", currentPage);
-			request.setAttribute("pageCnt", pageCnt);
-			request.setAttribute("boardList", list);
+		}
+		request.setAttribute("search", search);
+						
+		request.setAttribute("startPage", startPage);
+		request.setAttribute("endPage", endPage);
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("pageCnt", pageCnt);
+		request.setAttribute("boardList", list);
+
+		// TODO: 경로 확인
+		// 리스트 페이지로 이동 
 			
 			request.getRequestDispatcher("board/BoardList.jsp").forward(request, response);
-		}
+		
 	}
 
 	

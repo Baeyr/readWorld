@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>읽편한세상</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="/SEMI/board/BoardStyle.css?ver=1">
+<link rel="stylesheet" href="/board/BoardStyle.css?ver=33">
 <script type="text/javascript" src="/SEMI/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="/SEMI/ckeditor/config.js"></script>
 </head>

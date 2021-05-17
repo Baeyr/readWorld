@@ -64,6 +64,7 @@ public class BookDetailControl extends HttpServlet {
 		BookDAO bookdao = new BookDAO();
 		
 		
+		
 		// 메인, 검색화면에서 isbn값 전달받기 
 		String isbn = request.getParameter("isbn");
 		

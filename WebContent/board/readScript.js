@@ -31,7 +31,7 @@ $('.srBtn').click(function(){
 		} else {
 			idx2=String(parent1).slice(-2);
 		}
-		$(parent).after('<table class="table4"> <tr class="row3"> <td class="re"><i id="icon" class="fas fa-arrow-right fa-3x"></i></td>'+
+		$(parent).after('<table class="table4 tb"> <tr class="row3"> <td class="arr"><i id="icon" class="fas fa-arrow-right fa-3x"></i></td>'+
 		'<td class="text">'+
 		'<input type="hidden" class="rootNo" value="'+idx2+'">'+
 		'<textarea class="putReCmt" name="cmtcontent" id="reCmt">'+
@@ -56,7 +56,7 @@ $('.smBtn').click(function(){
 		} else {
 			idx2=String(parent1).slice(-2);
 		}
-		$(parent).after('<table class="table6"> <tr class="row3"> <td class="re"><i id="icon" class="fas fa-arrow-right fa-3x"></i></td>'+
+		$(parent).after('<table class="table6 tb"> <tr class="row3"> <td class="arr"><i id="icon" class="fas fa-arrow-right fa-3x"></i></td>'+
 		'<td class="text">'+
 		'<input type="hidden" class="rootNo" value="'+idx2+'">'+
 		'<textarea class="putReCmt" name="cmtcontent" id="reCmt1">'+parent2+

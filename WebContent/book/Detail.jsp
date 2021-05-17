@@ -52,7 +52,7 @@
 			<h2 class="title">책 소개 [요약]</h2>
 			<p>
 			<c:forEach items="${detailbook}" var="item">
-			${item.description }
+				${item.description }
 			</c:forEach>
 			</p>
 		</article>
@@ -86,7 +86,6 @@
 	
 </div>
 <script>
-
 	var form = document.getElementById("frm");
 	var enrB = document.getElementById("b2");
 	
@@ -113,8 +112,6 @@ Rating.prototype.setRate = function(newrate){
     });
 }
 let rating = new Rating();	//별점 인스턴스 생성
-
-
 document.addEventListener('DOMContentLoaded', function(){
     //별점선택 이벤트 리스너
     document.querySelector('.rating').addEventListener('click',function(e){
@@ -126,7 +123,6 @@ document.addEventListener('DOMContentLoaded', function(){
     
     
 });
-
 </script>
 </body>
 </html>

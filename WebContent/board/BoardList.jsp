@@ -18,7 +18,7 @@
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<link href="<%=request.getContextPath()%>/board/BoardListStyle.css?333" rel="stylesheet" type = "text/css">
+	<link href="<%=request.getContextPath()%>/board/BoardListStyle.css?32" rel="stylesheet" type = "text/css">
 </head>
 <body>
 	<% request.setCharacterEncoding("utf-8"); %>
@@ -34,13 +34,13 @@
             </article>
 
             <article id="main_article2" class="header">
-                <div class="boardD">
+		<div class="boardD">
                 <table class="board">
                     <tr class=topR>
                         <td class="tableTop no1">NO
 			<input type="hidden" id="currentP" value="<%=request.getAttribute("currentPage")%>"/>
                         </td>
-                        <td class="tableTop">제목</td>
+                        <td class="tableTop topT">제목</td>
                         <td class="tableTop">아이디</td>
                         <td class="tableTop">날짜</td>
                         <td class="tableTop">추천수</td>

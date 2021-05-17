@@ -79,7 +79,7 @@ public class LoginControl extends HttpServlet {
 			}else {
 				out.println("<script>alert('로그인 성공!!')</script>");				
 			}
-			out.println("<script>location.href='/SEMI/main'</script>");
+			out.println("<script>location.href='main'</script>");
 			//request.getRequestDispatcher("/main").forward(request, response);
 		}
 		

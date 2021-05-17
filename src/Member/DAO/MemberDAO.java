@@ -49,11 +49,9 @@ public class MemberDAO {
 		
 		JDBCTemplate.close(rs);
 		JDBCTemplate.close(pstmt);
-		JDBCTemplate.close(conn);
 		
 		//저장
 		try {
-			conn = JDBCTemplate.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1,maxNo);
 			pstmt.setString(2, id);
@@ -64,15 +62,13 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 		
-		JDBCTemplate.close(rs);
-		JDBCTemplate.close(pstmt);
-		JDBCTemplate.close(conn);
 		
 		return result;
 	}
 	public int MemberInsert(Member m,Genre g) {
 		int result = 0;
 		int result2 = 0;
+		
 		
 		int maxNo = g.getGenre().size();
 		
@@ -137,7 +133,6 @@ public class MemberDAO {
 						pstmt = conn.prepareStatement(delsql);
 						pstmt.setString(1, id);
 						result = pstmt.executeUpdate();
-						
 						JDBCTemplate.close(rs);
 						JDBCTemplate.close(pstmt);
 						JDBCTemplate.close(conn);
@@ -232,64 +227,6 @@ public class MemberDAO {
 			}
 			return result;
 		}
-		
-	//회원권 해지2
-		public int TicketTermination2(String id, String pwd) {
-			int result = 0;
-			String dbpw = "";
-			try {
-				conn = JDBCTemplate.getConnection();
-				String sql = "select pwd from member where id=?"; // 채우기
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, id);
-				rs = pstmt.executeQuery();
-				if (rs.next()) {
-					dbpw = rs.getString("pwd");
-					if (dbpw.equals(pwd)) {
-						try {
-							rs.close();
-						} catch (SQLException s) {
-							s.printStackTrace();
-						}
-						try {
-							pstmt.close();
-						} catch (SQLException s) {
-							s.printStackTrace();
-						}
-						String Tersql = "DELETE FROM purchase where id = ?";
-						pstmt = conn.prepareStatement(Tersql);
-						pstmt.setString(1, id);
-						result = pstmt.executeUpdate();
-						// update 실패 한 경우. result : 0
-						// update 성공 한 경우. result : 1
-					} else {
-						System.out.println("pwd 틀렸음");	// result : 0			
-					}
-				} else  {
-					System.out.println("id가 없음");  // result : 0
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					rs.close();
-				} catch (SQLException s) {
-					s.printStackTrace();
-				}
-				try {
-					pstmt.close();
-				} catch (SQLException s) {
-					s.printStackTrace();
-				}
-				try {
-					conn.close();
-				} catch (SQLException s) {
-					s.printStackTrace();
-				}
-			}
-			return result;
-		}
 	// 로그인
 	public Genre getGenre(String id) {
 		Genre genre = new Genre();
@@ -306,7 +243,8 @@ public class MemberDAO {
 			while(rs.next()) {
 				String gen = rs.getString("genre");
 				text.add(gen);
-			}			
+			}
+			
 			genre.setGenre(text);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -315,7 +253,10 @@ public class MemberDAO {
 			JDBCTemplate.close(rs);
 			JDBCTemplate.close(pstmt);
 			JDBCTemplate.close(conn);
-		}		
+		
+
+		}
+		
 		return genre;
 	}
 	
@@ -379,10 +320,11 @@ public class MemberDAO {
 		 }
 	 } catch(Exception e) {
 		 System.out.println("아이디 중복 확인 실패 : " + e );
-	 	} finally {
+			} finally {
 	 		JDBCTemplate.close(rs);
 			JDBCTemplate.close(pstmt);
 			JDBCTemplate.close(conn);
+	 
 	 	}
 	 return cnt;
 	}
@@ -450,6 +392,7 @@ public class MemberDAO {
 			JDBCTemplate.close(pstmt);
 			JDBCTemplate.close(conn);
 		}
+		
 		return m;
 		}
 }
