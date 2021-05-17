@@ -226,7 +226,7 @@
                     		</tr>
                     	</c:if>
                         <c:if test = "${not empty allQna}">
-                    		<c:forEach items="${myQna}" var="bl">
+                    		<c:forEach items="${allQna}" var="bl">
 	                    		<tr class="accordian">
 	                            <td class="tableCon no">${bl.qnano}</td>
 	                            <c:if test="${bl.id eq 'admin'}">

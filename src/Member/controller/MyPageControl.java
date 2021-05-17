@@ -268,7 +268,7 @@ public class MyPageControl extends HttpServlet {
 		//전체 회원글검색
 		List<Qna> allQna = null;
 		
-		final int pageSize3 = 3; // 한 페이지당 게시글 수
+		final int pageSize3 = 5; // 한 페이지당 게시글 수
 		final int pageBlock3 = 3;  // 화면에 나타날 페이지 링크 수
 		
 		int cnt3 = 0 ;	// 총 글 개수

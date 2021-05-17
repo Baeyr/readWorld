@@ -81,8 +81,8 @@ public class QnaDAO {
 		String sql2 = "";
 		
 		if(id.equals("admin")) {
-			sql1 = "(SELECT * FROM qnaboard order by qnaref desc, qna_step asc) b";
-			sql2 = "SELECT * FROM (SELECT ROWNUM r, b.* from "+sql1+") where r>=? and r<=?";
+			sql1 = "(select rownum r,q2.* from (select * from qnaboard)q1, qnaboard q2 where (q1.qnano = q2.qnaref) order by q1.qnaref desc, q1.qna_step asc)";
+			sql2 = "select * from"+sql1+" where r>=? and r<=?";
 		}else {
 			sql1 = "(select rownum r,q2.* from (select * from qnaboard where id='"+id+"')q1, qnaboard q2 where (q1.qnano = q2.qnaref) order by q1.qnaref desc, q1.qna_step asc)";
 			sql2 = "select * from"+sql1+" where r>=? and r<=?";
