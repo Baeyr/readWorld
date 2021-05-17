@@ -121,7 +121,7 @@
                 <div class="tbody">
                     <c:forEach var="i" items="${d1.rows}" varStatus="s">
 						<c:if test="${i['cmtstep']==1}">
-							<table class="table3-${i['cmtrootno']} tb">
+							<table class="tb table3-${i['cmtrootno']}">
 							<tr class="row3">
 								<td class="row1" colspan="2"><i class="far fa-times-circle"></i>${i['id']}</td>
 								<td></td>
@@ -142,7 +142,7 @@
 							<hr>
 						</c:if>
 						<c:if test="${i['cmtstep']>1}">
-							<table class="table5-${i['cmtrootno']} tb">
+							<table class="tb table5-${i['cmtrootno']}">
 							<tr class="row3">
 								<td class="re" rowspan="2"><i id="icon"
 								class="fas fa-arrow-right fa-3x"></i></td>
