@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-*{
-	box-sizing: border-box;
-}
-
 section{
             height:1000px;
             margin: auto;

@@ -3,7 +3,9 @@
     <style>
     
 	.all{
-		width: 1500px;
+		margin: auto;
+		margin-left: 5%;
+		margin-right: 5%;
     }
     .topnav {
     	overflow: hidden;

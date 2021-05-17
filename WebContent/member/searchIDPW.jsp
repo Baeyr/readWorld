@@ -19,7 +19,7 @@
     	width: 300px;
     	height: 25px;
     	top: 10px;
-    	left:1100px;
+    	left:180px;
     	border-color:  #1C4025;
     	border-radius: 5px;
     	margin-left: 20px;
